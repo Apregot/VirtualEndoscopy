@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+   <title>SplitPane sketch</title>
+  <link rel="stylesheet" href="../css/splitpane.css">
+  <script src="../closure-library/closure/goog/base.js"></script>
+
+
+  <script>
+    goog.require('goog.ui.Component');
+    goog.require('goog.ui.Button');
+    // этот require стоит в js/gfk/ui/splitpanex.js, но почему-то не успевает подгрузиться
+    goog.require('goog.ui.SplitPane');
+  </script>
+
+  <script src="../js/gfk/ui/splitpanex.js"></script>
+
+   <style>
+
+    /* The rest of these styles are for the splitpane demo, splitpane.html */
+
+    /* Example of styling a particular handle */
+    #another-splitpane .goog-splitpane-handle {
+      background: gray;
+    }
+
+    .red_block {
+      border: 1px solid black;
+      background: red;
+    }
+    .blue_block {
+      border: 1px solid black;
+      background: blue;
+      width: 400px;
+      height: 200px; 
+      resize:both;
+      overflow:auto;
+    }
+
+    .grid_row {
+      background:#393939;
+      display: grid;
+      //width: 500px;
+      grid-template-columns: 3fr 4fr;
+    }
+
+
+   </style>
+</head>
+
+<body>
+  <div class='goog-splitpane' id='anotherSplitter'>
+    <div class='goog-splitpane-first-container'>
+      <div class="red_block">Left Frame</div>   
+       <!-- это из LeftPane component -->
+
+       <div class="grid_row">
+         <div style="color:white">Стандартный:</div>
+         <div style="display:flex; justify-content:space-between;">
+           <select id="sel1">
+             <option>Realistic</option>
+             <option>Cardio</option>
+           </select>
+           <button>Ред.</button>
+         </div>
+       </div>
+
+       <div class="grid_row">
+         <div style="color:white;">Освещение:</div>
+         <div style="display:flex;"><input type="checkbox" name="b"><div id="s12" style="flex-grow:2;"></div></div>    
+       </div>
+
+    </div>
+    <div class='goog-splitpane-second-container'>
+       <!-- Right frame -->
+      <div class="red_block">Right Frame</div>
+
+    </div>
+    <div class='goog-splitpane-handle'></div>
+  </div>
+
+   <p> Программный сплиттер в resizable div
+   <div id="sp1" class="blue_block"></div>
+
+   <p> Программный resizable сплиттер в сплиттере
+   <div id="sp2" class="blue_block"></div>
+   <button onclick="removeInnerSplitter();">Remove inner splitter</button>
+
+
+   <script> 
+    var lhs = new goog.ui.Component();
+    var rhs = new goog.ui.Component();
+
+    var splitpane1 = new goog.ui.SplitPane(lhs, rhs,goog.ui.SplitPane.Orientation.HORIZONTAL);
+    splitpane1.setInitialSize(250);
+    splitpane1.setHandleSize(10);
+    splitpane1.decorate(document.getElementById('anotherSplitter'));
+    // splitpane1.render();
+    splitpane1.setSize(new goog.math.Size(600,100));
+
+    // программный сплиттер sp1                           gfk.ui.
+    var sp1 = new gfk.ui.SplitPaneExpanded();
+    sp1.render(document.getElementById('sp1'));
+    console.log('sp1 child count ',sp1.getChildCount())
+    const child1 = sp1.getChildAt(0);
+    const ch1_element = child1.getElement();
+    console.log('child1.getElement()',child1.getElement())
+    const ch1_content_el = child1.getContentElement();
+    console.log('child1.getContentElement()',child1.getContentElement())
+    console.log('child1.getChildCount()', child1.getChildCount())
+
+    // добавляем <button> как HTML
+    ch1_element.innerHTML = '<button id="b1"> HTML button b1 </button>';
+    ch1_element.innerHTML += '<button id="b2"> HTML button b2 </button>';
+    // если в родительском контейнере установить goog-inline-block, то можно добавлять просто
+    // <button>'s и они выстроятся в линию, если позволяет место
+    // если родительский контейнер обычный (без goog-inline-block), то можно пометить индивидуально элементы
+    // через goog-inline-block и они выстроятся в линию как показано ниже
+    const b1 = document.getElementById('b1'), b2 = document.getElementById('b2')
+    goog.dom.classlist.add(b1,'goog-inline-block');
+    goog.dom.classlist.add(b2,'goog-inline-block');
+
+    const ch2_comp = sp1.getChildAt(1);
+    const b3 = new goog.ui.Button('b3 как goog.ui.Button');
+    ch2_comp.addChild(b3,true);   // true - рендерить в родителе
+
+
+    // Программный resizable сплиттер в сплиттере
+    var sp2 = new gfk.ui.SplitPaneExpanded();
+    sp2.render(document.getElementById('sp2'));
+    var spv = new gfk.ui.SplitPaneExpanded('vertical');
+    // spv.render(sp2.getChildAt(0).getElement());
+    sp2.getChildAt(0).addChild(spv,true);
+
+
+    // let ro = new ResizeObserver(entry => {
+    //   console.log('handleResize',entry)
+    // });
+    // console.log('ro', ro)
+    // ro.observe(document.getElementById('sp1'));
+
+    // document.querySelector('#sp1').handleResize = entry => {
+    //   console.log('handleResize',entry)
+    // }
+
+    function removeInnerSplitter() {
+      console.log('removeInnerSplitter()')
+      sp2.getChildAt(0).removeChild(spv,true);  // почему-то надо указывать true, чтобы прекратить рендеринг
+      // если сделать removeChild() то в удаляемом компоненте вызывается disposeInternal
+
+
+    }
+
+
+   </script>
+</body>
+</html>
+

@@ -1,0 +1,101 @@
+.goog-tab-content {
+  height:100%;
+  padding:0px;
+}
+
+
+.ffr-viewer-main {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    background-color: white
+}
+
+.ffr-viewer-toolbar {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 80px;
+    right: 0;
+    padding: 10px;
+    background: #333!important;
+    border-bottom: 1px solid #222;
+    overflow: hidden
+}
+
+.visualizer {
+        width: 100%;
+        height: 100%;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        background-color: #353535;
+    }
+
+.renderer {
+    background-color: #000;
+    width: 50%;
+    height: 50%;
+    resize: both;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: none;
+    position: relative;
+    overflow: hidden;
+}
+
+#r0 {
+    border-top: 2px solid #03a9f4;
+}
+
+#r1 {
+    border-top: 2px solid #f44336;
+}
+
+#r2 {
+    border-top: 2px solid #ffeb3b;
+}
+
+#r3 {
+    border-top: 2px solid #8bc34a;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+    opacity: 1;
+}
+
+// Dialog-10
+.ffr-d10-gridrow {
+  background:#d0d0d0;
+  display: grid;
+  //width: 500px;
+  grid-template-columns: 1fr 3fr;
+}
+
+//------------------
+.ffr-viewer-stage {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    background-color: #252525;
+}
+
+.container {
+  //display: flex;
+  position: relative;
+  top: 80px;
+  height:670px;
+  border: 0px solid #ece89d;
+  margin: 0px 0px 30px 0px;
+}
+

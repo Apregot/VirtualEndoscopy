@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<!--This is a comment. Comments are not displayed in the browser-->
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>gfk.ui.TabBar test</title>
+  <link rel="stylesheet" href="../css/tabbar.css">
+  <style>
+    .goog-tab-content {
+      height: 9em;
+      margin: 0;
+      border: 1px solid #6b90da;
+      border-top: 0;
+      padding: 4px 8px;
+      background: #fff;
+      overflow: auto;
+    }
+  </style>
+
+  <script src="../../closure-library/closure/goog/base.js"></script>
+  <script type="text/javascript" src="../js/gfk/ui/tabbar.js"></script>
+</head>
+
+<body>
+    <!-- сюда попадает программно созданный gfk.ui.TabBar -->
+    <p> Тест gfk.ui.TabBar</p>
+    <div id="tabw1"></div>
+    <div id="d1"></div>
+    <!-- -->
+    <script>
+      var tabBar = new gfk.ui.TabBar(tabw1,['tab1','tab2']);
+      tabBar.setTabContent(0,'AAA');
+      tabBar.setTabContent(1,'BBB');
+      tabBar.setSelectedTabIndex(0);
+      tabBar.setEnabled(1,false);
+      //tabBar.log();
+
+      //tabw1.innerHTML = 'AAA'
+      // tabw1.appendChild(d1)
+      // console.log('tabw1',tabw1)
+      // console.log('tabw1.childNodes',tabw1.childNodes)
+      // console.log('tabw1.firstChild',tabw1.firstChild)
+    </script>
+</body>
+</html>
+

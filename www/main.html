@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<title>V5-FFR build 1</title>
+	<link rel="stylesheet" type="text/css" href="css/ffr.css">
+  <link rel="stylesheet" href="css/splitpane.css">
+  <link rel="stylesheet" href="css/tabbar.css">
+  <link rel="stylesheet" href="css/slider.css">
+  <link rel="stylesheet" href="css/progressbar.css">
+  <link rel="stylesheet" href="css/twothumbslider.css">
+
+  <link rel="stylesheet" href="closure-library/closure/goog/css/common.css">
+  <link rel="stylesheet" href="closure-library/closure/goog/css/menu.css">
+  <link rel="stylesheet" href="closure-library/closure/goog/css/menuitem.css">
+  <link rel="stylesheet" href="closure-library/closure/goog/css/menuseparator.css">
+  <link rel="stylesheet" href="closure-library/closure/goog/css/toolbar.css">
+  <link rel="stylesheet" href="closure-library/closure/goog/css/dialog.css">  
+  <link rel="stylesheet" href="closure-library/closure/goog/css/tab.css">
+  <link rel="stylesheet" href="closure-library/closure/goog/css/tabbar.css">
+  <link rel="stylesheet" href="closure-library/closure/goog/css/tree.css">
+  <link rel="stylesheet" href="closure-library/closure/goog/css/checkbox.css">
+	<script src="closure-library/closure/goog/base.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/three.js/99/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ami.js/0.32.0/ami.min.js"></script>  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.0.0/math.js"></script> 
+  <script type="text/javascript" src="https://d3js.org/d3.v4.js"></script>
+
+  <script src="js/deps.js"></script>
+  <script src="js/appconf.js"></script>
+  <script src="js/gfk/ui/splitpane.js"></script>
+  <script src="js/gfk/ui/tabbar.js"></script>
+  <script src="js/gfk/ui/slider.js"></script>
+  <script src="js/gfk/ui/dialog.js"></script>
+  <script src="js/gfk/ui/progressbar.js"></script>
+  <script src="js/tables.js"></script>
+  <script src="js/marchingcubes.js"></script>
+	<script src="js/main.js"></script>
+  <script src="js/uibuilder.js"></script>
+  <script src="js/ui/dialogs/Dialog8.js"></script>
+  <script src="js/ui/dialogs/Dialog10.js"></script>
+  <script src="js/ui/dialogs/Dialog11.js"></script>
+  <script src="js/dicomParser.min.js"></script>
+  <script src="js/dumpDICOMfile.js"></script>
+  <script type="text/javascript" src="js/V5TrackballControl.js"></script>
+  <script src="js/amiviewer.js"></script>
+  <script src="js/cube.js"></script>
+  <script src="js/ffrdriver.js"></script>
+  <script src="js/axplane.js"></script>
+  <script src="js/huv.js"></script>
+  <script src="js/axplanecontrols.js"></script>
+  <script src="js/up3.js"></script>
+  <script src="js/SubdivisionModifier.js"></script>
+  <script src="js/filevolumeloader.js"></script>
+  <script src="js/fsf.js"></script>
+  <script src="js/ffrprotocol.js"></script>
+  <script src="js/H_loadDICOM.js"></script>
+  <!-- <script src="js/markstenosis.js"></script> -->
+  <script src="js/ui/components/FakeLeftPanelComponent.js"></script>
+  <script src="js/ui/components/VesselListComponent.js"></script>
+  <script src="js/ui/components/LeftPanelComponent.js"></script>
+  <script src="js/ui/components/MarkStenosisComponent.js"></script>
+  <script src="js/ui/components/quadview.js"></script>
+  <script src="js/ui/components/SeriesListsComponent.js"></script>
+  <script src="js/onion.js"></script>
+  <script src="js/ui/components/VesselHistogramComponent.js"></script>
+  <script src="js/rainbow.js"></script>
+  <script src="js/Lut.js"></script>
+  <script src="js/plasticboy.js"></script>
+  <script src="js/rgt.js"></script>
+  <!-- <script src="js/svetz.js"></script> -->
+
+  <style>
+    .goog-toolbar {
+      background: #383838;
+    }
+    .goog-menuitem {
+      color: #fff;
+    }
+    .goog-toolbar-menu-button-caption {
+      color:white;
+      font-size: medium;
+    }
+  </style>
+<style class="text/css">
+
+    #div_vis_grid {
+      //width: 300px;
+      //height: 300px;
+      background: #eee;
+      border: 5px solid #393939;
+    }
+    .grid_row {
+      background:#393939;
+      display: grid;
+      //width: 500px;
+      grid-template-columns: 3fr 4fr;
+    }
+    .content {
+      background: #d0d0d0;
+    }
+
+    .inputfile-invisible {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
+    }
+
+    .modal-dialog {
+    z-index: 10;
+    }
+
+</style>
+</head>
+
+<body class="ffr-viewer-body">
+    <script>FFR.createViewer(document.body);</script>
+</body>
+</html>
+

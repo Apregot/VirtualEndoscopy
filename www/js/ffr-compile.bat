@@ -1,0 +1,49 @@
+java -jar ..\..\closure-library\closure-compiler-v20190301.jar^
+ --generate_exports^
+ --entry_point ./main.js^
+ --compilation_level ADVANCED_OPTIMIZATIONS^
+ --generate_exports^
+ --js '..\..\closure-library/closure/**.js'^
+ --js '..\..\closure-library//third_party/**.js^
+ --js '!..\..\closure-library/**test.js'^
+ --js '!..\..\closure-library/**tester.js'^
+ --js '!..\..\closure-library/**_perf.js'^
+ --js '!..\..\closure-library/closure/goog/bootstrap/nodes.js'^
+ --js '!..\..\closure-library/closure/goog/bootstrap/bytestring_perf.js'^
+ --js '!..\..\closure-library/closure/bin/generate_closure_unit_tests/generate_closure_unit_tests.js'^
+ --externs ami.ext.js^
+ --externs three.ext.js^
+ --externs externs.js^
+ --js V5TrackballControl.js^
+ --js amiviewer.js^
+ --js main.js^
+ --js gfk/ui/dialog.js^
+ --js gfk/ui/tabbar.js^
+ --js gfk/ui/slider.js^
+ --js gfk/ui/splitpane.js^
+ --js gfk/ui/progressbar.js^
+ --js ./uibuilder.js^
+ --js ./dumpDICOMfile.js^
+ --js ./marchingcubes.js^
+ --js ./tables.js^
+ --js ./ffrdriver.js^
+ --js ./cube.js^
+ --js ./axplane.js^
+ --js ./huv.js^
+ --js ./axplanecontrols.js^
+ --js ./up3.js^
+ --js ./SubdivisionModifier.js^
+ --js ./filevolumeloader.js^
+ --js ./fsf.js^
+ --js ./ffrprotocol.js^
+ --js ./H_loadDICOM.js^
+ --js ./serieslists.js^
+ --js ./markstenosis.js^
+ --js ./ui/components/FakeLeftPanelComponent.js^
+ --js ./ui/components/VesselListComponent.js^
+ --js ./ui/components/LeftPanelComponent.js^
+ --js ./ui/components/MarkStenosisComponent.js^
+ --js_output_file ffr-min.js
+ REM echo //# sourceMappingURL=v5-min.js.map >>v5-min.js
+
+

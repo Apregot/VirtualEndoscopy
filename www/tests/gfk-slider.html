@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<!--This is a comment. Comments are not displayed in the browser-->
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>gfk.ui.Slider test</title>
+  <link rel="stylesheet" href="../../closure-library/closure/goog/css/common.css">
+  <link rel="stylesheet" href="../css/slider.css">
+  
+  <script src="../../closure-library/closure/goog/base.js"></script>
+  <script type="text/javascript" src="../js/gfk/ui/tabbar.js"></script>
+  <script type="text/javascript" src="../js/gfk/ui/slider.js"></script>
+</head>
+
+<body>
+    <!-- сюда попадает программно созданный gfk.ui.Slider -->
+    <p> Тест gfk.ui.Slider</p>
+    <div id="slider-1" style="width:200px;"></div>
+    <div id="slider-2" style="width:200px;"></div>
+    <div id="slider-goog" class="goog-slider" style="width: 200px; height: 20px">
+      <div class="goog-slider-thumb"></div>
+    </div>
+
+    <div id="tab1" style="width:200px;"></div>
+    
+    <script>
+      var slider = new gfk.ui.Slider(document.getElementById('slider-1')); slider.slider.setValue(new Number(60))
+      var slider2 = new gfk.ui.Slider(document.getElementById('slider-2')); slider2.slider.setValue(5);
+
+      var slider3 = new goog.ui.Slider;
+      slider3.decorate(document.getElementById('slider-goog'));
+      slider3.setValue(50)
+
+      slider.listen(function() {
+        let value = slider.getValue();
+        console.log('value',value)
+      });
+
+    </script>
+</body>
+</html>
+

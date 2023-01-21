@@ -1,0 +1,46 @@
+24.02.21 <<< FFR.b12:голубая аорта Почукаевой >>>
+ new: js/marchingcubes.js js/tables.js
+ mod: js/main.js main.html js/ffr-compile.bat ChangeLog.txt js/ffr-min.js (184K)
+14.02.21 <<< FFR.b11: Закладка Несортированные изображения >>>
+ new: img/CD-ROM-icon.png img/Save-PACS.png img/camera.png
+ mod: main.html js/main.js img/p1.png ChangeLog.txt js/ffr-min.js (167K)
+14.02.21 <<< FFR.b10: amiviewer.js и загрузка Почукаевой-449>>>
+ new: js/amiviewer.js js/V5TrackballControl.js js/ami.ext.js js/three.ext.js // js/ami.js
+ mod: main.html main-min.html js/main.js js/externs.js js/ffr-compile.bat ChangeLog.txt js/ffr-min.js (167K)
+12.02.21 <<< FFR.b9: worklist c Почукаевой>>>
+ new: img/p1.png
+ mod: main.html main-min.html js/main.js js/uibuilder.js js/gfk/ui/tabbar.js css/ffr.css ChangeLog.txt js/ffr-min.js (139K)
+      js/main.js формирование worklist с Почукаевой
+      css/ffr.css классы visualizer и renderer
+03.02.21 <<< FFR.b8: меню Чтение DICOM каталого/файла как invisible input и подключение cornerstoneJS dicomParser>>>
+ new: js/dicomParser.min.js js/dumpDICOMfile.js js/externs.js
+ mod: main.html main-min.html js/main.js js/uibuilder.js js/ffr-compile.bat js/ffr-min.js
+31.01.21 <<< FFR.b7: Load DICOM menu item>>>
+ mod: main.html js/main.js js/uibuilder.js
+25.01.21 <<< FFR.b6: Dialog-12>>>
+ mod: js/uibuilder.js js/main.js js/gfk/ui/tabbar.js js/ffr-min.js
+24.01.21 <<< FFR.b5: main.html#Dialog-12 lower-left tabs>>>
+ mod: js/uibuilder.js main.html main-min.html js/main.js js/gfk/ui/splitpane.js js/gfk/ui/dialog.js js/ffr-min.js js/deps.js
+20.01.21 <<< main.html>>>
+ new: img/6.png
+ mod: js/main.js main.html js/gfk/ui/slider.js js/gfk/ui/splitpane.js js/deps.js css/ffr.css tests/gfk-slider.html
+18.01.21 <<< splitpane.css >>>
+ new: css/splitpane.css
+15.01.21 <<< gfk.ui.TabBar с DOM хранилищем содержимого tab'ов >>>
+ new: css/tabbar.css
+ mod: js/gfk/ui/splitpane.js js/gfk/ui/tabbar.js tests/gfk-tabbar.html
+11.01.21 <<< gfk.ui.SplitPane >>>
+ new: js/gfk/ui/splitpane.js  tests/gfk-splitpane.html
+08.01.21 <<< gfk.ui.Slider >>>
+ new: js/gfk/ui.slider.js img/{q.png}  tests/{gfk-slider.html, tests/gfk-tabbar.html} 
+ mod: js/ffr-compile.bat js/gfk/ui/tabbar.js
+07.01.21 <<< FFR.b4: gfk.ui.TabBar Dialog-10(part.) >>>
+ git add js/gfk js/deps.js; 
+ git add main.html main-min.html css/ffr.css js/uibuilder.js js/main.js js/gfk/ui/dialog.js js/ffr-min.js js/ffr-compile.bat
+06.01.21 git add js/gfk/ui/dialog.js js/uibuilder.js js/deps.js img/q.png			git commit -m "gfk.ui.Dialog, uibuilder, первый Menu/Dialog-1"
+ git add main.html main-min.html js/main.js js/ffr-compile.bat js/ffr-min.js
+05.01.21 git add js/ffr-min.js; 													git commit -m "added ffr-min.js"
+05.01.21 git add main-min.html js/ffr-compile.bat; git add main.html js/main.js; 	git commit -m "added main-min.html"
+04.01.21 git init; git add main.html css js;		 								git commit -m "initial revision"
+ 
+ 
