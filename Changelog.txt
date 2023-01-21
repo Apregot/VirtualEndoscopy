@@ -1,0 +1,298 @@
+19.10.22 <<< 1.2.4.72 новый формат FFRfull.tre >>> ffr-min.js 262 688 warn:102
+17.10.22 <<< 1.2.4.72 ЧСС и другие данные пациента >>> ffr-min.js 262 647 warn:102
+15.10.22 <<< 1.2.4.71 >>> ffr-min.js 260 623 warn:101
+ * колесико, PAN и ZOOM
+ * табличка с ФРК
+26.09.22 <<< 071RC1 табличка с ФРК>>>ffr-min.js 282 578 warn:99
+20.08.22 <<< 071RC колесико, PAN и ZOOM >>>ffr-min.js 281 298 warn:97
+19.08.22 <<< 1.2.4.70 FindAorta со многими срезами >>>ffr-min.js 282 774 warn:96
+13.08.22 <<< 070RC FindAorta со многими срезами >>>ffr-min.js 282 218 warn:96
+09.08.22 <<< 070RC RGT: первые регрессионные тесты >>>ffr-min.js 281 847 warn:96
+07.08.22 <<< 1.2.4.69 Удалить сосуд >>>ffr-min.js 275 937 warn:95
+05.08.22 <<< 1.2.4.68 ускорена сегментация аорты >>>ffr-min.js 274 704 warn:94
+ * ускорена сегментация аорты (класс IDT) [Данилов]
+ * более информативные проценты в прогрессбаре [Данилов]
+ * cнижена вероятность обрыва связи [Данилов]
+ * Отображение сглаженной аорты при выборе порога сегментации коронаров [Данилов]
+
+05.08.22 <<< более информативные проценты в прогрессбаре >>>
+04.08.22 <<< 1.2.4.67 ROI с рамками >>>ffr-min.js 274 331 warn:94
+ * появился интерфейс по управлению рамками ROI
+ * тест план при выпуске релиза
+ * bugfix: ошибка при Закрыть серию (null rhs)
+03.08.22 <<< ускорена сегментация аорты (класс IDT) >>>
+30.07.22 <<< 1.2.4.66 сборка с GetOptimalTau >>> ffr-min.js 266 084 warn:86
+* интегрирован pull request 1 Саши Данилова с автоматическим определением порого tau
+
+28.07.22 <<< 1.2.4.66 добавлен GetOptimalTau в протокол >>> ffr-min.js 266 072 warn:86
+18.07.22 <<< 1.2.4.65 series resize и докерфайлы для CRADLE ATB >>> ffr-min.js 265 985 warn:86
+13.07.22 <<< 1.2.4.65 https и wss в PROD >>> ffr-min.js 264 479 warn:81
+07.06.22 <<< 1.2.4.64 с новым blood, LUT, state4 Брусницин, свет >>> ffr-min.js 264 479 warn:81
+26.05.22 <<< 1.2.4.63 учет пустых воксельных масок при передаче >>> ffr-min.js 263 795 warn:81
+25.05.22 <<< 1.2.4.62 PlasticBoy с LUT >>> ffr-min.js 263 542 warn:82
+21.05.22 <<< 1.2.4.61 FFRserver c логом OpenMP threads >>> ffr-min.js 260 190 warn:86
+19.05.22 <<< скрипт collect:PROD >>>
+17.05.22 <<< 1.2.4.60 FFRserver с включенным OpenMP >>> ffr-min.js 258 240 warn:82
+15.05.22 <<< 1.2.4.59 lws ping disabled; полная функциональность маркировки>>> ffr-min.js 258 240 warn:82
+10.05.22 <<< 1.2.3.58 lws ping>>> ffr-min.js 255 287 warn:82
+07.05.22 <<< 1.2.3.57 инфо стеноз и colored boxes>>> ffr-min.js 255 227 warn:82
+07.05.22 <<< infoDiv и чистка кода >>> ffr-min.js 254 161 warn:82
+02.05.22 <<< 1.2.2.56 исправлен парсинг PrepareResult >>> ffr-min.js 254 514 warn:82
+01.05.22 <<< чистка кода >>> ffr-min.js 254 569 warn:82
+01.05.22 <<< 1.2.2.55 Почукаева FFRfull демо >>> ffr-min.js 254 569 warn:85
+30.04.22 <<< colorVesselSegment перенесен в VesselHistogram >>> ffr-min.js 250 574 warn:83
+30.04.22 <<< makeTubeMesh перенесен из plastic boy  в Tubes >>> ffr-min.js 253 880 warn:85
+29.04.22 <<< старый код по раскраске сосоудов перенесен из rainbow в plastic boy >>> 
+29.04.22 <<< удаление старых selectVesselSegment(s) >>> 
+29.04.22 <<< перекомпоновка selectVesselSegment(s) >>> 
+29.04.22 <<< 1.2.2.54 plastic boy >>> ffr-min.js 251 953 warn:88
+18.04.22 <<< 1.2.2.53 Capture/Start/Clear, UserStenosisPercent и массив стенозов в PrepareResult >>> ffr-min.js 250 385 warn:74 (только компиляция)
+17.04.22 <<< 1.2.1.52 LUT и rainbow >>> ffr-min.js 248 159 warn:79
+12.04.22 <<< рефакторинг-2 MarkStenosisComponent >>>
+12.04.22 <<< рефакторинг-1 MarkStenosisComponent >>>
+12.04.22 <<< фиксация кода перед рефакторингом MarkStenosisComponent >>>
+09.04.22 <<< 1.2.1.51 работает переключение сосудов >>> ffr-min.js 255 274 warn:59
+05.04.22 <<< select/deselect столбика на гистограмме >>> ffr-min.js 254 197 warn:58
+05.04.22 <<< 1.2.0.50 убраны axplane из интефейса >>> ffr-min.js 254 019 warn:58
+03.04.22 <<< tooltips на гистограмме >>> ffr-min.js 254 897 warn:58
+03.04.22 <<< colorVesselSegment >>> ffr-min.js 254 548 warn:58
+02.04.22 <<< 1.2.0.49 прототип раскраски части сосуда по клику на гистограмму >>> ffr-min.js 254 156 warn:58
+30.03.22 <<< 1.2.0.48 VesselHistogramComponent >>> ffr-min.js 253 883 warn:58
+23.03.22 <<< 1.1.1.47 увеличение буфера до 10К и раскраска Почукаевой 90% >>> 
+11.03.22 <<< 1.1.1.46 коррекная работа Прорядить Серию >>> ffr-min.js 251 154 warn:58 (LUT)
+09.03.22 <<< 1.1.0.45 новый blood - раскраска артерий значением ФРК >>> ffr-min.js 251 115 warn:58 (LUT)
+03.03.22 <<< 1.1.0.44 профиль Почукаевой через Onion >>> ffr-min.js 251 490 warn:40
+01.03.22 <<< 1.1.0.44 класс Onion для автоматической маркировки стеноза >>> ffr-min.js 250 903 warn:39
+27.02.22 <<< 1.0.1.43 эксперименты с inflateN6 >>> ffr-min.js 250 654 warn:35
+16.02.22 <<< 1.0.1.42 дополнительное освещение >>> ffr-min.js 248 485 warn:35
+13.02.22 <<< 1.0.1.41 профиль Почукаевой RV3 с учетом близости к центральной линии >>> ffr-min.js 247 990 warn:35
+12.02.22 <<< 1.0.1.40 получил профиль сечений на Почукаевой right vesssel 3 >>> ffr-min.js 249 185 warn:35
+19.12.21 <<< 1.0.1.39 эксперименты по автоматическому нахождению среза аорты >>>
+19.12.21 <<< 1.0.1.39 добавил ui/dialogs/Dialog11.js >>>
+11.12.21 <<< 1.0.1.39 issue#9 (диапазон аорты) AortaSearch_FindAorta stats на Домаскине >>>
+08.12.21 <<< 1.0.1.39 ui/dialogs/Dialog11.js с обработкой input enter >>> ffr-min.js 248 093 warn:35
+06.12.21 <<< 1.0.0.38 базовый вариант для полевых испытаний  >>> ffr-min.js 248 074 warn:36
+05.12.21 <<< issue#6.2 enable/disable OK and Cancel buttons in Dialog-10  >>> ffr-min.js 248 050 warn:37
+05.12.21 <<< ui/dialogs/Dialog10.js  >>> ffr-min.js 247 923 warn:37
+04.12.21 <<< b.37 deploy:TEST и PROD  отработал новый blood.exe >>> ffr-min.js 247 923 warn:37
+03.12.21 <<< b.37 DEV обработка и диагностика аварийного завершения blood >>>
+21.11.21 <<< новый shvetz.js >>>
+16.11.21 <<< передача Int32 и Float32Array с длинными индексами для анализа аорты Швец >>>
+06.11.21 <<< cleanup-1 >>> ffr-min.js 246 520 warn:37
+06.11.21 <<< спрямил пути для короткой маркировки стеноза >>> ffr-min.js 246 520 warn:37
+06.11.21 <<< MarkStenosisComponent visArea resize >>> ffr-min.js 246 732 warn:37
+05.11.21 <<< SeriesLists как Component + resize >>> ffr-min.js 246 625 warn:37
+05.11.21 <<< LeftPanel resize >>> ffr-min.js 247 220 warn:38
+28.10.21 <<< MarkStenosisComponent - 1 шаг перехода на  SplitPaneExpanded >>> ffr-min.js 246 548 warn:38
+24.10.21 <<< b.36 QuadView resize >>> ffr-min.js 246 213 warn:39
+24.10.21 <<< b.35 QuadView как goog.ui.Component >>> ffr-min.js 245 655 warn:39
+23.10.21 <<< ResizeObserver заработал в min варианте >>> ffr-min.js 245 456 warn:39
+23.10.21 <<< b.34 перевел Viewer на gfk.ui.SplitPaneExpanded; но resize не работает в min варианте, так как GCC не понимает ResizeObserver>>>
+23.10.21 <<< new gfk.ui.SplitPaneExpanded - базовая функциональность >>>
+18.10.21 <<< b.33 progress bar при передачи DICOM данных на сервер>>> ffr-min.js 245 167 warn:40
+18.10.21 <<< b.32 закрыт issue#1 (открыть/закрыть серию) >>> ffr-min.js 245 016 warn:40
+12.10.21 <<< deploy:PROD с service.php >> ffr-min.js 244 482 warn:40
+12.10.21 <<< bin/atb >>
+12.10.21 <<< terminate_session >>
+12.10.21 <<< b.31 service.php на deploy:TEST >>>
+11.10.21 <<< b.30 service.php автоматический запуск ATB отработал на DEV >>>
+11.10.21 <<< вытестнение старого экземпляра ATB новым >>>
+11.10.21 <<< ATB 1.0-2021-10-11 отрабатывает request-to-stop >>>
+09.10.21 <<< b.29 заработал deploy:DEV и TEST >>> ffr-min.js 244 094 warn:40
+07.10.21 <<< О программе, deploy.config.js, deploy.js и наброски развертывания PROD >>>
+----
+5.09.21 <<< npm run make:stage >>>
+15.09.21 <<< deploy.sh DEV => STAGE >>>
+10.09.21 <<< GCL должна быть локальной в проекте >>>
+10.09.21 <<< добавил в проект GCC@20190301.0.0 и GCL@20190121.0.0 и новый скрипт сборки ffr-min >>> ffr-min.js 243 762 warn:40 
+08.09.21 <<< npm script build:pea для создания контейнера pea/atb >>>
+08.09.21 <<< переименовал docker-containers в scripts >>>
+08.09.21 <<< удалил lws из Headers >>>
+08.09.21 <<< подчистка windows-зависимостей и ручная сборка ATB на cradle/u:3 >>>
+07.09.21 <<< маркировка стеноза, показанная на видео >>> ffr-min.js 244 023 warn:40
+17.08.21 <<< bugfix: передача координат стеноза и др. ATB 1.0-2021-08-17 >>> ffr-min.js 239 749 warn:39
+16.08.21 <<< маркировка стеноза с переключателями срезов и Capture/Start calculation работает>>> ffr-min.js 238 752 warn:39
+15.08.21 <<< решена проблема со скролингом visArea >>> ffr-min.js 235 136 warn:39
+14.08.21 <<< движение маркера стеноза стрелками и слайдером >>> ffr-min.js 234 958 warn:39
+14.08.21 <<< унифицированный обработчик для MouseEvent >>> ffr-min.js 237 543 warn:39
+14.08.21 <<< унификация IdFragments >>> ffr-min.js 237 913 warn:39
+11.08.21 <<< полная цепочка отработала на R3 на положении маркеров по умолчанию >>>
+11.08.21 <<< кнопка Capture stenosis работает на положении маркеров по умолчанию >>> ffr-min.js 249 219 warn:40 
+10.08.21 <<< установка начальных маркеров стеноза на сосуде >>> ffr-min.js  246 951 warn:39
+10.08.21 <<< работает выбор сосуда с подсветкой центральной линии >>> ffr-min.js  246 128 warn:39
+09.08.21 <<< перенес код из класса MarkStenosis в MarkStenosisComponent>>> ffr-min.js  245 394 warn:39
+08.08.21 <<< новый UI MarkStenosisComponent вместо Диалога-12 >>> ffr-min.js  246 271 warn:39
+08.08.21 <<< LeftPanelComponent вынесен из main как отдельный компонент >>> ffr-min.js  238 085 warn:38
+08.08.21 <<< новый VesselListComponent с событими SELECT/REMOVE/MARKSTENOSIS/VIRTUALENDOSCOPY >>> ffr-min.js  245 835 warn:36
+07.08.21 <<< класс FakeLeftPanelComponent - первый пример наследования goog.ui.* классом ES6 >>> ffr-min.js  243 000 warn:36
+07.08.21 <<< код виртуальной эндоскопии перенесен из D-12 в MarkStenosis >>> ffr-min.js  242 629 warn:36
+05.08.21 <<< код 'экран в экране' перенесен из D-12 в MarkStenosis >>> ffr-min.js  240 603 warn:37
+30.07.21 <<< state4 в новом MarkStenosis >>> ffr-min.js 237 891 warn:41
+29.07.21 <<< новый класс MarkStenosis и перевод d12 в левую панель >>> ffr-min.js 236 249 warn:37
+29.07.21 <<< теперь в SeriesLists передается goog.ui.Component, а не div >>> ffr-min.js 235 663 warn:38
+27.07.21 <<< enable/disable update progress ATB 1.0-2021-07-27 >>> ffr-min.js 235 707 warn:38
+27.07.21 <<< bundler CSS файлов и deployment script >>>
+22.07.21 <<< ошибки внесенные copypaste (о пользе двойных проверок diff'ов) >>> 235 704 warn:37
+22.07.21 <<< Диалог-12 тоже отрабатывает в цепочке. Значит хардкода больше нет ATB 1.0-2021-07-22 >>> 235 704 warn:37
+22.07.21 <<< Диалог-11 (vessels preview) полностью включен в цепочку >>> 233 253 warn:39
+21.07.21 <<< в слайдере задействованы стрелочки + блокировка d10 во время обработки preview >>> 230 381 warn: 39
+19.07.21 <<< Перевод шага 3 (Vessels Preview) с blob на битовую маску 29М->0.5M >>> 
+19.07.21 <<< работает Диалог-10 (AortaPreviw) со слайдером тау и альфа-бета-гамма >>> ffr-min.js 235 048 warn: 39
+18.07.21 <<< оптимизация marching cubes время сокращено с 8 сек до 1 >>> ffr-min.js 234 773 warn:39
+17.07.21 <<< оптимизация времени работы LoadAortaPreview с 7 сек до 1.3 >>> 
+16.07.21 <<< работает прием и передача битовой воксельной маски с ROI (сокращение объема передачи в 50 раз) >>> ffr-min.js 234 124 warn:35
+16.07.21 <<< преобразование линейных в кубические индексы и вычисление ROI перенесено в Cube ATB.1.0-20211607>>> 
+15.07.21 <<< работает прием и передача воксельной маски с ROI >>> ffr-min.js 233 359 warn:35
+15.07.21 <<< восстановил работоспособность Cube.marchingCubes() на обычной маске >>> ffr-min.js 233 841 warn:34
+13.07.21 <<< mem usage в tracer и не совсем удачная попытка ввести FSF.BITMASK >>> ffr-min.js 231 212 warn:34
+11.07.21 <<< Причесал cube.fs перед реализацией битовых воксельных масок >>> ffr-min.js 231 212 warn:34
+10.07.21 <<< На шаге 2 до диалога-10 отработали оба Почукаева и Колмыков ATB.1.0-20211007 >>> 
+10.07.21 <<< Перевод LoadAortaPreview с Blob на ArrayBuffer >>> ffr-min.js 232 209 warn:34
+09.07.21 <<< How to listen to slider >>> 
+09.07.21 <<< Диалог-8 (поиск среза аорты) избавлен от хардкода Почукаевой >>> ffr-min.js 233 020 warn:32
+09.07.21 <<< передается кружок >>> ffr-min.js 232 992 warn:33
+08.07.21 <<< AortaSearch возвращает OK+Blob с длинным индексом FSF >>> ffr-min.js 232 706 warn:36
+08.07.21 <<< работает новый FSF парсер с двоичными OK и ERR ATB.1.0-20210807>>> ffr-min.js 223 771 warn:34
+07.07.21 <<< AortaSearch возвращает картинку среза аорты как Blob>>> ffr-min.js 231 297 warn:33
+06.07.21 <<< Transfer Cube c учетом Rescale slope/intercept (случай Колмыкова)>>> ffr-min.js 231 370 warn:32
+05.07.21 <<< Viewer.openSeries и новая логика подключения к серверу >>> ffr-min.js 234 491 warn:31
+04.07.21 <<< Активировано меню Открыть серию >>> ffr-min.js 234 321 warn:31
+04.07.21 <<< работает удаление закладки с сериями >>> ffr-min.js 233 734 warn:31
+04.07.21 <<< работает удаление/добавление карточки серии >>> ffr-min.js 233 678 warn:33
+01.07.21 <<< прорядить Почукаеву до 200 работает в базовом варианте >>> ffr-min.js 233 023 warn:33
+30.06.21 <<< процедура прореживания серии в классе SeriesLists >>> ffr-min.js 241 448 warn:33
+30.06.21 <<< избавился от параметра Map для метаинформации в сериях >>> ffr-min.js 241 229 warn:39
+29.06.21 <<< AMI 0.23.0 + THREE r.99 В сериях появилась метаинформация >>> ffr-min.js 241 521 warn:38
+29.06.21 <<< подключена загрузка Почукаевой и сделан переход на CDN AMI 0.23.0 + THREE r.93 >>> ffr-min.js 241 489 warn:38
+29.06.21 <<< контекстное меню Прорядить серию (только форма) >>> ffr-min.js 232 734 warn:38
+21.06.21 <<< tabClose значок на закладке TabBar >>> ffr-min.js 225 596 warn:36
+21.06.21 <<< карточки Почукаевой и Колмыкова заполняются корректно >>> ffr-min.js 225 231 warn:30
+20.06.21 <<< default tab content в SeriesLists >>> ffr-min.js warn:28
+19.06.21 <<< SeriesLists как отдельный класс >>> ffr-min.js 232 853 warn:28
+19.06.21 <<< FileVolumeLoader получил доступ к метаинформации >>> ffr-min.js 232 614 warn:28
+18.06.21 <<< thumbAxialSlice - функция, которая делает thumbnails для стека кадров >>> ffr-min.js 232 641 warn:25
+17.06.21 <<< отделен обработчик loadDICOMFileOrDir >>> ffr-min.js 231 815 warn:24
+16.06.21 <<< сборка куба и включение AortaSearch_FindAorta в цепочку >>> ffr-min.js 231 807 warn:24
+15.06.21 <<< ffrprotol.js в отдельном файле >>> ffr-min.js 231 499 warn:24
+15.06.21 <<< индикатор готовности сервера в toolbar >>> ffr-min.js 231 380 warn:24
+13.06.21 <<< FFR__interface::LoadCube() все части куба передаются, включая fake UID >>> ffr-min.js 230 350 warn:26
+12.06.21 <<< LOAD CUBE proof of concept >>> ffr-min.js 230 036 warn:23
+11.06.21 <<< обработка binary frames в ffrservice и первые эксперименты с LOAD CUBE >>> ffr-min.js 229 652 warn:25
+08.06.21 <<< тесты на идентичность почукаева-113.bin и AMI.stack >>> 
+08.06.21 <<< контрольная точка после катастрофы 03.06.21: цепочка доходит до load state4, которого нет >>> ffr-min.js 228 949
+02.06.21 <<< FileVolumeLoader + quadView через UP3 >>> ffr-min.js 229 109 warn:20
+01.06.21 <<< FileVolumeLoader - загрузчик локальных DICOM файлов >>> ffr-min.js 228 346 warn:19
+29.05.21 <<< GCC warnings cleanup (осталось 19 пока все) >>> ffr-min.js 226 557
+29.05.21 <<< GCC warnings cleanup (осталось 35) >>> ffr-min.js 226 531
+29.05.21 <<< GCC warnings cleanup (осталось 55) >>> ffr-min.js 226 550
+29.05.21 <<< убрал R5 (greenContourHelper) warns 63 >>> ffr-min.js 226612
+27.05.21 <<< GCC warnings cleanup (осталось 91) >>> ffr-min.js 226K
+26.05.21 <<< передача front и rear в контейнер >>> ffr-min.js 227K
+25.05.21 <<< полный цикл с передачей входных данных и возвратом результата из контейнера blood >>>
+23.05.21 <<< запускается контейнер blood >>> ffr-min.js 227K
+14.05.21 <<< cleanup-1: удалил sketches-1-3 >>> ffr-min.js 226K
+12.05.21 <<< то, что было показано в кино >>> ffr-min.js 226K
+10.05.21 <<< связка step 1-4 + sketch4 работает >>>
+09.05.21 <<< dialog-10 с голубой аортой Почукаевой >>>
+09.05.21 <<< выделил step3() и вставил вызов dialog-10 >>>
+06.05.21 <<< управление Axplane через клавиатуру вынесено в диалог. Там же маркировка стеноза S/F/R - Start/Finish/Result >>> ffr-min.js 225K
+04.05.21 <<< движение Axplane вперед маркирует стеноз >>> ffr-min.js 225K
+03.05.21 <<< переход на гладкий vessel1 >>> ffr-min.js 224K
+03.05.21 <<< R9: сглаживание Катмулла—Кларка и checkpoint перед переходом на гладкие поверхности >>> ffr-min.js 224K
+26.04.21 <<< Добавил алгоритм Катмулла—Кларка >>> ffr-min.js 222K
+24.04.21 <<< Том Сойер красит забор >>> ffr-min.js 220K
+22.04.21 <<< axplane двигается и показывает срез в inset >>>
+22.04.21 <<< R8: inset со срезом >>>
+22.04.21 <<< r6 как inset в r0 >>>
+21.04.21 <<< первый контур поперечного среза на центральной линии с увеличением в R6 (через PointsCloud)>>> ffr-min.js 219K
+21.04.21 <<< R7: получил увеличенное изображение в центре среза axplane >>> ffr-min.js 217K
+20.04.21 <<< мой fitBox >>> ffr-min.js 214K
+20.04.21 <<< позиционирование орто камеры перед скошеным срезом >>> ffr-min.js 213K
+17.04.21 <<< makeR7(): аксиальный срез в HUV 3D и орто с шариком в центре >>> ffr-min.js 212K
+16.04.21 <<< визуализация ортокамеры R6 в 3-х проекциях >>>
+15.04.21 <<< R6 показывает срез куба при движении Axplane по центральной линии сосуда >>> ffr-min.js 219K
+15.04.21 <<< добавлена подсистема UP3 >>> ffr-min.js 218K
+14.04.21 <<< Axplane.sliceGeometry() получил первый срез на сосуде без использования WebGLRenderTarget >>> ffr-min.js 218K
+13.04.21 <<< сечение шарика, помещенного в середину центральной линии видно в R4 >>> ffr-min.js 218K
+13.04.21 <<< синхронизована камера и секущая плоскость в AxplaneControls >>> ffr-min.js 216K
+12.04.21 <<< хождение с фонариком по сосуду (очень увлекательно) >>> ffr-min.js 215K
+11.04.21 <<< новый класс AxplaneControls с управлением ArrowLeft|ArrowRight и zoom >>>
+11.04.21 <<< makeR4() с рендерингом в HUV >>> ffr-min.js 216K
+09.04.21 <<< добавлен новый класс HUV >>> ffr-min.js 214K
+08.04.21 <<< камера внутри сосуда >>>
+07.04.21 <<< camera.fitBox на зеленом кубе в R5 >>>
+06.04.21 <<< очертил контур bbox 4-го сосуда на R5 >>>
+05.04.21 <<< Axplane на 4-м сосуде >>> ffr-min.js 212K
+04.04.21 <<< FFRViewer::onResize и восстановил minmax R0 по двойному клику >>> ffr-min.js 210K
+03.04.21 <<< b.24 диалог-12 сделан немодальным и загружает quadview с аортой и сосудами (но без centerlines) >>> ffr-min.js 209K
+03.04.21 <<< зеленый контур в Dialog-12::R5 >>> ffr-min.js 209K 
+02.04.21 <<< sketch3(прореживание 4:1): загрузка прореженной серии Почукаева-113 в quad viewer >>> ffr-min.js 205K
+01.04.21 <<< шарик в начальной точке centerline сечется плоскостями >>> ffr-min.js 209K
+31.03.21 <<< сечение куба произвольной плоскостью в Dialog-12::r4 >>> ffr-min.js 210K
+30.03.21 <<< первый срез в Dialog-12::r4 на Почукаева-449 >>> ffr-min.js 209K
+29.03.21 <<< класс AMIVolumeLoaderProgressBar + загрузка почукаевой-449 в прологе markStenosis() >>> ffr-min.js 209K
+28.03.21 <<< FSF передача кубов формата sY2 и эксперименты со сглаживанием аорты >>> ffr-min.js 209K
+28.03.21 <<< Cube::marchingCubes() >>> ffr-min.js 207K
+27.03.21 <<< наконец-то centerlines встали на свои места >>> 
+24.03.21 <<< b.23 Cube.geometry() и разноцветные сосуды >>> ffr-min.js 204K
+23.03.21 <<< b.22 голубая аорта Почукаевой с сосудами после загрузки state4 >>> ffr-min.js 204K
+23.03.21 <<< b.21 cube.js: проверены nonzero-stats аорты и сосудов после загрузки state4 >>> ffr-min.js 202K
+22.03.21 <<< b.20 FSF binary stream (включая multipart) и сохранение/восстановление state4 >>> ffr-min.js 201K
+20.03.21 <<< FSF test stream: string, cube, string+cube >>>
+19.03.21 <<< b.19 шаг 4 полностью >> ffr-min.js 200K
+19.03.21 <<< TabBar::setEnabled() - было нужно в Прорыве(!) в автотестах >>>
+18.03.21 <<< почти конец шага 4. GetBurificationPoints. Начало ffr-protocol-binary >>>
+17.03.21 <<< b.18 шаг 3 полностью. Появились сосуды. (аорту временно отключил) >>> ffr-min.js 197K
+16.03.21 <<< сделал FFR.viewer.loadAortaMask промисом, чтобы можно было вызывать синхронно через await>>
+16.03.21 <<< b.17 шаг 2 полностью с FFRProcessor >> ffr-min.js 196K
+16.03.21 <<< min cube для аорты сокращает время MarchingCubes в 10 раз >>
+15.03.21 <<< b.16 шаг 2 полностью без обращения к FFRProcessor (имитация) >>> ffr-min.js 195K
+15.03.21 <<< b.15 шаг 2.1 >>> ffr-min.js 195K
+14.03.21 <<< добавлен класс gfk.ui.ProgressBar >>> ffr-min.js 192K
+ new: www/js/gfk/ui/progressbar.js www/css/progressbar.css www/tests/gfk-progressbar.html
+13.03.21 <<< меню Тесты >>>
+13.03.21 <<<отработали бенчмарки на downstream 200Mb по lws локально и на dodo>>>
+12.03.21 <<<новый класс FFRService и эксперименты с async и Promise>>>
+ new: ffrservice.cpp ffrservice.h
+11.03.21 <<<VC files cleanup>>>
+10.03.21 <<<b14: появился класс FFR__driver и ffr-protocol v1 SEND/RECEIVE version>>>
+ new: www/js/ffrdriver.js 
+ mod: main.cpp lws.cpp ArterialTreeBuilderDLL.pro 
+ mod: www/main.html www/js/main.js www/js/ffr-min.js www/js/ffr-compile.bat Changelog.txt
+09.03.21 <<<b13: добавлен lws и Dialog-8>>>
+ new: ArterialTreeBuilder/lws.cpp ArterialTreeBuilder/Headers/lws/
+ mod: ArterialTreeBuilder/CMakeLists.txt www/js/main.js www/js/uibuilder.js www/main.html www/main-min.html
+ mod: Changelog.txt www/js/ffr-min.js (185К)
+-08.03.21
+ #del: git rm ArterialTreeBuilder: x64 ArterialTreeBuilder.vcxproj ArterialTreeBuilder.vcxproj.filters ArterialTreeBuilder.vcxproj.user ArterialTreeBuilder.def
+07.03.21 <<< добавил V5-FFR как www >>>
+ История V5-FFR находится в www/Changelog.txt
+06.03.21 <<< Шаг 5 завершен одинаково в FFR и ATB FFR.tre для blood.exe идентичен>>>
+05.03.21 <<< Шаг 4 завершен одинаково в FFR и ATB >>>
+04.03.21 <<< исправлен баг в VTB::correctOstiaPoint >>>
+ устранил разницу в начале шага 4
+02.03.21 <<< pretty time stamp in tracer. Начало исследования step-4 left/rightOstia разницы в FFR vs ATB >>
+  здесь уже иногда проявляется разница left/rightOstia на входе в FFR_Process() в FFR и ATB
+01.03.21 <<< добавлена унифицированная трассировка; в конце шага 3 возникло раличие >>>
+27.02.21 <<< шаг 3 на почукаева-113 сделан >>>
+25.02.21 <<< Pochukaeva() Step 1-3 вынесены из main >>>
+25.02.21 <<< Фиксация состояния на Почукаева Step 3 killed >>>
+21.02.21 <<<ITK DICOM reader и картинка кружка аорты Почукаевой>>>
+ new: mvox.h
+ mod: ArterialTreeBuilder.cpp tracer.cpp tracer.h
+08.02.21 <<<линковка на WSL-Ubuntu>>
+ new: CMakeLists.txt
+ mod: ArterialTreeBuilder.cpp Headers/vtb.hpp graph.cpp hessian2d3d.cpp hessian_filters.cpp idt.cpp
+ mod: stdafx.h targetver.h thinner.cpp tracer.cpp utils.cpp vtb.cpp
+ mod: arterialtreebuilderdll.cpp arterialtreebuilderdll.h
+06.02.21 <<Tracer>>
+ new: tracer.[cpp,h]
+ mod: ArterialTreeBuilder.cpp ArterialTreeBuilderDLL.pro
+06.02.21 <<b1>>: перевод проекта под QT; создается своя DLL с ITK-5.0.1 и она доходит на Почукаевой до запуска blood
+ примерно с теми же данными в input_data.tre, что и оригинальная dll, хотя разница видна уже на этапе выделения аорты (кружок
+ визуально смещен по сравнению с оригинальной dll). Видимо оригинальная InteropFFR.dll собрана на другой кодовой базе (более старой)
+ чем у меня в руках судя по дате создани dll. Кроме того сильно различаются размеры - в оригинальной 755Кб, у меня 1222Кб.
+ new: ArterialTreeBuilderDLL.pro ArterialTreeBuilderDLL_global.h arterialtreebuilderdll.[cpp,h]
+ mod: ArterialTreeBuilder.cpp vtb.[cpp,hpp] stdafx.h
+  в сигнатуры VTB::correctOstiaPoint() и ArterialTreeBuilder::UpdateProgress() добавлен const
+03.02.21 fork https://boogie.inm.ras.ru/breaksound/ArterialTreeBuilder
