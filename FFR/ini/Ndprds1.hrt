@@ -1,0 +1,63 @@
+ 1 0 2  Priznak izmeneniya davlenij stenok miokarda (0-bez izm.,1-s izm. bez zapomin.,2-s izm.i zapomin.)	(JIP)
+ 1.     Линейная частота сокращений сердца								(AM1, Гц)
+ 1.e-5  Коэффициент инерционности правого желудочка						(AI1)
+ 4.e-5 *0.04   Коэффициент сопротивления правого желудочка				(R1)
+ 3.     Коэффициент растяжимости правого желудочка						(C1)
+ 1.e-5  Коэффициент инерционности левого желудочка						(AI2)
+ 4.e-5 **0.04   Коэффициент сопротивления левого желудочка				(R2)
+ 3.     Коэффициент растяжимости левого желудочка						(C2)
+ 1.e-5 *1.e-6  Коэффициент инерционности левого предсердия				(AI3)
+ 0.004 *0.03   Коэффициент сопротивления левого предсердия				(R3)
+ 3. *0.5 *12.  Коэффициент растяжимости левого предсердия				(C3)
+ 1.e-5 *1.e-6  Коэффициент инерционности правого предсердия				(AI4)
+ 4.e-4 *0.03  Коэффициент сопротивления правого предсердия				(R4)
+ 3. *0.5 *12.  Коэффициент растяжимости правого предсердия				(C4)
+ 0.005  Коэффициент сопротивления легочного клапана						(R51)
+ 0.0206 Коэффициент сопротивления аортального клапана					(R62)
+ 0.0036 Коэффициент сопротивления входа в левое предсердие				(R37)
+ 0.0015 Коэффициент сопротивления входа в правое предсердие				(R48)
+ 1.e-5  Коэффициент сопротивления правого атриовентрикулярного клапана	(R14)
+ 0.0001 Коэффициент сопротивления левого атриовентрикулярного клапана	(R23)
+ 1.e7 *1.e6 0.05 0.4 Коэффициент сопротивления межжелудочного протока	(R12)
+ 1.e7 *1.e6   Коэффициент сопротивления meghpredserd. protoka			(R34)
+ 1.5    Диастолическое давление легочной артерии						(P5max, КПа)
+ 10.667 Диастолическое давление аорты									(P6max, КПа)
+ 1.1  Давление легочных вен												(P7, КПа)
+ 0.5    Давление полых вен												(P8, КПа)
+ 1.     Конечное время													(TK, сек)
+ 130.   Начальный объем  V1(0)
+ 0.                      dV1(0)/dt 
+ 0.                      dV4(0)/dt
+ 70.                     V4(0)
+ 130.                    V2(0)
+ 0.                      dV2(0)/dt
+ 0.                      dV3(0)/dt
+ 70.                     V3(0)
+ 0.75					 C11(O2  v pravom jeludochke) 
+ 0.5					 C12(CO2 v pravom jeludochke)
+ 0.5			 	     C21(O2  v levom jeludochke)
+ 0.5					 C22(CO2 v levom jeludochke)
+ 0.5					 C31(O2  v levom predserdii)
+ 0.5					 C32(CO2 v levom predserdii)
+ 0.5					 C41(O2  v pravom predserdii)
+ 0.5					 C42(CO2 v pravom predserdii)
+ 0.08  длительность сжатия правого желудочка				(TSP,в долях сердечного периода)
+ 0.067 длительность расслабления правого желудочка			(TRP)
+ 0.373 длитлеьность систолы правого желудочка				(T2P)
+ 0.3   длительность фазы наполнения правого желудочка		(THP)
+ 0.08  dlitelnost sghatiya левого желудочка					(TSL,v dolyakh serd.perioda)
+ 0.067 dlitelnost rasslableniya левого желудочка			(TRL)
+ 0.373 dlitelnost sistoly левого желудочка					(T2L)
+ 0.3   dliteln.osn.fazy napolnen.левого желудочка			(THL)
+ 100.   <-koeff.exponenty vozdejst.davlenija na pravyj geludochek 
+ 13 1000 75 200  chislo impulsov za 1 serd.cikl vozdejst.davlenija na pravyj geludochek 
+ 0 1.     amplituda vozdejstvuyuschego davlenija na pravyj geludochek 
+ 100.   <-koeff.exponenty vozdejst.davlenija na levyj geludochek 
+ 50 30     chislo impulsov za 1 serd.cikl vozdejst.davlenija na levyj geludochek 
+ 0 1. 0. 0.1 1.      amplituda vozdejstvuyuschego davlenija na levyj geludochek  
+ 100.   <-koeff.exponenty vozdejst.davlenija na levoe predserdie 
+ 30     chislo impulsov za 1 serd.cikl vozdejst.davlenija na levoe predserdie  
+ 0 1.     amplituda vozdejstvuyuschego davlenija na levoe predserdie   
+ 100.   <-koeff.exponenty vozdejst.davlenija na pravoe predserdie 
+ 1.     chislo impulsov za 1 serd.cikl vozdejst.davlenija na pravoe predserdie 
+ 0.     amplituda vozdejstvuyuschego davlenija na pravoe predserdie 

@@ -1,0 +1,5 @@
+pat1 14
+pat2 25
+pat3
+pat4
+pat5

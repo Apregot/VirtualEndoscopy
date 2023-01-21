@@ -1,0 +1,7 @@
+FROM blood-wine:base
+# сборка: docker build -f Dockerfile-wine-blood -t blood-wine:0.1 .
+# запуск: docker run --rm -v /home/germank/ATB/FFR:/FFR blood-wine:0.1
+WORKDIR /FFR
+CMD wine blood.exe
+
+

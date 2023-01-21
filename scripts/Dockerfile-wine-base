@@ -1,0 +1,10 @@
+FROM ubuntu:20.04
+# https://askubuntu.com/questions/909277/avoiding-user-interaction-with-tzdata-when-installing-certbot-in-a-docker-contai
+# docker build -f Dockerfile-wine-base -t blood-wine:base .
+ENV TZ=Europe/Kaliningrad
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+# https://routerus.com/how-to-install-wine-on-ubuntu-20-04/
+RUN dpkg --add-architecture i386
+RUN apt update
+RUN apt install -y wine64 wine32
+

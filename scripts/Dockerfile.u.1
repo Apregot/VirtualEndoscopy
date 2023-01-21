@@ -1,0 +1,15 @@
+# Создание контейнера cradle/u:1 == u:0+ITK-5.1
+# docker build - --tag cradle/u:1 < ./scripts/Dockerfile.u.1
+#
+FROM cradle/u:0
+ARG ITK_VERSION=5.1.0
+RUN mkdir -p /pkgs/src/ITK-5.1.0-build && cd /pkgs/src \
+ && wget https://github.com/InsightSoftwareConsortium/ITK/releases/download/v${ITK_VERSION}/InsightToolkit-${ITK_VERSION}.tar.gz \
+ && tar xzf InsightToolkit-${ITK_VERSION}.tar.gz && cd ITK-${ITK_VERSION}-build \
+ && cmake -DModule_IOMeshSTL=ON -DCMAKE_BUILD_TYPE=Release ../InsightToolkit-${ITK_VERSION} \
+ && make install && cd / && rm -r /pkgs/src
+
+ ## 1340 сек 633M /usr/local/include/ITK-5.1; /usr/local/lib/lib*-5.1.a
+
+
+

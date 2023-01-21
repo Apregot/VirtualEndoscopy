@@ -1,0 +1,30 @@
+{
+  "name": "arterialtreebuilder",
+  "version": "1.2.4",
+  "description": "fractional flow reserve project",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run build:atb --silent || exit 0",
+    "env": "env",
+    "make:atb": "./scripts/build-pea-atb.sh",
+    "deploy:DEV": "npm run make:atb --silent && node ./scripts/deploy.js DEV || exit 0",
+    "deploy:TEST": "npm run make:atb && node ./scripts/deploy.js TEST || exit 0",
+    "deploy:PROD": "npm run make:atb && node ./scripts/deploy.js PROD || exit 0",
+    "collect:PROD": "node ./scripts/deploy.js COLLECT || exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://boogie.inm.ras.ru/germank/ArterialTreeBuilder"
+  },
+  "author": "Роман Прямоносов <pryamonosovra@yandex.ru>, Герман Копытов <gKopytov@yandex.ru>",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "fs-extra": "^10.0.0",
+    "google-closure-compiler": "^20190301.0.0",
+    "google-closure-library": "^20190121.0.0"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2"
+  }
+}

@@ -1,0 +1,13 @@
+# Создание контейнера cradle/u:2 == u:1+VTK-8.2 то есть это base+ITK+VTK
+# docker build - --tag cradle/u:2 < ./scripts/Dockerfile.u.2
+#
+FROM cradle/u:1
+RUN apt-get update && apt-get install -y libgl-dev libxt-dev \
+ && mkdir -p /pkgs/src && cd /pkgs/src && wget https://www.vtk.org/files/release/8.2/VTK-8.2.0.tar.gz \
+ && tar xzf VTK-8.2.0.tar.gz && mkdir VTK-8.2.0-build && cd VTK-8.2.0-build \
+ && cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ../VTK-8.2.0 \
+ && make install && cd / && rm -r /pkgs/src
+
+## 2935 сек 1Gb /usr/local/include/vtk-8.2/; /usr/local/lib/lib*-8.2.a
+
+

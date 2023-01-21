@@ -1,0 +1,23 @@
+# Создание контейнера cradle/u:3 == u:+ITK-5.1+VTK-8.2_LWS
+# docker build - --tag cradle/u:3 < ./scripts/Dockerfile.u.3
+
+FROM cradle/u:2
+
+# Этот специфический коммит был текущим в апреле 2020 года, когда я подключал LWS к проекту curvature_dev
+# В будущем надо перейти на более поздние стабильные релизы LWS, но желательно иметь в проекте набор тестов Jest или Karma
+# чтобы не делать это на авось
+#
+ARG LWS_COMMIT_HASH=63c8a237763045207f726e487bab7006d347b151
+
+RUN apt-get install -y npm \
+ && mkdir -p /pkgs/src && cd /pkgs/src && git clone https://github.com/warmcat/libwebsockets \
+ && cd libwebsockets && git checkout ${LWS_COMMIT_HASH} \
+ && mkdir build && cd build && cmake -DLWS_WITH_SHARED=OFF -DLWS_WITH_SSL=OFF .. \
+ && make install && cd / && rm -r /pkgs/src
+
+ ## 124 сек 1.13G /usr/local/lib/libwebsockets.a /usr/local/lib/cmake/libwebsockets /usr/local/include/libwebsockets.h
+
+# предполагается, что приложение смонтировано на /APP
+# WORKDIR "/APP"
+# CMD ["npm", "run", "build"]
+
