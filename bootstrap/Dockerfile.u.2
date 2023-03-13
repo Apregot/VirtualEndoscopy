@@ -1,5 +1,5 @@
 # Создание контейнера cradle/u:2 == u:1+VTK-8.2 то есть это base+ITK+VTK
-# docker build - --tag cradle/u:2 < ./scripts/Dockerfile.u.2
+# docker build - --tag cradle/u:2 < ./bootstrap/Dockerfile.u.2
 #
 FROM cradle/u:1
 RUN apt-get update && apt-get install -y libgl-dev libxt-dev \

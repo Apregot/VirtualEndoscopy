@@ -1,5 +1,5 @@
 # Создание контейнера cradle/u:base 238 сек 500M
-# docker build - --tag cradle/u:0 < ./scripts/Dockerfile.u.0
+# docker build - --tag cradle/u:0 < ./bootstrap/Dockerfile.u.0
 # 
 FROM ubuntu:20.04
 ENV TZ=Europe/Kaliningrad

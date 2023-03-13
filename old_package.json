@@ -6,11 +6,11 @@
   "scripts": {
     "test": "npm run build:atb --silent || exit 0",
     "env": "env",
-    "make:atb": "./scripts/build-pea-atb.sh",
-    "deploy:DEV": "npm run make:atb --silent && node ./scripts/deploy.js DEV || exit 0",
-    "deploy:TEST": "npm run make:atb && node ./scripts/deploy.js TEST || exit 0",
-    "deploy:PROD": "npm run make:atb && node ./scripts/deploy.js PROD || exit 0",
-    "collect:PROD": "node ./scripts/deploy.js COLLECT || exit 0"
+    "make:atb": "old_scripts/build-pea-atb.sh",
+    "deploy:DEV": "npm run make:atb --silent && node old_scripts/deploy.js DEV || exit 0",
+    "deploy:TEST": "npm run make:atb && node old_scripts/deploy.js TEST || exit 0",
+    "deploy:PROD": "npm run make:atb && node old_scripts/deploy.js PROD || exit 0",
+    "collect:PROD": "node old_scripts/deploy.js COLLECT || exit 0"
   },
   "repository": {
     "type": "git",
