@@ -1,11 +1,11 @@
 const DeployConfig = {
 	build: 72,
 	DEV: {
-		wsurl: 'ws://localhost:8889'
+		wsurl: 'ws://192.168.50.138:80'
 	},
 
 	TEST: {
-		wsurl: 'ws://localhost:8889'
+		wsurl: 'ws://192.168.50.138:80'
 	},
 
 	PROD: {

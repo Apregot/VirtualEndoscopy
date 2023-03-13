@@ -69,7 +69,7 @@ class Viewer {
         this._about = `Версия ${AppConfig.version}.${AppConfig.build}\nот ${AppConfig.date} `;
 
         this.mainwin = mainwin;  
-        this._wsurl = AppConfig.wsurl; //'ws://localhost:8889';  
+        this._wsurl = AppConfig.wsurl; //'ws://192.168.50.138:80';
         //this._wsurl_remote = 'ws://dodo.inm.ras.ru/websocket';
         this._semafor = null;
         this._menuItemMarkStenosis = null;
@@ -445,7 +445,7 @@ class Viewer {
             self._semafor.setCaption('🟢');                        
             //let version = await this._FFRsrv.version();
             self._semafor.setTooltip('FFR сервер (версия '+version+') готов @'+this._wsurl);
-            //self._menuItemMarkStenosis.setEnabled(true);            
+            self._menuItemMarkStenosis.setEnabled(true);
         }
     }
 
