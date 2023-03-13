@@ -1,4 +1,5 @@
 /www/closure-library/*
 /.idea
 /node_modules
+/old_node_modules
 /ArterialTreeBuilder/build
