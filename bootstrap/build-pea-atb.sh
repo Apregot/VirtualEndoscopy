@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "making atb executable"
 PEANAME=pea/atb:latest
-docker run -it --rm -v `pwd`/ArterialTreeBuilder:/APP cradle/u:3 /bin/bash -c 'mkdir -p /APP/build && cd /APP/build && cmake .. && make'
+docker run -it --rm -v `pwd`/ArterialTreeBuilder:/APP cradle/u:3 /bin/bash -c 'mkdir -p /APP/build && cd /APP/build && cmake .. && make '
 if [ $? -ne 0 ] 
 then 
 	exit 1 
