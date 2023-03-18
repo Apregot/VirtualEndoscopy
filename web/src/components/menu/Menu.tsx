@@ -1,13 +1,11 @@
-import {SelectList} from "../base/SelectList";
+import { SelectList } from '../base/SelectList';
+import React, { type ReactElement } from 'react';
+import styles from './Menu.module.scss';
 
-type TProps = {
-
-};
-
-export const Menu = (props: TProps) => {
+export const Menu = (): ReactElement => {
     return (
-        <div>
-            <SelectList/>
+        <div className={styles.menu}>
+            <SelectList>Файл</SelectList>
         </div>
     );
 };

@@ -4,9 +4,9 @@ import 'primeicons/primeicons.css';
 
 import { Splitter, SplitterPanel } from 'primereact/splitter';
 import { Menu } from './components/menu/Menu';
-import React from 'react';
+import React, { type ReactElement } from 'react';
 
-function App (): JSX.Element {
+function App (): ReactElement {
     return (
         <div className="App">
             <Menu/>

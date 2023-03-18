@@ -17,6 +17,7 @@ module.exports = {
   plugins: [
     'react'
   ],
+  ignorePatterns: ["**/*SVG.jsx"],
   rules: {
     "semi": [2, "always"],
     "@typescript-eslint/semi": [2, "always"],
