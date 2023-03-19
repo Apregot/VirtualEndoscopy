@@ -1,8 +1,16 @@
 import React, { type ReactElement, type ReactNode, useEffect, useState } from 'react';
 import styles from './SelectList.module.scss';
 import { ReactComponent as Arrow } from './arrow.svg';
+
 interface TProps {
     children: ReactNode
+    items: ListItem[]
+    onItemSelect: (id: string) => void
+}
+
+export interface ListItem {
+    id: string
+    title: string
 }
 
 export const SelectList = (props: TProps): ReactElement => {
@@ -25,6 +33,11 @@ export const SelectList = (props: TProps): ReactElement => {
         }
     }, [opened]);
 
+    const onListItemSelected = (id: string): void => {
+        setOpen(false);
+        props.onItemSelect(id);
+    };
+
     return (
         <div>
             <button
@@ -34,11 +47,16 @@ export const SelectList = (props: TProps): ReactElement => {
                 <span className="mr-1.5">{props.children}</span><Arrow className={styles.arrow}/>
             </button>
             <ul
-                onClick={(e) => { e.stopPropagation(); }}
+
                 className={styles.list} style={{ display: listDisplay }}
             >
-                <li>1</li>
-                <li>2</li>
+                {
+                    props.items.map((listItem: ListItem) => {
+                        return (
+                            <li key={listItem.id} onClick={() => { onListItemSelected(listItem.id); }}>{listItem.title}</li>
+                        );
+                    })
+                }
             </ul>
         </div>
     );
