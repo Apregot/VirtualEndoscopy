@@ -23,6 +23,7 @@ module.exports = {
     "@typescript-eslint/semi": [2, "always"],
     "indent": ["error", 4],
     "@typescript-eslint/indent": ["error", 4],
-    "no-trailing-spaces": 0
+    "no-trailing-spaces": 0,
+    "@typescript-eslint/space-before-function-paren": 0
   }
 }
