@@ -6,6 +6,7 @@ export const Menu = (): ReactElement => {
     return (
         <div className={styles.menu}>
             <SelectList>Файл</SelectList>
+            <SelectList>Еще какой-нибудь пункт</SelectList>
         </div>
     );
 };

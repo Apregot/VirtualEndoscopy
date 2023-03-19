@@ -1,4 +1,4 @@
-.button:hover .arrow {
+.buttonOpened .arrow {
   transform: rotate(180deg);
 }
 
@@ -11,6 +11,10 @@
 }
 
 .list {
+  position: absolute;
+  top: 40px;
+  min-width: 200px;
+  background-color: #fff;
   border-radius: 0.375rem;
   max-width: 200px;
   -webkit-box-shadow: -3px 5px 21px -5px rgba(34, 60, 80, 0.2);
