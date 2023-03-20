@@ -1,0 +1,15 @@
+.selectButton {
+  display: block;
+  width: 100%;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.selectButtonFileInput {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
