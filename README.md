@@ -32,4 +32,9 @@ Backend - набор docker-слоев, которые поочередно на
 
 **Сборка frontend**
 
-TBD....
+Веб-интерфейс разрабатывается на основе связки **VITE & React & TypeScript**
+
+Зависимости:
+
+- https://github.com/FNNDSC/ami - Чтение и рендер DICOM файлов
+
