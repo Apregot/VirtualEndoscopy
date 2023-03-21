@@ -4,14 +4,14 @@ import styles from './SelectButton.module.scss';
 
 interface TProps {
     children: ReactNode
-    onFileUpload: (files: File) => void
+    onFileUpload: (files: FileList) => void
 }
 
 export const SelectButtonFile = (props: TProps): ReactElement => {
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>): void => {
-        const files = event.target.files ?? [];
-        if (files[0] != null) {
-            props.onFileUpload(files[0]);
+        const files = event.target.files ?? new FileList();
+        if (files != null) {
+            props.onFileUpload(files);
         }
     };
 

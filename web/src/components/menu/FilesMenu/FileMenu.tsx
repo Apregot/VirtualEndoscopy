@@ -1,9 +1,10 @@
 import React, { type ReactElement } from 'react';
 import { SelectButtonFile, SelectList } from '../../base/SelectList';
+import { DICOMLoader } from '../../../lib';
 
 export const FileMenu = (): ReactElement => {
-    const onFileUpload = (file: File): void => {
-        console.log('FILE UPLOADED: ', file);
+    const onFileUpload = (files: FileList): void => {
+        DICOMLoader.loadSeries(files).then((a) => { console.log(a); }).catch((err) => { console.log(err); });
     };
 
     return (
