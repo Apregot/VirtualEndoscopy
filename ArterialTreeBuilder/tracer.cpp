@@ -16,61 +16,61 @@
 using namespace std;
 
 Tracer::Tracer()
-    :Tracer("trace.txt")
+	:Tracer("trace.txt")
 {
 }
 
 Tracer::Tracer(std::string tracefile)
-    :tracefile(tracefile)
+	:tracefile(tracefile)
 {
-    log("==========================trace starts======================");
-    this->s0 = Tracer::msec().sec;
+	log("==========================trace starts======================");
+	this->s0 = Tracer::msec().sec;
 }
 
 Tracer::~Tracer()
 {
-    this->s1 = Tracer::msec().sec;
-    stringstream ss; ss << "==========================trace ends " << (s1-s0) <<" sec ======================";
-    log(ss.str());
+	this->s1 = Tracer::msec().sec;
+	stringstream ss; ss << "==========================trace ends " << (s1-s0) <<" sec ======================";
+	log(ss.str());
 }
 
 void Tracer::log(std::string str, string terminationString)
 {
-    MSec msec = Tracer::msec(); // текущая секунда и милисекунда
-    std::ofstream o(tracefile,std::ios_base::app);
-    //stringstream ts; ts << sec << '.' << msec <<' ';
-    struct tm *_tm = localtime(&msec.sec);
-    int y=_tm->tm_year, m=_tm->tm_mon, d=_tm->tm_mday, h=_tm->tm_hour, min=_tm->tm_min, s=_tm->tm_sec;
-    stringstream ts; ts <<1900+y<<'.'<<m+1<<'.'<<d<<' '<<h<<':'<<min<<':'<<s<<'.'<<msec.msec<<' ';
+	MSec msec = Tracer::msec(); // текущая секунда и милисекунда
+	std::ofstream o(tracefile,std::ios_base::app);
+	stringstream ts; ts << sec << '.' << msec <<' ';
+	struct tm *_tm = localtime(&msec.sec);
+	int y=_tm->tm_year, m=_tm->tm_mon, d=_tm->tm_mday, h=_tm->tm_hour, min=_tm->tm_min, s=_tm->tm_sec;
+	stringstream ts; ts <<1900+y<<'.'<<m+1<<'.'<<d<<' '<<h<<':'<<min<<':'<<s<<'.'<<msec.msec<<' ';
 #ifdef __linux__
     struct rusage usage;
     getrusage(RUSAGE_SELF,&usage);
     ts << "[RSS "<<usage.ru_maxrss<<"] ";
 #endif
 
-    // если строка начинается с '-', то подавляем выдачу TimeStamp
-    bool need_ts = true;
-    if(str[0] == '-') {
-        str.erase(0,1);
-        need_ts = false;
-    }
+	// если строка начинается с '-', то подавляем выдачу TimeStamp
+	bool need_ts = true;
+	if(str[0] == '-') {
+		str.erase(0,1);
+		need_ts = false;
+	}
 
-    stringstream ss; ss << (need_ts ? ts.str() : "") << str << terminationString;
-    cout << ss.str();
-    o << ss.str();
-    o.close();
+	stringstream ss; ss << (need_ts ? ts.str() : "") << str << terminationString;
+	cout << ss.str();
+	o << ss.str();
+	o.close();
 }
 
 void Tracer::logInt(std::string name, int val)
 {
-    stringstream ss; ss << name<<"="<<val;
-    this->log(ss.str());
+	stringstream ss; ss << name<<"="<<val;
+	this->log(ss.str());
 }
 
 MSec Tracer::msec()
 {
-    time_t sec;
-    unsigned msec = 0;
+	time_t sec;
+	unsigned msec = 0;
 #ifdef __linux__
     struct timeval tv; struct timezone tz;
     gettimeofday(&tv, &tz);
@@ -81,47 +81,47 @@ MSec Tracer::msec()
     sec = lt1.time;
     msec = lt1.millitm;
 #endif
-    MSec res = {sec, msec};
-    return res;
+	MSec res = {sec, msec};
+	return res;
 }
 
 void Tracer::startInterval(string label)
 {
-    MSec t0 = Tracer::msec();
-    this->intervals[label] = std::make_pair(t0,t0);
+	MSec t0 = Tracer::msec();
+	this->intervals[label] = std::make_pair(t0,t0);
 }
 
 void Tracer::stopInterval(string label)
 {
-    auto it = this->intervals.find(label);
-    if(it != this->intervals.end())
-        it->second.second = Tracer::msec();
+	auto it = this->intervals.find(label);
+	if(it != this->intervals.end())
+		it->second.second = Tracer::msec();
     else
-        cout << "Tracer::stopInterval() no interval " << label << endl;
+		cout << "Tracer::stopInterval() no interval " << label << endl;
 }
 
 double Tracer::getInterval(string label)
-{  
-    auto it = this->intervals.find(label);
-    if(it == this->intervals.end()) return 0.0;
-    stopInterval(label);
-    double t0 = it->second.first.sec+it->second.first.msec*0.001;
-    double t1 = it->second.second.sec+it->second.second.msec*0.001;
+{
+	auto it = this->intervals.find(label);
+	if(it == this->intervals.end()) return 0.0;
+	stopInterval(label);
+	double t0 = it->second.first.sec+it->second.first.msec*0.001;
+	double t1 = it->second.second.sec+it->second.second.msec*0.001;
 //    cout<<'*' << it->second.first.sec<<' '<<it->second.first.msec<<' '<< it->second.second.sec<<' '<<it->second.second.msec<<endl;
-    return (t1-t0);
+	return (t1-t0);
 }
 
 void Tracer::logInterval(string label)
 {
-    stopInterval(label);
-    stringstream ss; ss << label<<":"<<getInterval(label);
-    this->log(ss.str());
+	stopInterval(label);
+	stringstream ss; ss << label<<":"<<getInterval(label);
+	this->log(ss.str());
 }
 
 struct NonZeroStats {
-    int ROI[6];
-    int total,nonzero,first,last;   // всего вокселей,ненулевых, первый ненулевой, последний ненулевой (лин. индексы)
-    unsigned long long usum;
+	int ROI[6];
+	int total,nonzero,first,last;   // всего вокселей,ненулевых, первый ненулевой, последний ненулевой (лин. индексы)
+	unsigned long long usum;
 };
 static NonZeroStats cube_nonzero_stats(mvox::Cube cube);
 static std::string cube_nonzero_str(mvox::Cube cube, string pref="");
@@ -573,33 +573,33 @@ void t_FFR_GetVesselCenterLine_fin(FFRProcessor*, int vesselIndex, mvox::Point3D
 }
 
 void t_FFR_PrepareResult(FFRProcessor* , FFRStenosis* stenosis, int stenosisCount) {
-    stringstream ss; ss << "FFR_PrepareResult(FFR,,stenosisCount="<<stenosisCount<<")";
-    tracer.log(ss.str());
-    if(stenosisCount == 0) return;
-    mvox::Point3D_Double p; double a;
-    ss << "FFRStenosis={id="<< stenosis[0].Id<<",type="<<stenosis[0].StenosisType<<",UserStenosisPercent"<<stenosis[0].UserStenosisPercent<<"..\n ";
-    p = stenosis[0].Center.Position; a = stenosis[0].Center.Area;
-    ss << "Center={("<<p.x<<","<<p.y<<","<<p.z<<") area="<<a<<")\n";
-    p = stenosis[0].Front.Position; a = stenosis[0].Front.Area;
-    ss << "Front={("<<p.x<<","<<p.y<<","<<p.z<<") area="<<a<<")\n";
-    p = stenosis[0].Rear.Position; a = stenosis[0].Rear.Area;
-    ss << "Rear={("<<p.x<<","<<p.y<<","<<p.z<<") area="<<a<<")\n";
-    tracer.log(ss.str());
+	stringstream ss; ss << "FFR_PrepareResult(FFR,,stenosisCount="<<stenosisCount<<")";
+	tracer.log(ss.str());
+	if(stenosisCount == 0) return;
+	mvox::Point3D_Double p; double a;
+	ss << "FFRStenosis={id="<< stenosis[0].Id<<",type="<<stenosis[0].StenosisType<<",UserStenosisPercent"<<stenosis[0].UserStenosisPercent<<"..\n ";
+	p = stenosis[0].Center.Position; a = stenosis[0].Center.Area;
+	ss << "Center={("<<p.x<<","<<p.y<<","<<p.z<<") area="<<a<<")\n";
+	p = stenosis[0].Front.Position; a = stenosis[0].Front.Area;
+	ss << "Front={("<<p.x<<","<<p.y<<","<<p.z<<") area="<<a<<")\n";
+	p = stenosis[0].Rear.Position; a = stenosis[0].Rear.Area;
+	ss << "Rear={("<<p.x<<","<<p.y<<","<<p.z<<") area="<<a<<")\n";
+	tracer.log(ss.str());
 }
 
 
 
 void mywriter(wchar_t* text) {
-    tracer.log("mywriter called");
-    wstring wtext = text; char buf[1024*10]; int maxlen = sizeof(buf)-1,i;
-    for(i=0; i<wtext.size() && i<maxlen; i++)
-        buf[i] = (char)text[i];    // вот не нашел другого способа работать с wstring
-    buf[i] = 0;
-    string vs(buf);
-    ofstream o;
-    o.open("./FFR/input_data.tre");
-    o << vs;
-    o.close();
+	tracer.log("mywriter called");
+	wstring wtext = text; char buf[1024*10]; int maxlen = sizeof(buf)-1,i;
+	for(i=0; i<wtext.size() && i<maxlen; i++)
+		buf[i] = (char)text[i];    // вот не нашел другого способа работать с wstring
+	buf[i] = 0;
+	string vs(buf);
+	ofstream o;
+	o.open("./FFR/input_data.tre");
+	o << vs;
+	o.close();
 
 //    tracer.log(vs);
 }
