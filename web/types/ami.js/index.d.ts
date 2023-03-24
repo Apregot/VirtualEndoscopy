@@ -10,17 +10,20 @@ declare module 'ami.js' {
         seriesInstanceUID: string;
         studyInstanceUID: string;
         transferSyntaxUID: string;
-        seriesDate: any;
+        seriesDate: string;
         seriesDescription: string;
+        modality: string;
+
+        patientID: string;
+        patientName: string;
+        patientAge: string;
+        patientBirthdate: string;
+        patientSex: string;
+
+        stack: Stack[];
+
         numberOfFrames: number;
         numberOfChannels: number;
-        modality: any;
-        patientID: number | string;
-        patientName: string;
-        patientAge: number;
-        patientBirthdate: string;
-        patientSex: any;
-        stack: Stack[];
     }
 
     export class VolumeLoader {
