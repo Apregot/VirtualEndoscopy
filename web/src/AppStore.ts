@@ -1,11 +1,24 @@
 import { type Series } from './lib/Series';
-import { configureStore } from '@reduxjs/toolkit';
+import { type AnyAction, configureStore } from '@reduxjs/toolkit';
 
-export interface TContext {
+export interface TStoreData {
     series: Series[]
 }
 
-export const AppStore = configureStore({
-    reducer: (store, action) => { console.log(store, action); },
-    devTools: true
+export const AppStore = configureStore<TStoreData>({
+    reducer: (state: TStoreData | undefined, action: AnyAction) => {
+        console.log(state, action);
+
+        if (state === undefined) {
+            state = {
+                series: []
+            };
+        }
+
+        return state;
+    },
+    devTools: true,
+    preloadedState: {
+        series: []
+    }
 });
