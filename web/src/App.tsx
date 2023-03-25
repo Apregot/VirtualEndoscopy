@@ -5,13 +5,15 @@ import 'primeicons/primeicons.css';
 import { Splitter, SplitterPanel } from 'primereact/splitter';
 import { Menu } from './components/menu/Menu';
 import React, { type ReactElement } from 'react';
-import { AppStore } from './AppStore';
 import { Provider } from 'react-redux';
+import { setupStore } from './store/ApplicationStore';
+
+const appStore = setupStore();
 
 function App (): ReactElement {
     return (
         <div className="App">
-            <Provider store={AppStore}>
+            <Provider store={appStore}>
                 <Menu/>
                 <Splitter style={{ height: '300px' }}>
                     <SplitterPanel className="flex align-items-center justify-content-center">Panel 1</SplitterPanel>
