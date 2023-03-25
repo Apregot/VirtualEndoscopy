@@ -1,0 +1,31 @@
+.patientInfo {
+  margin-right: 20px;
+  min-height: 200px;
+  border-radius: 12px;
+  background-color: #f9fafb;
+  padding: 10px;
+  -webkit-box-shadow: 4px 7px 17px -3px rgba(34, 60, 80, 0.1);
+  -moz-box-shadow: 4px 7px 17px -3px rgba(34, 60, 80, 0.1);
+  box-shadow: 4px 7px 17px -3px rgba(34, 60, 80, 0.1);
+}
+.patientInfo .infoTitle {
+  color: #d4d4d8;
+  font-size: 17px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 15px;
+}
+.patientInfo .infoData {
+  display: flex;
+  flex-direction: column;
+}
+.patientInfo .infoData .infoDataRow {
+  color: #a1a1aa;
+  display: block;
+  margin-bottom: 2px;
+}
+.patientInfo .infoData .infoDataRow .infoDataRowValue {
+  color: #18181b;
+}
+
+/*# sourceMappingURL=SeriesInfo.module.css.map */
