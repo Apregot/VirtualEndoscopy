@@ -1,10 +1,13 @@
 import React, { type ReactElement } from 'react';
 import { SelectButtonFile, SelectList } from '../../base/SelectList';
 import { DICOMLoader } from '../../../lib';
+import { useDispatch } from 'react-redux';
 
 export const FileMenu = (): ReactElement => {
+    const dispatch = useDispatch();
+
     const onFileUpload = (files: FileList): void => {
-        DICOMLoader.loadSeries(files).then((a) => { console.log(a); }).catch((err) => { console.log(err); });
+        DICOMLoader.loadSeries(files).then((model) => { dispatch({ type: 'ADD_SERIES', payload: model }); }).catch((err) => { console.log(err); });
     };
 
     return (

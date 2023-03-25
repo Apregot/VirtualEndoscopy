@@ -18,7 +18,6 @@ export default class FileVolumeLoader extends VolumeLoader {
     }
 
     public async fetch(url: any): Promise<any> {
-        debugger;
         return await new Promise(resolve => {
             const fileReader = new FileReader();
 
@@ -47,7 +46,6 @@ export default class FileVolumeLoader extends VolumeLoader {
         }
 
         const loadSequences: Array<Promise<any> | Array<Promise<any>>> = [];
-        debugger;
         arrFiles.forEach((file: File | File[]) => {
             if (!Array.isArray(file)) {
                 loadSequences.push(

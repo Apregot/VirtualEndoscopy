@@ -7,15 +7,25 @@ export interface TStoreData {
 
 export const AppStore = configureStore<TStoreData>({
     reducer: (state: TStoreData | undefined, action: AnyAction) => {
-        console.log(state, action);
-
         if (state === undefined) {
             state = {
                 series: []
             };
         }
 
+        switch (action.type) {
+            case 'ADD_SERIES':
+                state.series.push(action.payload); // Нужно использовать createSlice instead
+                console.log('add_series', state.series);
+                break;
+        }
+
         return state;
+    },
+    middleware: (getDefaultMiddleware) => {
+        return getDefaultMiddleware({
+            serializableCheck: false
+        });
     },
     devTools: true,
     preloadedState: {
