@@ -10,6 +10,7 @@ declare module 'ami.js' {
         seriesInstanceUID: string;
         studyInstanceUID: string;
         transferSyntaxUID: string;
+        rawHeader: Array;
         seriesDate: string;
         seriesDescription: string;
         modality: string;

@@ -25,4 +25,20 @@ export class Series {
     getId(): string {
         return this.patient.id;
     }
+
+    getSN(): string{
+        return this.seriesModel.rawHeader.string('x00200011');
+    }
+
+    getPN(): string{
+        return this.seriesModel.rawHeader.string('x00181030');
+    }
+
+    getSD(): string{
+        return this.seriesModel.seriesDescription;
+    }
+
+    getNF(): number{
+        return this.seriesModel.numberOfFrames;
+    }
 }
