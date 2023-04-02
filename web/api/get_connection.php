@@ -1,5 +1,6 @@
 <?php
 require_once 'include.php';
 
-$connectionManager = new \VirtualEndoscopy\Connection\ConnectionManager();
-$result = $connectionManager->getConnection();
+$a = \VirtualEndoscopy\App::getInstance();
+//$connectionManager = new \VirtualEndoscopy\Connection\ConnectionManager();
+//$result = $connectionManager->getConnection();
