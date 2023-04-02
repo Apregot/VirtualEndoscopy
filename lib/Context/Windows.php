@@ -7,11 +7,6 @@ use VirtualEndoscopy\Config;
 final class Windows extends Context
 {
 
-	public function runScript(): bool
-	{
-		return true;
-	}
-
 	public function getType(): string
 	{
 		return 'Windows';
@@ -24,6 +19,6 @@ final class Windows extends Context
 
 	protected function getScriptExtension(): string
 	{
-		return 'bat';
+		return '.bat';
 	}
 }

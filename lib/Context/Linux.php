@@ -7,11 +7,6 @@ use VirtualEndoscopy\Config;
 final class Linux extends Context
 {
 
-	public function runScript(): bool
-	{
-		return true;
-	}
-
 	public function getType(): string
 	{
 		return 'Linux';
@@ -24,6 +19,6 @@ final class Linux extends Context
 
 	protected function getScriptExtension(): string
 	{
-		return 'sh';
+		return '.sh';
 	}
 }

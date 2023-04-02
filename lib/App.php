@@ -3,15 +3,16 @@ namespace VirtualEndoscopy;
 
 use Exception;
 use VirtualEndoscopy\Context;
+use VirtualEndoscopy\Error;
 
 final class App
 {
-	private static ?App $instance = null;
+	private static App $instance;
 	private Context\Context $context;
 
 	public static function getInstance(): self
 	{
-		if (!self::$instance)
+		if (empty(self::$instance))
 		{
 			self::$instance= new self();
 		}
@@ -19,10 +20,14 @@ final class App
 		return self::$instance;
 	}
 
+	public function getContext(): Context\Context
+	{
+		return $this->context;
+	}
+
 	private function __construct()
 	{
 		$this->initContext();
-		echo $this->context->getType();
 	}
 
 	private function initContext(): void
@@ -30,13 +35,16 @@ final class App
 		$systemCode = $this->getSystemCode();
 		if (!in_array($systemCode, Config::SUPPORTED_SYSTEMS))
 		{
-			throw new Exception('Your System is not supported', 10010);
+			throw new Exception('Your OS is not supported', Error\Dictionary::ERROR_OS_IS_NOT_SUPPORTED);
 		}
 
 		$this->context = match ($systemCode) {
 			Config::WINDOWS => new Context\Windows(),
 			Config::LINUX => new Context\Linux(),
-			default => throw new Exception('Context is not initialized', 10020),
+			default => throw new Exception(
+				'Context is not initialized',
+				Error\Dictionary::ERROR_CONTEXT_IS_NOT_INITIALIZED,
+			),
 		};
 	}
 

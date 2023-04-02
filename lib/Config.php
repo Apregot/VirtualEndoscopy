@@ -6,7 +6,7 @@ final class Config
 	const LINUX = 'Lin';
 	const WINDOWS = 'Win';
 
-	const DEFAULT_SCRIPT_DIRECTORY = DIRECTORY_SEPARATOR . 'scripts';
+	const DEFAULT_SCRIPT_DIRECTORY = 'scripts';
 	const SUPPORTED_SYSTEMS = [
 		self::WINDOWS,
 		self::LINUX,
