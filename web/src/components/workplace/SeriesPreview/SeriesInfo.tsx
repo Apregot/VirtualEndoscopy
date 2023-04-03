@@ -3,7 +3,7 @@ import styles from './SeriesInfo.module.scss';
 import { type Series } from '../../../lib/Series';
 import { PatientSex } from '../../../lib/Patient';
 import { SeriesInfoFragment } from './SeriesInfoFragment';
-
+import { Text } from '../../../lib/utils';
 interface TProps {
     series: Series[]
 }
@@ -24,11 +24,9 @@ export const SeriesInfo = (props: TProps): ReactElement => {
                     <span className={styles.infoDataRow}>Дата посещения: <span className={styles.infoDataRowValue}>Ольга</span></span>
                 </div>
             </div>
-            {series.map((seriesItem: Series) => {
-                return (
-                    <SeriesInfoFragment series={seriesItem}/> //key прокинуть бы
-                );
-              })}
+            {series.map((seriesItem: Series) => (
+                <SeriesInfoFragment key={Text.generateUUID()} series={seriesItem} />
+            ))}
 
         </div>
     );
