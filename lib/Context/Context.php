@@ -24,13 +24,16 @@ abstract class Context
 			);
 		}
 
-		return $this->runScript($scriptPath);
+		return $this->runCommand($scriptPath);
 	}
 
 	//TODO добавить тип возврата (объект результата?)
-	protected function runScript(string $scriptPath)
+	public function runCommand(string $script)
 	{
-		exec($scriptPath, $output,$resultCode);
+		exec($script, $output,$resultCode);
+		echo $resultCode;
+		var_dump($output);
+		echo "<br>";
 		return array_shift($output);
 	}
 

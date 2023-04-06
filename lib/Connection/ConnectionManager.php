@@ -17,13 +17,13 @@ class ConnectionManager
 	}
 	private function getFreePort(): int
 	{
-		$findFreePortScript = 'find_free_port.bat';
+		$findFreePortScript = 'is_built.bat';
 		$currentDirectory = system('echo %cd%');
 		echo '<br>';
 		$scriptDirectory = $currentDirectory . '/../../scripts/windows/';
 		$command = 'cmd /c '. $scriptDirectory . $findFreePortScript .' 2>&1';
 
-		system($command, $resultCode);
+		var_dump(system($command, $resultCode));
 		return $resultCode;
 	}
 }

@@ -13,5 +13,6 @@ final class Config
 	];
 	const SCRIPTS = [
 		'findFreePort' => 'find_free_port',
+		'isBuilt' => 'is_built',
 	];
 }
