@@ -12,6 +12,11 @@ final class Windows extends Context
 		return 'Windows';
 	}
 
+	public function getScriptRunner(): string
+	{
+		return 'cmd /c';
+	}
+
 	protected function getScriptsDirectory(): string
 	{
 		return Config::DEFAULT_SCRIPT_DIRECTORY . DIRECTORY_SEPARATOR . 'windows' . DIRECTORY_SEPARATOR;

@@ -30,7 +30,9 @@ final class BuildManager
 
 	public function isLayerBuilt(string $layer): bool
 	{
-		echo App::getInstance()->getContext()->runCommand('cmd /c docker images 2&>1');
+//		echo App::getInstance()->getContext()->runCommand(
+//			'cmd /c ' . \VirtualEndoscopy\Config::getLocalConfig()['dockerDirectory'] . ' images 2&>1'
+//		);
 		return true;
 	}
 

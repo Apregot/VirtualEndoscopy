@@ -12,6 +12,11 @@ final class Linux extends Context
 		return 'Linux';
 	}
 
+	public function getScriptRunner(): string
+	{
+		return '/bin/sh';
+	}
+
 	protected function getScriptsDirectory(): string
 	{
 		return Config::DEFAULT_SCRIPT_DIRECTORY . DIRECTORY_SEPARATOR . 'linux' . DIRECTORY_SEPARATOR;

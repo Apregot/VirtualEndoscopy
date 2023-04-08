@@ -7,7 +7,7 @@ use VirtualEndoscopy\Error;
 
 abstract class Context
 {
-	public function execute(string $scriptName)
+	public function getScriptPath(string $scriptName): string
 	{
 		$scriptPath =
 			$this->getProjectRoot()
@@ -24,17 +24,7 @@ abstract class Context
 			);
 		}
 
-		return $this->runCommand($scriptPath);
-	}
-
-	//TODO добавить тип возврата (объект результата?)
-	public function runCommand(string $script)
-	{
-		exec($script, $output,$resultCode);
-		echo $resultCode;
-		var_dump($output);
-		echo "<br>";
-		return array_shift($output);
+		return $this->getScriptRunner() . $scriptPath;
 	}
 
 	private function getProjectRoot(): string
@@ -43,6 +33,7 @@ abstract class Context
 	}
 
 	abstract public function getType(): string;
+	abstract public function getScriptRunner(): string;
 	abstract protected function getScriptsDirectory(): string;
 	abstract protected function getScriptExtension(): string;
 }

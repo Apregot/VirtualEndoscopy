@@ -3,6 +3,8 @@
 namespace VirtualEndoscopy;
 final class Config
 {
+	private static array $localConfig;
+
 	const LINUX = 'Lin';
 	const WINDOWS = 'Win';
 
@@ -11,8 +13,14 @@ final class Config
 		self::WINDOWS,
 		self::LINUX,
 	];
-	const SCRIPTS = [
-		'findFreePort' => 'find_free_port',
-		'isBuilt' => 'is_built',
-	];
+
+	public static function getLocalConfig(): array
+	{
+		if (empty(self::$localConfig))
+		{
+			self::$localConfig = include('.local_config.php');
+		}
+
+		return self::$localConfig;
+	}
 }

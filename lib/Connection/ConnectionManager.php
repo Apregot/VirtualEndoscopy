@@ -2,28 +2,38 @@
 
 namespace VirtualEndoscopy\Connection;
 
+use VirtualEndoscopy\Build;
+use VirtualEndoscopy\Config;
+use VirtualEndoscopy\Error;
+use VirtualEndoscopy\Script;
+use VirtualEndoscopy\Util\Result;
+
 class ConnectionManager
 {
-	public function getConnection()
+	public function getConnection(): Result
 	{
-		//if no connection
-		$freePort = $this->getFreePort();
+		$controller = (new Script\Controller());
+		$result = $controller->run(Script\Dictionary::SCRIPT_GET_FREE_PORT, []);
+		$freePort = $result->getData()['resultCode'];
 		if ($freePort > 0)
 		{
-			//start container with port
+			$result = $controller->run(
+				Script\Dictionary::SCRIPT_RUN_CONTAINER,
+				[
+					'dockerExecutable' => Config::getLocalConfig()['dockerExecutable'],
+					'outerPort' => $freePort,
+					'imageName' => Build\Dictionary::PEAK_LAYER,
+				],
+			);
+		}
+		else
+		{
+			throw new \Exception('No free port available', Error\Dictionary::ERROR_NO_FREE_PORT_AVAILABLE);
 		}
 
-		return true;
-	}
-	private function getFreePort(): int
-	{
-		$findFreePortScript = 'is_built.bat';
-		$currentDirectory = system('echo %cd%');
-		echo '<br>';
-		$scriptDirectory = $currentDirectory . '/../../scripts/windows/';
-		$command = 'cmd /c '. $scriptDirectory . $findFreePortScript .' 2>&1';
+		//TODO добавить проверку на то, что контейнер успешно создан
+		$result->setData(['freePort' => $freePort]);
 
-		var_dump(system($command, $resultCode));
-		return $resultCode;
+		return $result;
 	}
 }
