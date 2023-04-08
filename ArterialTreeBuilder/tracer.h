@@ -16,21 +16,21 @@ struct MSec {       // текущая секунда и милисекунда
 class Tracer
 {
 public:
-	Tracer();
-	Tracer(std::string tracefile);
-	~Tracer();
-	void log(std::string str, std::string terminationString="\n");
-	void logInt(std::string name, int val);
-	static MSec msec(); //текущая секунда и милисекунда
-	void startInterval(string label);
-	void stopInterval(string label);
-	double getInterval(string label);
-	void   logInterval(string label);
+    Tracer();
+    Tracer(std::string tracefile);
+    ~Tracer();
+    void log(std::string str, std::string terminationString="\n");
+    void logInt(std::string name, int val);
+    static MSec msec(); //текущая секунда и милисекунда
+    void startInterval(string label);
+    void stopInterval(string label);
+    double getInterval(string label);
+    void   logInterval(string label);
 
 private:
-	std::string tracefile;
-	time_t s0, s1;
-	map<string,pair<MSec,MSec>> intervals;  // string -> pair<MSec,MSec>    начало конец интервала
+    std::string tracefile;
+    time_t s0, s1;
+    map<string,pair<MSec,MSec>> intervals;  // string -> pair<MSec,MSec>    начало конец интервала
 };
 
 extern Tracer tracer;
@@ -73,20 +73,20 @@ class FFRProcessor;
 class VTB;
 struct FFRStenosis;
 void t_AortaSearch_FindAorta(mvox::Cube sourceCube);
-	struct AortaSearch_FindAorta_stat {
-		int dims[3];        // размерность куба
-		double zrange[2];   // Z-диапазон кубика
-		int dir[2];         // slice ind from to
-		int sliceIndex;     // индекс кадра, в котором будет искаться срез аорты
-		int dark;           // счетчики темных и светлых пикселей; темный - slice[0][0]
-		int white;
-		bool result;        // найден ли срез аорты
-		double point[3];    // найденный центр и радиус среза аорты, если result = true
-		double radius;
-		int IJ[2];          // центр и радиус откружности в координатах IJK
-		double rad;
-		float avgHU;
-	};
+    struct AortaSearch_FindAorta_stat {
+        int dims[3];        // размерность куба
+        double zrange[2];   // Z-диапазон кубика
+        int dir[2];         // slice ind from to
+        int sliceIndex;     // индекс кадра, в котором будет искаться срез аорты
+        int dark;           // счетчики темных и светлых пикселей; темный - slice[0][0]
+        int white;     
+        bool result;        // найден ли срез аорты
+        double point[3];    // найденный центр и радиус среза аорты, если result = true
+        double radius;        
+        int IJ[2];          // центр и радиус откружности в координатах IJK
+        double rad;
+        float avgHU;
+    };
 void t_AortaSearch_FindAorta_fin(mvox::Cube sourceCube, double* circles, int n);
 void t_FFR_Initialize(FFRSettings settings);
 void t_FFR_Process_PrepareAortaProc(FFRProcessor* processor, mvox::Cube sourceCube, mvox::UpdateProgress progressFunction);
@@ -100,9 +100,9 @@ void t_FFR_Process_SetVesselsSeeds(FFRProcessor* processor, mvox::Point3D_Double
 void t_FFR_Process_LoadVesselsPreview(FFRProcessor* processor,mvox::Cube segmCube,unsigned char targetCode,double threshold, VTB *vtb);
 void t_FFR_Process_LoadVesselsPreview_fin(FFRProcessor*,mvox::Cube cube,unsigned char targetCode, VTB *vtb);
 void t_FFR_Process(FFRProcessor* processor,mvox::Cube sourceCube,mvox::UpdateProgress progressFunction,CompleteParameters completeParameters, VTB *vtb);
-void t_FFR_Process_trace(VTB *vtb);
-void t_FFR_Process_assert_1(VTB *vtb);
-void t_FFR_Process_assert_2(VTB *vtb);
+ void t_FFR_Process_trace(VTB *vtb);
+ void t_FFR_Process_assert_1(VTB *vtb);
+ void t_FFR_Process_assert_2(VTB *vtb);
 void t_FFR_Process_fin(int cursor);
 void t_FFR_LoadAortaObject(FFRProcessor* processor,mvox::Cube segmCube,uint8_t targetCode);
 void t_FFR_LoadAortaObject_fin(mvox::Cube segmCube,uint8_t targetCode);

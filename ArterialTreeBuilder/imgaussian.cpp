@@ -175,58 +175,58 @@ void imfilter2D(short *I, unsigned long long *sizeI, float *H, unsigned long lon
 
 void imfilter3D(short *I, unsigned long long * sizeI, float *H, unsigned long long lengthH, float *J)
 {
-	unsigned long long z, j, i, z2;
-	short *Islice;
-	float *Cslice;
-	unsigned long long index=0, line=0;
-	float *SCache;
-	short *nCache;
-	unsigned long long hks, offset, offset2;
-	unsigned long long nslice;
-	nslice=sizeI[0]*sizeI[1];
+  unsigned long long z, j, i, z2;
+  short *Islice;
+  float *Cslice;
+  unsigned long long index=0, line=0;
+  float *SCache;
+  short *nCache;
+  unsigned long long hks, offset, offset2;
+  unsigned long long nslice;
+  nslice=sizeI[0]*sizeI[1];
 
-	SCache = new float[lengthH*nslice];
-	for(i=0; i<nslice; i++)
-		SCache[i]=0;
+  SCache = new float[lengthH*nslice];
+  for(i=0; i<nslice; i++)
+    SCache[i]=0;
 
-	nCache = new short[lengthH];
-	for(i=0; i<lengthH; i++)
-		nCache[i]=0;
+  nCache = new short[lengthH];
+  for(i=0; i<lengthH; i++)
+    nCache[i]=0;
 
-	hks=((lengthH-1)/2);
-	for(z=0; z<min(hks,sizeI[2]); z++)
-	{
-		Islice=&I[index];
-		Cslice=&SCache[line*nslice];
-		imfilter2D(Islice, sizeI, H, lengthH, Cslice);
-		index+=nslice;
-		if(z!=(sizeI[2]-1))
-		{
-			line++;
-			if(line>(lengthH-1))
-				line=0;
-		}
-		for(i=0; i<(lengthH-1); i++)
-			nCache[i]=nCache[i+1];
-		nCache[lengthH-1]=line;
-	}
-	for(z2=z; z2<hks; z2++)
-	{
-		for(i=0; i<(lengthH-1); i++)
-			nCache[i]=nCache[i+1];
-		nCache[lengthH-1]=line;
-	}
-	for(z=hks; z<(sizeI[2]-1); z++)
-	{
-		Islice=&I[index];
-		Cslice=&SCache[line*nslice];
-		imfilter2D(Islice, sizeI, H, lengthH, Cslice);
+  hks=((lengthH-1)/2);
+  for(z=0; z<min(hks,sizeI[2]); z++)
+  {
+    Islice=&I[index];
+    Cslice=&SCache[line*nslice];
+    imfilter2D(Islice, sizeI, H, lengthH, Cslice);
+    index+=nslice;
+    if(z!=(sizeI[2]-1))
+    {
+      line++;
+      if(line>(lengthH-1))
+        line=0;
+    }
+    for(i=0; i<(lengthH-1); i++)
+      nCache[i]=nCache[i+1];
+    nCache[lengthH-1]=line;
+  }
+  for(z2=z; z2<hks; z2++)
+  {
+    for(i=0; i<(lengthH-1); i++)
+      nCache[i]=nCache[i+1];
+    nCache[lengthH-1]=line;
+  }
+  for(z=hks; z<(sizeI[2]-1); z++)
+  {
+    Islice=&I[index];
+    Cslice=&SCache[line*nslice];
+    imfilter2D(Islice, sizeI, H, lengthH, Cslice);
 
-		offset=(z-hks)*nslice;
-		offset2=nCache[0]*nslice;
+    offset=(z-hks)*nslice;
+    offset2=nCache[0]*nslice;
 
-		for(j=0; j<nslice; j++)
-			J[offset+j]=SCache[offset2+j]*H[0];
+    for(j=0; j<nslice; j++)
+      J[offset+j]=SCache[offset2+j]*H[0];
     for(i=1; i<lengthH; i++)
     {
       offset2=nCache[i]*nslice;
@@ -288,72 +288,72 @@ void imfilter3D(short *I, unsigned long long * sizeI, float *H, unsigned long lo
 
 void GaussianFiltering3D(short *I, float *J, unsigned long long *dimsI, float sigma, float kernel_size)
 {
-	unsigned long long kernel_length,i;
-	float x, *H, totalH=0;
+  unsigned long long kernel_length,i;
+  float x, *H, totalH=0;
 
 /* Construct the 1D gaussian kernel */
-	if(kernel_size<1)
-		kernel_size=1;
-	kernel_length=(unsigned long long)(2*ceil(kernel_size/2)+1);
-	H = new float[kernel_length];
-	x=-ceil(kernel_size/2);
+  if(kernel_size<1)
+    kernel_size=1;
+  kernel_length=(unsigned long long)(2*ceil(kernel_size/2)+1);
+  H = new float[kernel_length];
+  x=-ceil(kernel_size/2);
 
-	for (i=0; i<kernel_length; i++)
-	{
-		H[i]=exp(-((x*x)/(2*(sigma*sigma))));
-		totalH+=H[i];
-		++x;
-	}
-	for (i=0; i<kernel_length; i++)
-		H[i]/=totalH;
-	imfilter3D(I, dimsI, H, kernel_length, J);
-	delete[] H;
+  for (i=0; i<kernel_length; i++)
+  {
+    H[i]=exp(-((x*x)/(2*(sigma*sigma))));
+    totalH+=H[i];
+    ++x;
+  }
+  for (i=0; i<kernel_length; i++)
+    H[i]/=totalH;
+  imfilter3D(I, dimsI, H, kernel_length, J);
+  delete[] H;
 }
 
 void GaussianFiltering2D(short *I, float *J, unsigned long long *dimsI, float sigma, float kernel_size)
 {
-	unsigned long long kernel_length,i;
-	float x, *H, totalH=0;
+  unsigned long long kernel_length,i;
+  float x, *H, totalH=0;
 
-	if(kernel_size<1)
-		kernel_size=1;
-	kernel_length=(unsigned long long)(2*ceil(kernel_size/2)+1);
-	H = new float[kernel_length];
+  if(kernel_size<1)
+    kernel_size=1;
+  kernel_length=(unsigned long long)(2*ceil(kernel_size/2)+1);
+  H = new float[kernel_length];
 
-	x=-ceil(kernel_size/2);
-	for (i=0; i<kernel_length; i++)
-	{
-		H[i]=exp(-((x*x)/(2*(sigma*sigma))));
-		totalH+=H[i];
-		++x;
-	}
-	for (i=0; i<kernel_length; i++)
-		H[i]/=totalH;
+  x=-ceil(kernel_size/2);
+  for (i=0; i<kernel_length; i++)
+  {
+    H[i]=exp(-((x*x)/(2*(sigma*sigma))));
+    totalH+=H[i];
+    ++x;
+  }
+  for (i=0; i<kernel_length; i++)
+    H[i]/=totalH;
 
-	imfilter2D(I, dimsI, H, kernel_length, J);
-	delete[] H;
+  imfilter2D(I, dimsI, H, kernel_length, J);
+  delete[] H;
 }
 
 void GaussianFiltering1D(short *I, float *J, unsigned long long lengthI, float sigma, float kernel_size)
 {
-	unsigned long long kernel_length,i;
-	float x, *H, totalH=0;
+  unsigned long long kernel_length,i;
+  float x, *H, totalH=0;
 
 /* Construct the 1D gaussian kernel */
-	if (kernel_size<1)
-		kernel_size = 1;
-	kernel_length = (unsigned long long)(2 * ceil(kernel_size / 2) + 1);
-	H = new float[kernel_length];
+  if (kernel_size<1)
+    kernel_size = 1;
+  kernel_length = (unsigned long long)(2 * ceil(kernel_size / 2) + 1);
+  H = new float[kernel_length];
 
-	x = -ceil(kernel_size/2);
-	for (i=0; i<kernel_length; i++)
-	{
-		H[i] = exp(-((x * x) / (2 * (sigma * sigma))));
-		totalH += H[i];
-		++x;
-	}
-	for (i=0; i<kernel_length; i++)
-		H[i] /= totalH;
-	imfilter1D(I, lengthI, H, kernel_length, J);
-	delete[] H;
+  x = -ceil(kernel_size/2);
+  for (i=0; i<kernel_length; i++)
+  {
+    H[i] = exp(-((x * x) / (2 * (sigma * sigma))));
+    totalH += H[i];
+    ++x;
+  }
+  for (i=0; i<kernel_length; i++)
+    H[i] /= totalH;
+  imfilter1D(I, lengthI, H, kernel_length, J);
+  delete[] H;
 }

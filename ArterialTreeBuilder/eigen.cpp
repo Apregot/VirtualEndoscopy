@@ -16,120 +16,121 @@ __inline double absd(double val){ if(val>0){ return val;} else { return -val;} }
 /* Symmetric Householder reduction to tridiagonal form. */
 static void tred2(double V[nn][nn], double d[nn], double e[nn]) 
 {
+    
 /*  This is derived from the Algol procedures tred2 by */
 /*  Bowdler, Martin, Reinsch, and Wilkinson, Handbook for */
 /*  Auto. Comp., Vol.ii-Linear Algebra, and the corresponding */
 /*  Fortran subroutine in EISPACK. */
-	int i, j, k;
-	double scale;
-	double f, g, h;
-	double hh;
-	for (j = 0; j < nn; j++)
+    int i, j, k;
+    double scale;
+    double f, g, h;
+    double hh;
+    for (j = 0; j < nn; j++)
 		d[j] = V[nn-1][j];
-
-	/* Householder reduction to tridiagonal form. */
-
-	for (i = nn-1; i > 0; i--)
-	{
-		/* Scale to avoid under/overflow. */
-		scale = 0.0;
-		h = 0.0;
-		for (k = 0; k < i; k++)
+    
+    /* Householder reduction to tridiagonal form. */
+    
+    for (i = nn-1; i > 0; i--) 
+    {
+        /* Scale to avoid under/overflow. */
+        scale = 0.0;
+        h = 0.0;
+        for (k = 0; k < i; k++) 
 			scale = scale + fabs(d[k]);
-		if (scale == 0.0)
-		{
-			e[i] = d[i-1];
-			for (j = 0; j < i; j++)
-			{
-				d[j] = V[i-1][j];
+        if (scale == 0.0) 
+        {
+            e[i] = d[i-1];
+            for (j = 0; j < i; j++) 
+            { 
+				d[j] = V[i-1][j]; 
 				V[i][j] = 0.0;  
 				V[j][i] = 0.0; 
 			}
-		}
-		else
-		{
-			/* Generate Householder vector. */
-
-			for (k = 0; k < i; k++)
-			{
-				d[k] /= scale;
+        } 
+        else 
+        {
+            /* Generate Householder vector. */
+            
+            for (k = 0; k < i; k++) 
+            { 
+				d[k] /= scale; 
 				h += d[k] * d[k]; 
 			}
-			f = d[i-1];
-			g = sqrt(h);
-			if (f > 0)
+            f = d[i-1];
+            g = sqrt(h);
+            if (f > 0) 
 				g = -g;
-			e[i] = scale * g;
-			h = h - f * g;
-			d[i-1] = f - g;
-			for (j = 0; j < i; j++)
+            e[i] = scale * g;
+            h = h - f * g;
+            d[i-1] = f - g;
+            for (j = 0; j < i; j++) 
 				e[j] = 0.0;
-
-			/* Apply similarity transformation to remaining columns. */
-
-			for (j = 0; j < i; j++)
-			{
-				f = d[j];
-				V[j][i] = f;
-				g = e[j] + V[j][j] * f;
-				for (k = j+1; k <= i-1; k++)
-				{
+            
+            /* Apply similarity transformation to remaining columns. */
+            
+            for (j = 0; j < i; j++) 
+            {
+                f = d[j];
+                V[j][i] = f;
+                g = e[j] + V[j][j] * f;
+                for (k = j+1; k <= i-1; k++) 
+                { 
 					g += V[k][j] * d[k]; e[k] += V[k][j] * f; 
 				}
-				e[j] = g;
+                e[j] = g;
+            }
+            f = 0.0;
+            for (j = 0; j < i; j++) 
+            { 
+				e[j] /= h; f += e[j] * d[j]; 
 			}
-			f = 0.0;
-			for (j = 0; j < i; j++)
-			{
-				e[j] /= h; f += e[j] * d[j];
-			}
-			hh = f / (h + h);
-			for (j = 0; j < i; j++)
-			{
+            hh = f / (h + h);
+            for (j = 0; j < i; j++) 
+            { 
 				e[j] -= hh * d[j]; 
 			}
-			for (j = 0; j < i; j++)
-			{
-				f = d[j]; g = e[j];
-				for (k = j; k <= i-1; k++)
+            for (j = 0; j < i; j++) 
+            {
+                f = d[j]; g = e[j];
+                for (k = j; k <= i-1; k++) 
 					V[k][j] -= (f * e[k] + g * d[k]);
-				d[j] = V[i-1][j];
-				V[i][j] = 0.0;
-			}
-		}
-		d[i] = h;
-	}
-
-	/* Accumulate transformations. */
-
-	for (i = 0; i < nn-1; i++)
-	{
-		V[nn-1][i] = V[i][i];
-		V[i][i] = 1.0;
-		h = d[i+1];
-		if (h != 0.0)
-		{
-			for (k = 0; k <= i; k++)
+                d[j] = V[i-1][j];
+                V[i][j] = 0.0;
+            }
+        }
+        d[i] = h;
+    }
+    
+    /* Accumulate transformations. */
+    
+    for (i = 0; i < nn-1; i++) 
+    {
+        V[nn-1][i] = V[i][i];
+        V[i][i] = 1.0;
+        h = d[i+1];
+        if (h != 0.0) 
+        {
+            for (k = 0; k <= i; k++) 
 				d[k] = V[k][i+1] / h;
-			for (j = 0; j <= i; j++)
-			{
-				g = 0.0;
-				for (k = 0; k <= i; k++)
+            for (j = 0; j <= i; j++) 
+            {
+                g = 0.0;
+                for (k = 0; k <= i; k++) 
 					g += V[k][i+1] * V[k][j];
-				for (k = 0; k <= i; k++)
+                for (k = 0; k <= i; k++) 
 					V[k][j] -= g * d[k];
-			}
-		}
-		for (k = 0; k <= i; k++)
+            }
+        }
+        for (k = 0; k <= i; k++) 
 			V[k][i+1] = 0.0;
-	}
-	for (j = 0; j < nn; j++)
-	{
+    }
+    for (j = 0; j < nn; j++) 
+    {
 		d[j] = V[nn-1][j]; 
 		V[nn-1][j] = 0.0; 
 	}
-	V[nn-1][nn-1] = 1.0;
-	e[0] = 0.0;
+    V[nn-1][nn-1] = 1.0;
+    e[0] = 0.0;
 }
 
 /* Symmetric tridiagonal QL algorithm. */
@@ -139,41 +140,41 @@ static void tql2(double V[nn][nn], double d[nn], double e[nn])
 /*  Bowdler, Martin, Reinsch, and Wilkinson, Handbook for */
 /*  Auto. Comp., Vol.ii-Linear Algebra, and the corresponding */
 /*  Fortran subroutine in EISPACK. */
-
-	int i, j, k, l, m;
-	double f;
-	double tst1;
-	double eps;
-	int iter;
-	double g, p, r;
-	double dl1, h, c, c2, c3, el1, s, s2;
-
-	for (i = 1; i < nn; i++)
+    
+    int i, j, k, l, m;
+    double f;
+    double tst1;
+    double eps;
+    int iter;
+    double g, p, r;
+    double dl1, h, c, c2, c3, el1, s, s2;
+    
+    for (i = 1; i < nn; i++) 
 		e[i-1] = e[i];
-	e[nn-1] = 0.0;
-
-	f = 0.0;
-	tst1 = 0.0;
-	eps = pow(2.0, -52.0);
-	for (l = 0; l < nn; l++)
-	{
-		/* Find small subdiagonal element */
-
-		tst1 = MAX(tst1, fabs(d[l]) + fabs(e[l]));
-		m = l;
-		while (m < nn)
-		{
-			if (fabs(e[m]) <= eps*tst1)
+    e[nn-1] = 0.0;
+    
+    f = 0.0;
+    tst1 = 0.0;
+    eps = pow(2.0, -52.0);
+    for (l = 0; l < nn; l++) 
+    {
+        /* Find small subdiagonal element */
+        
+        tst1 = MAX(tst1, fabs(d[l]) + fabs(e[l]));
+        m = l;
+        while (m < nn) 
+        {
+            if (fabs(e[m]) <= eps*tst1) 
 				break;
-			m++;
-		}
-
-		/* If m == l, d[l] is an eigenvalue, */
-		/* otherwise, iterate. */
-
-		if (m > l)
-		{
-			iter = 0;
+            m++;
+        }
+        
+        /* If m == l, d[l] is an eigenvalue, */
+        /* otherwise, iterate. */
+        
+        if (m > l) 
+        {
+            iter = 0;
             do{
                 iter = iter + 1;  /* (Could check iteration count here.) */
                 /* Compute implicit shift */
@@ -305,34 +306,34 @@ void getHessianDecomposition3D (double EigVal[3],
 }
 
 void getHessianDecomposition2D (double EigVal[2], double hes_elem[3],
-								double EigVect1[2], double EigVect2[2])
+                                 double EigVect1[2], double EigVect2[2])
 {
-	double tmp;
-	double Dxx = hes_elem[0];
-	double Dxy = hes_elem[1];
-	double Dyy = hes_elem[2];
-	double Discriminant = sqrt((Dxx - Dyy)*(Dxx - Dyy) + 4*Dxy*Dxy);
-	EigVect2[0] = Dxx - Dyy + Discriminant;
-	EigVect2[1] = 2*Dxy;
+  double tmp;
+  double Dxx = hes_elem[0];
+  double Dxy = hes_elem[1];
+  double Dyy = hes_elem[2];
+  double Discriminant = sqrt((Dxx - Dyy)*(Dxx - Dyy) + 4*Dxy*Dxy);
+  EigVect2[0] = Dxx - Dyy + Discriminant;
+  EigVect2[1] = 2*Dxy;
 
-	double norm = sqrt(EigVect2[0]*EigVect2[0] + EigVect2[1]*EigVect2[1]);
+  double norm = sqrt(EigVect2[0]*EigVect2[0] + EigVect2[1]*EigVect2[1]);
 
-	if (norm > 1e-14)
-	{
-		EigVect2[0] /= norm;
-		EigVect2[1] /= norm;
-	}
+  if (norm > 1e-14)
+  {
+    EigVect2[0] /= norm;
+    EigVect2[1] /= norm;
+  }
 
-	EigVect1[0] = -EigVect2[1];
-	EigVect1[1] = EigVect2[0];
+  EigVect1[0] = -EigVect2[1]; 
+  EigVect1[1] = EigVect2[0];
 
-	EigVal[0] = 0.5*(Dxx + Dyy - Discriminant);
-	EigVal[1] = 0.5*(Dxx + Dyy + Discriminant);
+  EigVal[0] = 0.5*(Dxx + Dyy - Discriminant);
+  EigVal[1] = 0.5*(Dxx + Dyy + Discriminant);
 
-	if ( fabs(EigVal[0]) > fabs(EigVal[1]) )
-	{
-		tmp = EigVal[0]; EigVal[0] = EigVal[1]; EigVal[1] = tmp;
-		tmp = EigVect1[0]; EigVect1[0] = EigVect2[0]; EigVect2[0] = tmp;
-		tmp = EigVect1[1]; EigVect1[1] = EigVect2[1]; EigVect2[1] = tmp;
-	}
+  if ( fabs(EigVal[0]) > fabs(EigVal[1]) )
+  {
+    tmp = EigVal[0]; EigVal[0] = EigVal[1]; EigVal[1] = tmp;
+    tmp = EigVect1[0]; EigVect1[0] = EigVect2[0]; EigVect2[0] = tmp;
+    tmp = EigVect1[1]; EigVect1[1] = EigVect2[1]; EigVect2[1] = tmp;
+  }
 }

@@ -7,119 +7,119 @@
 using namespace std;
 enum vesselType
 {
-	REGULAR = 0,
-	STENOSIS = 1,
-	STENT = 2,
-	FLOW3D = 3,
-	GAP = 4
+  REGULAR = 0,
+  STENOSIS = 1,
+  STENT = 2,
+  FLOW3D = 3,
+  GAP = 4
 };
 
 enum BranchType
 {
-	UNADOPTED = 0,
-	LEFT = 1,
-	RIGHT = 2
+  UNADOPTED = 0,
+  LEFT = 1,
+  RIGHT = 2
 };
 
 struct GraphRib
 {
-	int reorderedID;
-	int ID;
-	int firstEndID;
-	int secondEndID;
-	int markerPointID;
-	int markerExtraPointID;
-	double stenosisPersent=0;
-	double diameterCM=0;
-	int parentRib=-2;
-	int childRib=-1;
-	vector <vector<int> > points;
-	vesselType marker;
-	BranchType branchLabel;
-	bool isGapRib=0;
-	int labelID; // для того чтобы перемещаться по Rigth/Left/UnadoptedRibs
-	bool selected; // если компонента графа, в которой содержится вершина, выбрана
+  int reorderedID;
+  int ID;
+  int firstEndID;
+  int secondEndID;
+  int markerPointID;
+  int markerExtraPointID;
+  double stenosisPersent=0;
+  double diameterCM=0;
+  int parentRib=-2;
+  int childRib=-1;
+  vector <vector<int> > points;
+  vesselType marker;
+  BranchType branchLabel;
+  bool isGapRib=0;
+  int labelID; // для того чтобы перемещаться по Rigth/Left/UnadoptedRibs
+  bool selected; // если компонента графа, в которой содержится вершина, выбрана
 };
 
 struct GraphNode
 {
-	//TODO нужно ли добавлять список точек
-	int reorderedID;
-	int ID;
-	vector <int> incidentRibsID;
-	double x;
-	double y;
-	double z;
-	int degree;
-	BranchType branchLabel;
-	int labelID; // для того чтобы перемещаться по Rigth/Left/UnadoptedNodes
-	bool selected; // если компонента графа, в которой содержится вершина, выбрана
-	vector<vector <int> > voxelNodes;
-	bool isNullNode=0;
+  //TODO нужно ли добавлять список точек
+  int reorderedID;
+  int ID;
+  vector <int> incidentRibsID;
+  double x;
+  double y;
+  double z;
+  int degree;
+  BranchType branchLabel;
+  int labelID; // для того чтобы перемещаться по Rigth/Left/UnadoptedNodes
+  bool selected; // если компонента графа, в которой содержится вершина, выбрана
+  vector<vector <int> > voxelNodes;
+  bool isNullNode=0;
 };
 
 class Graph {
-	Thinner *thinner;
+  Thinner *thinner;
 public:
-	int leftOstiaNodeID, rightOstiaNodeID;
-	int leftOstiaRibID, rightOstiaRibID;
+  int leftOstiaNodeID, rightOstiaNodeID;
+  int leftOstiaRibID, rightOstiaRibID;
+  
+  unsigned finalGraphRibsCount;
+  unsigned finalGraphNodesCount;
 
-	unsigned finalGraphRibsCount;
-	unsigned finalGraphNodesCount;
+  vector<GraphRib> Ribs;
+  vector<GraphNode> Nodes;
+  // use these graph to reaload initial graph
+  vector <GraphRib> initialRibs;
+  vector <GraphNode> initialNodes;
 
-	vector<GraphRib> Ribs;
-	vector<GraphNode> Nodes;
-	// use these graph to reaload initial graph
-	vector <GraphRib> initialRibs;
-	vector <GraphNode> initialNodes;
+  vector <int> terminalPathLabels;
 
-	vector <int> terminalPathLabels;
+  vector<vector<vector<int> > > TerminalPaths;
+  int numOfTerminalPaths;
+  int numOfLeftTerminalPaths;
+  vector<vector<vector<int> > > NodesOnTerminalPaths;
 
-	vector<vector<vector<int> > > TerminalPaths;
-	int numOfTerminalPaths;
-	int numOfLeftTerminalPaths;
-	vector<vector<vector<int> > > NodesOnTerminalPaths;
+  vector <int> LeftRibs, RightRibs, UnadoptedRibs, SelectedComponentRibs;
+  vector <int> LeftNodes, RightNodes, UnadoptedNodes, SelectedComponentNodes;
 
-	vector <int> LeftRibs, RightRibs, UnadoptedRibs, SelectedComponentRibs;
-	vector <int> LeftNodes, RightNodes, UnadoptedNodes, SelectedComponentNodes;
+  Graph(Thinner *thinner);
+  ~Graph();
 
-	Graph(Thinner *thinner);
-	~Graph();
+  void glueRibsToTerminalPaths();
+  void returnRibsAsTerminalPaths();
+  void wrapGraph();
+  void redefineWrappers();
+  void reloadGraph();
 
-	void glueRibsToTerminalPaths();
-	void returnRibsAsTerminalPaths();
-	void wrapGraph();
-	void redefineWrappers();
-	void reloadGraph();
+  vector <vector <int>> StenosisPaths;
+  bool locateWholeStenosis (int stenosisID, int begin[3], int end[3], int type, double stenosisPersent);
 
-	vector <vector <int>> StenosisPaths;
-	bool locateWholeStenosis (int stenosisID, int begin[3], int end[3], int type, double stenosisPersent);
-
-	void fillParentRibs();
-	void fillChildrenRibs();
-	double meanDiameterOnChildSegment(unsigned ribID, unsigned numOfVoxels);
-	double meanDiameterOnParentSegment(unsigned ribID, unsigned numOfVoxels);
-	int findChild(unsigned ribID);
+  void fillParentRibs();
+  void fillChildrenRibs();
+  double meanDiameterOnChildSegment(unsigned ribID, unsigned numOfVoxels);
+  double meanDiameterOnParentSegment(unsigned ribID, unsigned numOfVoxels);
+  int findChild(unsigned ribID);
 private:
-
-	bool locateStenosisEnds(int front[3], int end[3], int segmentsID[2]);
-	bool isNearEndOfSegment(unsigned pointID, int segmentID, int nodeID);
-
-	void findVoxelNodesConnectiveComponents();
+	
+  bool locateStenosisEnds(int front[3], int end[3], int segmentsID[2]);
+  bool isNearEndOfSegment(unsigned pointID, int segmentID, int nodeID);
+  
+  void findVoxelNodesConnectiveComponents();
 public:
-	void findOstiaNodesAndRibs();
-	int findGraphNodeBetweenRibs(unsigned segment1, unsigned segment2);
+  void findOstiaNodesAndRibs();
+  int findGraphNodeBetweenRibs(unsigned segment1, unsigned segment2);
 private:
-	void cutRibAtPoint (int ribID, unsigned pointID, int stenosisDirection);
-
-	//Printing methods
+  void cutRibAtPoint (int ribID, unsigned pointID, int stenosisDirection);
+  
+  //Printing methods
 public:
-	void printNode(ofstream &output, GraphNode node);
-	void printRib(ofstream &output, GraphRib rib, bool printPoints);
+  void printNode(ofstream &output, GraphNode node);
+  void printRib(ofstream &output, GraphRib rib, bool printPoints);
 
-	void printGraph(ofstream &output);
-	void printGraphOnGV(string output);
-	void removeGaps();
+  void printGraph(ofstream &output);
+  void printGraphOnGV(string output);
+  void removeGaps();
 
 private:
 	void pushRibs(vector<vector<double> > oldConnections);

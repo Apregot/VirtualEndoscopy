@@ -12,30 +12,31 @@
 /*  Fc     }                                */
 /*==========================================*/
 void FrangiFilter3d (double * Vesselness, bool firstUse,
-						short *Image, unsigned long long *dims,
-						double *sigmasInfo,
-						double Falpha, double Fbeta, double Fc,
-						bool mod);
+                        short *Image, unsigned long long *dims,
+                        double *sigmasInfo,
+                        double Falpha, double Fbeta, double Fc,
+                        bool mod);
 
 void FrangiFilter3d_AMP (double * Vesselness, bool firstUse,
-							short *Image, unsigned long long *dims,
-							double *sigmasInfo,
-							double Falpha, double Fbeta, double Fc,
-							bool mod);
+                        short *Image, unsigned long long *dims,
+                        double *sigmasInfo,
+                        double Falpha, double Fbeta, double Fc,
+                        bool mod);
 
-double* FrangiFilter3dReturnOptimalScales(short *Image, unsigned long long *dims,
-											double *sigmasInfo,
-											bool returnOptimalScales, double *optimalScales,
-											double Falpha, double Fbeta, double Fc);
+double* FrangiFilter3dReturnOptimalScales
+                        (short *Image, unsigned long long *dims,
+                        double *sigmasInfo,
+                        bool returnOptimalScales, double *optimalScales,
+                        double Falpha, double Fbeta, double Fc);
 
 double* BifurcationFilter3d (short *Image,
-								unsigned long long *dims,
-								double *sigmasInfo,
-								double beta);
+                             unsigned long long *dims,
+                             double *sigmasInfo,
+                             double beta);
 
 double* CirclenessFilter2d (short * Image,
-							unsigned long long *dims,
-							double optimalScale,
-							double alpha, double beta);
+                             unsigned long long *dims,
+                             double optimalScale,
+                             double alpha, double beta);
 
 #endif /*HESSIAN_FILTERS_HPP*/
