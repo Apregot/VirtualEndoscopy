@@ -3,10 +3,12 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 interface SeriesState {
     patientsSeriesList: Series[][]
+    selectedPreviewSeries: Series | null
 }
 
 const initialState: SeriesState = {
-    patientsSeriesList: []
+    patientsSeriesList: [],
+    selectedPreviewSeries: null
 };
 
 export const seriesSlice = createSlice({
@@ -23,6 +25,10 @@ export const seriesSlice = createSlice({
                 }
             }
             check && state.patientsSeriesList.push([action.payload]);
+        },
+
+        selectPreviewSeries: (state, action: PayloadAction<Series>) => {
+            state.selectedPreviewSeries = action.payload;
         }
     }
 });

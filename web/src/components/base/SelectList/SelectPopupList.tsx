@@ -1,14 +1,14 @@
-import React, { type ReactElement, useEffect, useState } from 'react';
+import React, { type ReactElement } from 'react';
 import styles from './SelectPopupList.module.scss';
 
 export interface ListItem {
-    id: string
+    id: string | number
     content: ReactElement
 }
 
 interface TProps {
     items: ListItem[]
-    onItemSelect: (id: string) => void
+    onItemSelect: (id: string | number) => void
     opened: boolean
     className?: string
 }
@@ -17,7 +17,7 @@ export const SelectPopupList = (props: TProps): ReactElement => {
     const opened = props.opened;
     const listDisplay = opened ? 'block' : 'none';
 
-    const onListItemSelected = (id: string): void => {
+    const onListItemSelected = (id: string | number): void => {
         props.onItemSelect(id);
     };
 

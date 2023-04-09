@@ -10,7 +10,7 @@ declare module 'ami.js' {
         seriesInstanceUID: string;
         studyInstanceUID: string;
         transferSyntaxUID: string;
-        rawHeader: Array;
+        rawHeader: any[];
         seriesDate: string;
         seriesDescription: string;
         modality: string;
@@ -41,6 +41,7 @@ declare module 'ami.js' {
         xCosine: number;
         yCosine: number;
         zCosine: number;
+        dimensionsIJK: Object;
         prepare: () => void;
     }
 }

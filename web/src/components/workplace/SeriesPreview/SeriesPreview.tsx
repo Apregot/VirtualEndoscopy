@@ -1,8 +1,5 @@
 import React, { type ReactElement } from 'react';
 import { Splitter, SplitterPanel } from 'primereact/splitter';
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
-import { SeriesInfo } from './SeriesInfo';
 import { SeriesInfoList } from './SeriesInfoList';
 import { QuadView } from '../QuadView';
 
@@ -22,10 +19,10 @@ export const SeriesPreview = (): ReactElement => {
             <SplitterPanel size={60}>
                 <Splitter layout="vertical">
                     <SplitterPanel style={{ overflow: 'hidden' }}>
-                        <QuadView/>
+                        <QuadView />
                     </SplitterPanel>
                     <SplitterPanel size={30} style={{ overflow: 'hidden' }}>
-                        <SeriesInfoList/>
+                        <SeriesInfoList />
                     </SplitterPanel>
                 </Splitter>
             </SplitterPanel>
