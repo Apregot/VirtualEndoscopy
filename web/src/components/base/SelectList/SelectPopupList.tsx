@@ -9,20 +9,23 @@ export interface ListItem {
 interface TProps {
     items: ListItem[]
     onItemSelect: (id: string) => void
-    opened?: boolean
+    opened: boolean
+    className?: string
 }
 
 export const SelectPopupList = (props: TProps): ReactElement => {
-    const opened = props?.opened ?? false;
+    const opened = props.opened;
     const listDisplay = opened ? 'block' : 'none';
 
     const onListItemSelected = (id: string): void => {
         props.onItemSelect(id);
     };
 
+    const classes = `${styles.list} ${props?.className ?? ''}`;
+
     return (
         <ul
-            className={styles.list} style={{ display: listDisplay }}
+            className={classes} style={{ display: listDisplay }}
         >
             {
                 props.items.map((listItem: ListItem) => {
