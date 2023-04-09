@@ -4,6 +4,7 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { SeriesInfo } from './SeriesInfo';
 import { SeriesInfoList } from './SeriesInfoList';
+import { QuadView } from '../QuadView';
 
 export const SeriesPreview = (): ReactElement => {
     return (
@@ -21,7 +22,7 @@ export const SeriesPreview = (): ReactElement => {
             <SplitterPanel size={60}>
                 <Splitter layout="vertical">
                     <SplitterPanel style={{ overflow: 'hidden' }}>
-                        2
+                        <QuadView/>
                     </SplitterPanel>
                     <SplitterPanel size={30} style={{ overflow: 'hidden' }}>
                         <SeriesInfoList/>
