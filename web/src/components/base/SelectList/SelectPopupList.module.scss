@@ -1,0 +1,29 @@
+
+.list {
+  position: absolute;
+  top: 45px;
+  min-width: 170px;
+  background-color: #fff;
+  border-radius: 0.375rem;
+  max-width: 200px;
+  -webkit-box-shadow: -3px 5px 21px -5px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: -3px 5px 21px -5px rgba(34, 60, 80, 0.2);
+  box-shadow: -3px 5px 21px -5px rgba(34, 60, 80, 0.2);
+  li {
+    padding: 5px 10px;
+    cursor: pointer;
+    &:hover {
+      background-color: rgb(245 245 245);
+      transition: all 0.1s;
+      color: rgb(42, 42, 42);
+    }
+
+    &:last-child {
+      border-radius: 0 0 0.375rem 0.375rem;
+    }
+
+    &:first-child {
+      border-radius: 0.375rem 0.375rem 0 0;
+    }
+  }
+}

@@ -35,7 +35,7 @@ export default class FileVolumeLoader extends VolumeLoader {
     }
 
     public async load(url: File | FileList, requests = new Map<any, any>()): Promise<any> {
-        console.log('FileVolumeLoader::load()', url);
+        console.log('[OLD APPLICATION] FileVolumeLoader::load()', url);
         const arrFiles = [];
         if (url instanceof File) {
             arrFiles.push(url);
