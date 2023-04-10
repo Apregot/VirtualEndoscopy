@@ -1,6 +1,7 @@
 import React, { type ReactElement } from 'react';
 import * as THREE from 'three';
 import { useAppSelector } from '../../../hooks/redux';
+import styles from './QuadView.module.scss';
 
 export const QuadView = (): ReactElement => {
     const { selectedPreviewSeries } = useAppSelector((state) => state.seriesReducer);
@@ -8,6 +9,7 @@ export const QuadView = (): ReactElement => {
     let title = 'NONE SELECTED';
     if (selectedPreviewSeries !== null) {
         title = `selected ${selectedPreviewSeries.getId()}`;
+        console.log(`${title} was selected`);
         const seriesStack = selectedPreviewSeries.getModel().stack[0];
 
         // old_www/js/ui/components/quadview.js:162 , загрузка серии в фреймы. Следует разобраться и добавить типы
@@ -16,6 +18,11 @@ export const QuadView = (): ReactElement => {
         console.log(RIO);
     }
     return (
-        <h1>{ title }</h1>
+        <div className={styles.wrapper}>
+            <div className={`${styles.renderer} ${styles.red}`}></div>
+            <div className={`${styles.renderer} ${styles.blue}`}></div>
+            <div className={`${styles.renderer} ${styles.yellow}`}></div>
+            <div className={`${styles.renderer} ${styles.green}`}></div>
+        </div>
     );
 };
