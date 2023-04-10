@@ -7,6 +7,7 @@ import { type Series } from '../../../lib/Series';
 
 export const SeriesInfoList = (): ReactElement => {
     const { patientsSeriesList } = useAppSelector((state) => state.seriesReducer);
+    console.log(patientsSeriesList);
     return (
         <Tabs
             defaultActiveKey="unsorted"

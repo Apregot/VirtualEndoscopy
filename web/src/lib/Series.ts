@@ -34,6 +34,10 @@ export class Series {
         return this.seriesModel.rawHeader.string('x00181030');
     }
 
+    getSeriesId(): string {
+        return this.seriesModel.rawHeader.string('x0020000e');
+    }
+
     getSD(): string {
         return this.seriesModel.seriesDescription;
     }

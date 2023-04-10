@@ -29,6 +29,15 @@ export const seriesSlice = createSlice({
 
         selectPreviewSeries: (state, action: PayloadAction<Series>) => {
             state.selectedPreviewSeries = action.payload;
+        },
+
+        deleteSeries: (state, action: PayloadAction<Series>) => {
+            for (const element of state.patientsSeriesList) {
+                if (element.at(0)?.getId === action.payload.getId) {
+                    const seriesIndex = element.findIndex(el => el.getSeriesId === action.payload.getSeriesId);
+                    element.splice(seriesIndex, 1);
+                }
+            }
         }
     }
 });

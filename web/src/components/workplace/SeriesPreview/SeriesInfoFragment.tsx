@@ -10,14 +10,15 @@ interface TProps {
 }
 
 enum ContextMenuAction {
-    OPEN_SERIES
+    OPEN_SERIES,
+    CLOSE_SERIES,
 }
 
 export const SeriesInfoFragment = (props: TProps): ReactElement => {
     const series = props.series;
     const [contextOpened, openContext] = useState(false);
 
-    const { selectPreviewSeries } = seriesSlice.actions;
+    const { selectPreviewSeries, deleteSeries } = seriesSlice.actions;
     const dispatch = useAppDispatch();
 
     // TODO: must be splitted into contextMenuAvailable component
@@ -33,12 +34,15 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
         if (itemId === ContextMenuAction.OPEN_SERIES) {
             dispatch(selectPreviewSeries(series));
         }
+        if (itemId === ContextMenuAction.CLOSE_SERIES) {
+            dispatch(deleteSeries(series));
+        }
     };
 
     useEffect(() => {
         if (contextOpened) {
             setTimeout(() => {
-                const onOtherAction = () => {
+                const onOtherAction = (): void => {
                     openContext(false);
                     document.removeEventListener('click', onOtherAction);
                     document.removeEventListener('contextmenu', onOtherAction);
@@ -70,6 +74,10 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
                     {
                         id: ContextMenuAction.OPEN_SERIES,
                         content: <span>Открыть серию</span>
+                    },
+                    {
+                        id: ContextMenuAction.CLOSE_SERIES,
+                        content: <span>Закрыть серию</span>
                     }
                 ]}
 
