@@ -8,6 +8,7 @@
   -webkit-box-shadow: -3px 5px 21px -5px rgba(34, 60, 80, 0.2);
   -moz-box-shadow: -3px 5px 21px -5px rgba(34, 60, 80, 0.2);
   box-shadow: -3px 5px 21px -5px rgba(34, 60, 80, 0.2);
+  z-index: 9999;
 }
 .list li {
   padding: 5px 10px;
