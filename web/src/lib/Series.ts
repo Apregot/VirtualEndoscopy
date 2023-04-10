@@ -26,19 +26,19 @@ export class Series {
         return this.patient.id;
     }
 
-    getSN(): string{
+    getSN(): string {
         return this.seriesModel.rawHeader.string('x00200011');
     }
 
-    getPN(): string{
+    getPN(): string {
         return this.seriesModel.rawHeader.string('x00181030');
     }
 
-    getSD(): string{
+    getSD(): string {
         return this.seriesModel.seriesDescription;
     }
 
-    getNF(): number{
+    getNF(): number {
         return this.seriesModel.numberOfFrames;
     }
 }

@@ -6,7 +6,7 @@ import { type ListItem, SelectPopupList } from './SelectPopupList';
 interface TProps {
     children: ReactNode
     items: ListItem[]
-    onItemSelect: (id: string) => void
+    onItemSelect: (id: string | number) => void
 }
 
 export const SelectList = (props: TProps): ReactElement => {

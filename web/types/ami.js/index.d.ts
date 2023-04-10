@@ -6,11 +6,13 @@
  * @see old_www/js/ami.ext.js
  */
 declare module 'ami.js' {
+    import type * as THREE from 'three';
+
     export class SeriesModel {
         seriesInstanceUID: string;
         studyInstanceUID: string;
         transferSyntaxUID: string;
-        rawHeader: any[];
+        rawHeader: RawHeader;
         seriesDate: string;
         seriesDescription: string;
         modality: string;
@@ -27,6 +29,10 @@ declare module 'ami.js' {
         numberOfChannels: number;
     }
 
+    export class RawHeader {
+        string: (val: string) => string;
+    }
+
     export class VolumeLoader {
         loadSequence: (file: File, requests: Map<any, any>) => Promise;
         loadSequenceGroup: (files: File[], requests: Map<any, any>) => Promise[];
@@ -41,7 +47,11 @@ declare module 'ami.js' {
         xCosine: number;
         yCosine: number;
         zCosine: number;
-        dimensionsIJK: Object;
+        dimensionsIJK: Dimensions;
         prepare: () => void;
+    }
+
+    export class Dimensions {
+        clone: () => THREE.Vector3;
     }
 }
