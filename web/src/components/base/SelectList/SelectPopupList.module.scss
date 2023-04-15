@@ -1,5 +1,6 @@
 
 .list {
+  color: #000000;
   position: absolute;
   top: 45px;
   min-width: 170px;
@@ -16,7 +17,7 @@
     &:hover {
       background-color: rgb(245 245 245);
       transition: all 0.1s;
-      color: rgb(42, 42, 42);
+      color: rgb(64, 64, 64);
     }
 
     &:last-child {

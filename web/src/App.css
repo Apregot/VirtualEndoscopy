@@ -1,42 +1,34 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+body {
+  background-color: var(--app-theme-bg);
+  transition: background-color 0.1s ease-in;
+  color: var(--app-theme-primary);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.p-splitter {
+  border: 1px solid var(--app-theme-bg-second);
+  background: var(--app-theme-bg);
+  transition: background-color 0.1s ease-in;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.p-splitter .p-splitter-panel {
+  background-color: var(--app-theme-bg);
+  transition: background-color 0.1s ease-in;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.p-splitter .p-splitter-gutter {
+  background: var(--app-theme-bg-second);
 }
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.p-splitter .p-splitter-gutter-resizing {
+  background: var(--app-theme-bg-third);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* Navigation bar library section */
+.nav-item .nav-link.active {
+  background-color: var(--app-theme-bg);
+  color: var(--app-theme-primary);
+  border: none;
 }
 
-.card {
-  padding: 2em;
+.nav-tabs {
+  border-bottom: none;
 }
 
-.read-the-docs {
-  color: #888;
-}
+/*# sourceMappingURL=App.css.map */

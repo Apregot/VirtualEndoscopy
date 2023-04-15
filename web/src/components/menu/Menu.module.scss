@@ -1,4 +1,16 @@
 .menu {
   padding: 10px;
   display: flex;
+  justify-content: space-between;
+  div {
+    display: flex;
+  }
+
+  .themeSwitcher {
+    span {
+      display: block;
+      padding-right: 20px;
+    }
+    margin-right: 20px;
+  }
 }

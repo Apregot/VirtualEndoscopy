@@ -12,8 +12,8 @@ interface TProps {
 export const SelectList = (props: TProps): ReactElement => {
     const [opened, setOpen] = useState<boolean>(false);
     const buttonStyles = opened
-        ? 'px-2 py-0.5 rounded-md hover:bg-neutral-100 transition-colors'
-        : `px-2 py-0.5 rounded-md hover:bg-neutral-100 transition-colors ${styles.buttonOpened}`;
+        ? `px-2 py-0.5 rounded-md transition-colors ${styles.buttonSelect}`
+        : `px-2 py-0.5 rounded-md transition-colors ${styles.buttonSelect} ${styles.buttonOpened}`;
 
     useEffect(() => {
         if (opened) {

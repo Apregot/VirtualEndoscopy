@@ -2,7 +2,7 @@
   margin-right: 20px;
   min-height: 200px;
   border-radius: 12px;
-  background-color: #f9fafb;
+  background-color: var(--app-theme-bg-second);
   padding: 10px;
   -webkit-box-shadow: 4px 7px 17px -3px rgba(34, 60, 80, 0.1);
   -moz-box-shadow: 4px 7px 17px -3px rgba(34, 60, 80, 0.1);
@@ -25,7 +25,7 @@
   margin-bottom: 2px;
 }
 .patientInfo .infoData .infoDataRow .infoDataRowValue, .patientSeries .infoData .infoDataRow .infoDataRowValue {
-  color: #18181b;
+  color: var(--app-theme-primary);
 }
 
 .contextMenu {

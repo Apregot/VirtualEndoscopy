@@ -1,6 +1,17 @@
 .menu {
   padding: 10px;
   display: flex;
+  justify-content: space-between;
+}
+.menu div {
+  display: flex;
+}
+.menu .themeSwitcher {
+  margin-right: 20px;
+}
+.menu .themeSwitcher span {
+  display: block;
+  padding-right: 20px;
 }
 
 /*# sourceMappingURL=Menu.module.css.map */

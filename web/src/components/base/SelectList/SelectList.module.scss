@@ -1,4 +1,9 @@
 
+.buttonSelect {
+  &:hover {
+    background-color: var(--app-theme-bg-second);
+  }
+}
 
 .buttonOpened {
   & .arrow {

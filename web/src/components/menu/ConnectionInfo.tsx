@@ -18,11 +18,11 @@ export const ConnectionInfo = (): ReactElement => {
 function getStatusClasses(status: ConnectionStatus): string {
     switch (status) {
         case ConnectionStatus.CONNECTED:
-            return 'text-green-600 bg-green-100';
+            return 'text-green-600 bg-green-400/30';
         case ConnectionStatus.DISCONNECTED:
-            return 'text-red-600 bg-red-100';
+            return 'text-red-600 bg-red-400/30';
         case ConnectionStatus.PROGRESS:
-            return 'text-yellow-600 bg-yellow-100';
+            return 'text-yellow-600 bg-yellow-400/30';
     }
     return '';
 }

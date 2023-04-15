@@ -4,6 +4,7 @@ import { SeriesInfo } from './SeriesInfo';
 import Tabs from 'react-bootstrap/Tabs';
 import { useAppSelector } from '../../../hooks/redux';
 import { type Series } from '../../../lib/Series';
+import styles from './SeriesInfoList.module.scss';
 
 export const SeriesInfoList = (): ReactElement => {
     const { patientsSeriesList } = useAppSelector((state) => state.seriesReducer);
@@ -12,7 +13,7 @@ export const SeriesInfoList = (): ReactElement => {
         <Tabs
             defaultActiveKey="unsorted"
             id="uncontrolled-tab-example"
-            className="bg-neutral-50"
+            className={styles.tabs}
         >
             <Tab eventKey="unsorted" title="Несортированные изображения">
         unsorted

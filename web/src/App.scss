@@ -1,0 +1,40 @@
+body {
+  background-color: var(--app-theme-bg);
+  transition: background-color 0.1s ease-in;
+  color: var(--app-theme-primary);
+}
+
+.p-splitter {
+  border: 1px solid var(--app-theme-bg-second);
+  background: var(--app-theme-bg);
+  transition: background-color 0.1s ease-in;
+
+  .p-splitter-panel {
+    background-color: var(--app-theme-bg);
+    transition: background-color 0.1s ease-in;
+  }
+
+  .p-splitter-gutter {
+    background: var(--app-theme-bg-second);
+  }
+
+  .p-splitter-gutter-resizing {
+    background: var(--app-theme-bg-third);
+  }
+}
+
+
+/* Navigation bar library section */
+
+.nav-item {
+
+  .nav-link.active {
+    background-color: var(--app-theme-bg);
+    color: var(--app-theme-primary);
+    border: none;
+  }
+}
+
+.nav-tabs {
+  border-bottom: none;
+}

@@ -168,11 +168,11 @@ goog.require('goog.ui.Component');
 			initHelpersStack(r.rx,stack);	// это функция из amiviwer.js надо от нее избавляться
 	    r.borderROI = new ROIBorder(this.ROI, r.rx.stackHelper.slice)
   		r.rx.scene.add(r.borderROI);
-  	}
-  	// это взгляд на срез с другой стороны. 
-  	// По какой-то причине рамка ROI видна только с одной стороны
-  	//
-  	this._r2.camera.invertColumns()
+  		}
+		// это взгляд на срез с другой стороны.
+		// По какой-то причине рамка ROI видна только с одной стороны
+		//
+		this._r2.camera.invertColumns()
 
 		this._r0.scene.add( this._r1.scene); this._r0.scene.add( this._r2.scene); this._r0.scene.add( this._r3.scene);
 		let centerLPS = stack.worldCenter(); //, worldbb = stack.worldBoundingBox(); 
