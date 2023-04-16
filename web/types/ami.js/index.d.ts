@@ -54,4 +54,12 @@ declare module 'ami.js' {
     export class Dimensions {
         clone: () => THREE.Vector3;
     }
+
+    export class OrthographicCamera {
+        constructor(a: number, b: number, c: number, d: number, e: number, f: number);
+    }
+
+    export class TrackballOrthoControl {
+        constructor(camera: OrthographicCamera, element: HTMLElement);
+    }
 }

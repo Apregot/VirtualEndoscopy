@@ -1,9 +1,10 @@
-import React, { type ReactElement, useEffect, useState } from 'react';
+import React, { type ReactElement, useEffect, useRef, useState } from 'react';
 import styles from './SeriesInfo.module.scss';
 import { type Series } from '../../../lib/Series';
 import { SelectPopupList } from '../../base/SelectList/SelectPopupList';
 import { seriesSlice } from '../../../store/reducers/SeriesSlice';
 import { useAppDispatch } from '../../../hooks/redux';
+import { UP3 } from '../../../lib/visualization';
 
 interface TProps {
     series: Series
@@ -20,6 +21,20 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
 
     const { selectPreviewSeries, deleteSeries } = seriesSlice.actions;
     const dispatch = useAppDispatch();
+
+    const canvasRef = useRef(null);
+
+    useEffect(() => {
+        if (canvasRef.current === null) {
+            return;
+        }
+
+        const dicomPreviewDiv = canvasRef.current as HTMLDivElement;
+        const rx = UP3.enable(dicomPreviewDiv);
+        rx.sliceColor = 0x000000;
+        UP3.initRenderer2D(dicomPreviewDiv);
+        rx.sliceOrientation = 'axial';
+    }, [canvasRef]);
 
     // TODO: must be splitted into contextMenuAvailable component
     const onContextMenuCalled = (event: React.MouseEvent): void => {
@@ -58,6 +73,7 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
     return (
         <div className="flex p-3 relative">
             <div onContextMenu={onContextMenuCalled} className={styles.patientSeries}>
+                <div ref={canvasRef}></div>
                 <span className={styles.infoTitle}>Номер: {series.getSN()}</span>
                 <div className={styles.infoData}>
                     <span className={styles.infoDataRow}>PN: <span className={styles.infoDataRowValue}>{series.getPN()}</span></span>
