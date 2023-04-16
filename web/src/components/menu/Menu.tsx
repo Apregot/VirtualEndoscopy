@@ -2,7 +2,7 @@ import React, { type ReactElement, useState, useEffect } from 'react';
 import styles from './Menu.module.scss';
 import { ConnectionInfo } from './ConnectionInfo';
 import { FileMenu } from './FilesMenu';
-import { InputSwitch } from 'primereact/inputswitch';
+import { InputSwitch, type InputSwitchChangeEvent } from 'primereact/inputswitch';
 
 interface TProps {
     onDarkThemeChanged?: (darkTheme: boolean) => void
@@ -25,7 +25,7 @@ export const Menu = (props: TProps): ReactElement => {
             </div>
             <div className={styles.themeSwitcher}>
                 <span>Темная тема</span>
-                <InputSwitch checked={darkTheme} onChange={(e) => { setDarkTheme(e.value); }}/>
+                <InputSwitch checked={darkTheme} onChange={(e: InputSwitchChangeEvent) => { setDarkTheme(e.value as boolean); }}/>
             </div>
         </div>
     );

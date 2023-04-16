@@ -1,0 +1,43 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.renderer {
+  background: rgb(24, 24, 27);
+  width: 50%;
+  height: 50%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid var(--app-theme-bg-third);
+  border-bottom: none;
+  position: absolute;
+  overflow: hidden;
+}
+
+.red {
+  border-top: 3px solid rgb(220, 38, 38);
+  left: 0;
+  top: 0;
+}
+
+.blue {
+  border-top: 3px solid rgb(37, 99, 235);
+  right: 0;
+  top: 0;
+}
+
+.yellow {
+  border-top: 3px solid rgb(250, 204, 21);
+  left: 0;
+  bottom: 0;
+}
+
+.green {
+  border-top: 3px solid rgb(74, 222, 128);
+  right: 0;
+  bottom: 0;
+}
+
+/*# sourceMappingURL=QuadView.module.css.map */
