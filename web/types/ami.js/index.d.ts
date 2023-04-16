@@ -29,6 +29,35 @@ declare module 'ami.js' {
         numberOfChannels: number;
     }
 
+    export class StackHelper {
+        constructor(stack: Stack);
+
+        index: number;
+
+        bbox: HelpersBoundingBox;
+        slice: HelpersSlice;
+        border: HelpersSlice;
+
+        orientation: number;
+        outOfBounds: number;
+
+        orientationMaxIndex: number;
+        orientationSpacing: number;
+
+        canvasWidth: number;
+        canvasHeight: number;
+        borderColor: number;
+    }
+
+    export class HelpersSlice {
+        canvasWidth: number;
+        canvasHeight: number;
+    }
+
+    export class HelpersBoundingBox {
+        visible: boolean;
+    }
+
     export class RawHeader {
         string: (val: string) => string;
     }
@@ -49,6 +78,8 @@ declare module 'ami.js' {
         zCosine: number;
         dimensionsIJK: Dimensions;
         prepare: () => void;
+        worldBoundingBox: () => [number, number, number, number, number, number];
+        worldCenter: () => THREE.Vector3;
     }
 
     export class Dimensions {
@@ -56,10 +87,25 @@ declare module 'ami.js' {
     }
 
     export class OrthographicCamera {
-        constructor(a: number, b: number, c: number, d: number, e: number, f: number);
+        constructor(left: number, right: number, top: number, bottom: number, near: number, far: number);
+
+        controls: any;
+        box: { center: THREE.Vector3, halfDimensions: THREE.Vector3 };
+        canvas: { width: number, height: number };
+        orientation: string;
+        stackOrientation: number;
+
+        update(): void;
+        fitBox(a: number, b: number): void;
+        directions: number[3];
     }
 
     export class TrackballOrthoControl {
         constructor(camera: OrthographicCamera, element: HTMLElement);
     }
+
+    /* Factory Section */
+    function orthographicCameraFactory(three: THREE): OrthographicCamera.prototype;
+    function stackHelperFactory(three: THREE): StackHelper.prototype;
+    function trackballOrthoControlFactory(three: THREE): TrackballOrthoControl.prototype;
 }

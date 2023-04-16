@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import * as AMI from 'ami.js';
 import { type WebGLRenderer } from 'three/src/renderers/WebGLRenderer';
+import { type Stack } from 'ami.js';
 
 export interface ThreeFrame {
     id: string // Имя в системе UP3
@@ -9,11 +10,13 @@ export interface ThreeFrame {
     renderer?: WebGLRenderer
     color: number
     targetID: number
-    camera: any
-    controls: any
+
+    camera: AMI.OrthographicCamera | null
+    controls: AMI.TrackballOrthoControl | null
+
     scene?: THREE.Scene
     light: any
-    stackHelper: any
+    stackHelper: AMI.StackHelper | null
     dicomInfo: any // ссылка на объект класса DicomInfo
     boxHelper: any // надо для dispose
     stack: any
@@ -92,23 +95,33 @@ export class UP3 {
         rendererObject.renderer = new THREE.WebGLRenderer({ antialias: true });
         rendererObject.renderer.autoClear = false;
         rendererObject.renderer.localClippingEnabled = true;
-        rendererObject.renderer.setSize(rendererObject.domElement.clientWidth, rendererObject.domElement.clientHeight);
+        rendererObject.renderer.setSize(128, 128);
         rendererObject.renderer.setClearColor(0x121212, 1);
         rendererObject.renderer.domElement.id = String(rendererObject.targetID);
         rendererObject.domElement.appendChild(rendererObject.renderer.domElement);
 
         /* camera */
-        rendererObject.camera = new AMI.OrthographicCamera(
-            rendererObject.domElement.clientWidth / -2,
-            rendererObject.domElement.clientWidth / 2,
-            rendererObject.domElement.clientHeight / 2,
-            rendererObject.domElement.clientHeight / -2,
+        const OrthographicCamera = AMI.orthographicCameraFactory(THREE);
+        // rendererObject.camera = new OrthographicCamera(
+        //     rendererObject.domElement.clientWidth / -2,
+        //     rendererObject.domElement.clientWidth / 2,
+        //     rendererObject.domElement.clientHeight / 2,
+        //     rendererObject.domElement.clientHeight / -2,
+        //     1,
+        //     1000
+        // );
+        rendererObject.camera = new OrthographicCamera(
+            128 / -2,
+            128 / 2,
+            128 / 2,
+            128 / -2,
             1,
             1000
         );
 
         /* controls */
-        rendererObject.controls = new AMI.TrackballOrthoControl(rendererObject.camera, rendererObject.domElement);
+        const TrackballOrthoControl = AMI.trackballOrthoControlFactory(THREE);
+        rendererObject.controls = new TrackballOrthoControl(rendererObject.camera, rendererObject.domElement);
         rendererObject.controls.staticMoving = true;
         rendererObject.controls.noRotate = true;
         rendererObject.camera.controls = rendererObject.controls;
@@ -116,8 +129,46 @@ export class UP3 {
         rendererObject.scene = new THREE.Scene();
     }
 
-    static initHelpersStack(frame: ThreeFrame, stack: any): void {
+    static initHelpersStack(frame: ThreeFrame, stack: Stack): void {
+        const StackHelper = AMI.stackHelperFactory(THREE);
+        frame.stackHelper = new StackHelper(stack);
+        frame.stackHelper.bbox.visible = false;
+        frame.stackHelper.borderColor = frame.sliceColor;
+        frame.stackHelper.canvasWidth = 128;
+        frame.stackHelper.canvasHeight = 128;
 
+        // set camera
+        const worldbb = stack.worldBoundingBox();
+        const lpsDims = new THREE.Vector3(
+            (worldbb[1] - worldbb[0]) / 2,
+            (worldbb[3] - worldbb[2]) / 2,
+            (worldbb[5] - worldbb[4]) / 2
+        );
+
+        // box: {halfDimensions, center}
+        const box = {
+            center: stack.worldCenter().clone(),
+            halfDimensions: new THREE.Vector3(lpsDims.x + 10, lpsDims.y + 10, lpsDims.z + 10)
+        };
+
+        // init and zoom
+        const canvas = {
+            width: 128,
+            height: 128
+        };
+
+        if (frame.camera === null) return;
+
+        frame.camera.directions = [stack.xCosine, stack.yCosine, stack.zCosine];
+        frame.camera.box = box;
+        frame.camera.canvas = canvas;
+        frame.camera.orientation = frame.sliceOrientation;
+        frame.camera.update();
+        frame.camera.fitBox(1, 2);
+
+        frame.stackHelper.orientation = frame.camera.stackOrientation;
+        frame.stackHelper.index = Math.floor(frame.stackHelper.orientationMaxIndex / 2);
+        frame.scene.add(frame.stackHelper);
     }
 
     static create(): ThreeFrame {
@@ -130,7 +181,6 @@ export class UP3 {
             camera: null,
             controls: null,
             light: null,
-            stackHelper: null,
             dicomInfo: null,
             boxHelper: null,
             stack: null,
@@ -141,7 +191,8 @@ export class UP3 {
             camera2: null,
             light2: null,
             sliceColor: 0x000000,
-            sliceOrientation: 'axis'
+            sliceOrientation: 'axis',
+            stackHelper: null
         };
     };
 }

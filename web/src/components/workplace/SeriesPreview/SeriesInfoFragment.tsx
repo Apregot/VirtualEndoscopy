@@ -18,22 +18,36 @@ enum ContextMenuAction {
 export const SeriesInfoFragment = (props: TProps): ReactElement => {
     const series = props.series;
     const [contextOpened, openContext] = useState(false);
+    const [seriesImg, setSeriesImg] = useState('');
 
     const { selectPreviewSeries, deleteSeries } = seriesSlice.actions;
     const dispatch = useAppDispatch();
 
+    const divRef = useRef(null);
     const canvasRef = useRef(null);
 
     useEffect(() => {
-        if (canvasRef.current === null) {
+        if (canvasRef.current === null || seriesImg !== '' || divRef.current === null) {
             return;
         }
 
-        const dicomPreviewDiv = canvasRef.current as HTMLDivElement;
+        const dicomPreviewDiv = divRef.current as HTMLDivElement;
         const rx = UP3.enable(dicomPreviewDiv);
-        rx.sliceColor = 0x000000;
+        rx.sliceColor = 0xffffff;
         UP3.initRenderer2D(dicomPreviewDiv);
         rx.sliceOrientation = 'axial';
+        UP3.initHelpersStack(rx, series.getModel().stack[0]);
+        const canvas = rx.domElement.firstChild;
+        rx.renderer.render(rx.scene, rx.camera);
+        const canvas1 = canvasRef.current as HTMLCanvasElement;
+        const ctx = canvas1.getContext('2d');
+        ctx.drawImage(canvas, 0, 0);
+        ctx.font = 'bold 36px serif';
+        // ctx.fillStyle('#ff0000');
+        const n = series.getModel().stack[0]._numberOfFrames; const xOffset = n < 10 ? 107 : n < 100 ? 90 : n < 1000 ? 70 : 50;
+        ctx.fillText(n.toString(), xOffset, 1);
+        setSeriesImg(canvas.toDataURL());
+        canvas1.style.display = 'none';
     }, [canvasRef]);
 
     // TODO: must be splitted into contextMenuAvailable component
@@ -73,7 +87,9 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
     return (
         <div className="flex p-3 relative">
             <div onContextMenu={onContextMenuCalled} className={styles.patientSeries}>
-                <div ref={canvasRef}></div>
+                <div style={{ borderRadius: '12px', overflow: 'hidden', marginBottom: '15px' }} ref={divRef}>
+                    <canvas ref={canvasRef} width='128' height='128'/>
+                </div>
                 <span className={styles.infoTitle}>Номер: {series.getSN()}</span>
                 <div className={styles.infoData}>
                     <span className={styles.infoDataRow}>PN: <span className={styles.infoDataRowValue}>{series.getPN()}</span></span>
