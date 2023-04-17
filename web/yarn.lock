@@ -730,10 +730,10 @@ ajv@^6.10.0, ajv@^6.12.4:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-ami.js@0.33.0:
-  version "0.33.0"
-  resolved "https://registry.npmjs.org/ami.js/-/ami.js-0.33.0.tgz"
-  integrity sha512-IRdFPAvFP2W0JCtSaANYBuMggMUOEx1Y+IO9Ll8cVfCpgRG7AvLCcuEKT6jJAchXQ6Cmrjg4eKs7JoGVVghMWQ==
+ami.js@0.32.0:
+  version "0.32.0"
+  resolved "https://registry.npmjs.org/ami.js/-/ami.js-0.32.0.tgz"
+  integrity sha512-2PRXIMErYEQMwLWoPBDnmWRL6YX0VdDPFTC+qcYhKRgDU2F86ynFnds22Xi9gJCgiNDWRevjUWXsrCBtnBP+pA==
   dependencies:
     dicom-parser "1.8.1"
     image-JPEG2000 "github:ReflexionMed/image-JPEG2000#master"
@@ -4249,10 +4249,10 @@ text-table@^0.2.0:
   resolved "https://registry.npmjs.org/text-table/-/text-table-0.2.0.tgz"
   integrity sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==
 
-three@0.125.2, three@latest:
-  version "0.125.2"
-  resolved "https://registry.npmjs.org/three/-/three-0.125.2.tgz"
-  integrity sha512-7rIRO23jVKWcAPFdW/HREU2NZMGWPBZ4XwEMt0Ak0jwLUKVJhcKM55eCBWyGZq/KiQbeo1IeuAoo/9l2dzhTXA==
+three@0.93.0, three@latest:
+  version "0.93.0"
+  resolved "https://registry.npmjs.org/three/-/three-0.93.0.tgz"
+  integrity sha512-Ys9+UBBsd6FxTZZl4BH7B4b2F+B2uR0cOwY7OQ/aCzU/VgO4Wmmr1LbWPH1fsTvSVik9KAuwxwOHlSC4IMGOLA==
 
 "through@>=2.2.7 <3":
   version "2.3.8"
