@@ -2,19 +2,20 @@ import * as THREE from 'three';
 import * as AMI from 'ami.js';
 import { type WebGLRenderer } from 'three/src/renderers/WebGLRenderer';
 import { type Stack } from 'ami.js';
+import { type Object3D } from 'three';
 
 export interface ThreeFrame {
     id: string // Имя в системе UP3
     domId?: string
     domElement: HTMLElement | null // HTMLElement
-    renderer?: WebGLRenderer
+    renderer: WebGLRenderer | null
     color: number
     targetID: number
 
     camera: AMI.OrthographicCamera | null
     controls: AMI.TrackballOrthoControl | null
 
-    scene?: THREE.Scene
+    scene: THREE.Scene | null
     light: any
     stackHelper: AMI.StackHelper | null
     dicomInfo: any // ссылка на объект класса DicomInfo
@@ -122,6 +123,7 @@ export class UP3 {
         /* controls */
         const TrackballOrthoControl = AMI.trackballOrthoControlFactory(THREE);
         rendererObject.controls = new TrackballOrthoControl(rendererObject.camera, rendererObject.domElement);
+        if (rendererObject.controls === null || (rendererObject.camera === null)) return;
         rendererObject.controls.staticMoving = true;
         rendererObject.controls.noRotate = true;
         rendererObject.camera.controls = rendererObject.controls;
@@ -132,6 +134,7 @@ export class UP3 {
     static initHelpersStack(frame: ThreeFrame, stack: Stack): void {
         const StackHelper = AMI.stackHelperFactory(THREE);
         frame.stackHelper = new StackHelper(stack);
+        if (frame.stackHelper === null) return;
         frame.stackHelper.bbox.visible = false;
         frame.stackHelper.borderColor = frame.sliceColor;
         frame.stackHelper.canvasWidth = 128;
@@ -157,7 +160,7 @@ export class UP3 {
             height: 128
         };
 
-        if (frame.camera === null) return;
+        if (frame.camera === null || frame.scene === null) return;
 
         frame.camera.directions = [stack.xCosine, stack.yCosine, stack.zCosine];
         frame.camera.box = box;
@@ -168,7 +171,7 @@ export class UP3 {
 
         frame.stackHelper.orientation = frame.camera.stackOrientation;
         frame.stackHelper.index = Math.floor(frame.stackHelper.orientationMaxIndex / 2);
-        frame.scene.add(frame.stackHelper);
+        frame.scene.add(frame.stackHelper as Object3D);
     }
 
     static create(): ThreeFrame {
@@ -192,7 +195,9 @@ export class UP3 {
             light2: null,
             sliceColor: 0x000000,
             sliceOrientation: 'axis',
-            stackHelper: null
+            stackHelper: null,
+            renderer: null,
+            scene: null
         };
     };
 }

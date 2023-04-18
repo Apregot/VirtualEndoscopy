@@ -7,6 +7,7 @@
  */
 declare module 'ami.js' {
     import type * as THREE from 'three';
+    import { Camera, Object3D } from 'three';
 
     export class SeriesModel {
         seriesInstanceUID: string;
@@ -29,7 +30,7 @@ declare module 'ami.js' {
         numberOfChannels: number;
     }
 
-    export class StackHelper {
+    export class StackHelper extends Object3D {
         constructor(stack: Stack);
 
         index: number;
@@ -80,13 +81,14 @@ declare module 'ami.js' {
         prepare: () => void;
         worldBoundingBox: () => [number, number, number, number, number, number];
         worldCenter: () => THREE.Vector3;
+        _numberOfFrames: number;
     }
 
     export class Dimensions {
         clone: () => THREE.Vector3;
     }
 
-    export class OrthographicCamera {
+    export class OrthographicCamera extends Camera {
         constructor(left: number, right: number, top: number, bottom: number, near: number, far: number);
 
         controls: any;
@@ -102,6 +104,8 @@ declare module 'ami.js' {
 
     export class TrackballOrthoControl {
         constructor(camera: OrthographicCamera, element: HTMLElement);
+        staticMoving: boolean;
+        noRotate: boolean;
     }
 
     /* Factory Section */

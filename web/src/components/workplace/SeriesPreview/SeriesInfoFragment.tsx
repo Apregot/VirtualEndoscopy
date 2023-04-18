@@ -33,20 +33,28 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
 
         const dicomPreviewDiv = divRef.current as HTMLDivElement;
         const rx = UP3.enable(dicomPreviewDiv);
+        if (rx.domElement === null) return;
+
         rx.sliceColor = 0xffffff;
         UP3.initRenderer2D(dicomPreviewDiv);
+
+        if (rx.renderer === null || rx.scene === null || rx.camera === null) return;
+
         rx.sliceOrientation = 'axial';
         UP3.initHelpersStack(rx, series.getModel().stack[0]);
+
         const canvas = rx.domElement.firstChild;
+        if (canvas === null) return;
         rx.renderer.render(rx.scene, rx.camera);
         const canvas1 = canvasRef.current as HTMLCanvasElement;
         const ctx = canvas1.getContext('2d');
-        ctx.drawImage(canvas, 0, 0);
+        if (ctx === null) return;
+        ctx.drawImage(canvas as CanvasImageSource, 0, 0);
         ctx.font = 'bold 36px serif';
         // ctx.fillStyle('#ff0000');
         const n = series.getModel().stack[0]._numberOfFrames; const xOffset = n < 10 ? 107 : n < 100 ? 90 : n < 1000 ? 70 : 50;
         ctx.fillText(n.toString(), xOffset, 1);
-        setSeriesImg(canvas.toDataURL());
+        setSeriesImg((canvas as HTMLCanvasElement).toDataURL());
         canvas1.style.display = 'none';
     }, [canvasRef]);
 
