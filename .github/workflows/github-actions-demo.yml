@@ -2,15 +2,18 @@ name: Virtual Endoscopy CI
 run-name: ${{ github.actor }} has pushed commit ${{ github.sha }}
 on: [push]
 jobs:
-  Try to build:
+  Try_to_build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: '14'
-      - run: cd ./web
+      - id: install
+        working-directory: ./web
+        run: npm install
       - id: build
+        working-directory: ./web
         run: npm run build
         continue-on-error: true
       - if: steps.build.outcome != 'success'
