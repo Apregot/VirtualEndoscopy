@@ -1,7 +1,11 @@
 package main
 
-import "server/internal/app"
+import (
+	"fmt"
+	"server/internal/app"
+)
 
 func main() {
 	app.Run()
+	fmt.Println("Application is running!")
 }

@@ -9,7 +9,7 @@ import (
 
 func Run() {
 	router := createRouter()
-	log.Fatal(http.ListenAndServe("localhost:8080", router))
+	log.Fatal(http.ListenAndServe(":80", router))
 }
 
 func createRouter() *httprouter.Router {
