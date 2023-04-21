@@ -22,7 +22,7 @@ func UpDockerContainer() DockerContainer {
 		log.Fatal(err)
 	}
 
-	container := DockerContainer{Port: 80}
+	container := DockerContainer{Port: 8889}
 	return container
 }
 
