@@ -14,7 +14,7 @@ type DockerContainer struct {
 
 func UpDockerContainer() DockerContainer {
 	dropContainer()
-	cmd := exec.Command("docker", "run", "-d", "-p", "80:8889", "pea/atb:latest")
+	cmd := exec.Command("docker", "run", "-d", "-p", "8889:8889", "pea/atb:latest")
 	var out bytes.Buffer
 	cmd.Stdout = &out
 	err := cmd.Run()
