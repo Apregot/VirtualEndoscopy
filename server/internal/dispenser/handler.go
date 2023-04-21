@@ -22,6 +22,8 @@ type containerCreateResult struct {
 }
 
 func (h *Handler) takeContainer(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
+	writer.Header().Set("Access-Control-Allow-Origin", "*")
+
 	var buffer bytes.Buffer
 	buffer.WriteString(SERVER_ADDR)
 	buffer.WriteString(":")
