@@ -5,19 +5,34 @@ export enum ConnectionStatus {
     DISCONNECTED,
     PROGRESS,
 };
+
+interface ServerResponse {
+    Address: string
+};
+
 export const ConnectionInfo = (): ReactElement => {
     const [status, setStatus] = useState(ConnectionStatus.DISCONNECTED);
 
     useEffect(() => {
-        const socket = new WebSocket('ws:127.0.0.1:81', 'ffr-protocol');
-        socket.onopen = function(e) {
-            alert('CONNECTED');
-            setStatus(ConnectionStatus.CONNECTED);
-        };
-        socket.onclose = function(e) {
-            alert('DISCONNECTED');
-            setStatus(ConnectionStatus.DISCONNECTED);
-        };
+        void fetch('http://158.160.65.29/atb/take', { // Фиксированный адрес сервака
+            // mode: 'cors',
+            method: 'GET'
+        }).then(async (response: Response) => {
+            return await response.json();
+        }).then((result: ServerResponse) => {
+            if (typeof result?.Address === 'string') {
+                console.log('Socket Address: ', result.Address);
+                const socket = new WebSocket(`ws:${result.Address}`, 'ffr-protocol');
+                socket.onopen = function(e) {
+                    alert('CONNECTED');
+                    setStatus(ConnectionStatus.CONNECTED);
+                };
+                socket.onclose = function(e) {
+                    alert('DISCONNECTED');
+                    setStatus(ConnectionStatus.DISCONNECTED);
+                };
+            }
+        });
     }, []);
     
     const classes = 'ml-3 mt-1 max-h-6 px-2 py-1 rounded-lg font-semibold text-xs';
