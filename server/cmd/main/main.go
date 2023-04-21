@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	app.Run()
 	fmt.Println("Application is running!")
+	app.Run()
 }
