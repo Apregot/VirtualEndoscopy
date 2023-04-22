@@ -29,13 +29,14 @@ jobs:
 #        run: echo "Build fail"; exit 1
 #      - name: onSuccess
 #        run: exit 0
-  Approve_pull_request:
+  Merge_pull_request:
     runs-on: ubuntu-latest
     needs: Test_app
     steps:
-      - name: Approve Pull Request
-        uses: juliangruber/approve-pull-request-action@v2.0.0
+      - name: Merge Pull Request
+        uses: juliangruber/merge-pull-request-action@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ github.event.pull_request.number }}
+          method: squash
           repo: Apregot/VirtualEndoscopy
