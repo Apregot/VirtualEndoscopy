@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: whats in the pull-request
-        run: ${{ toJSON(github.event.pull_request) }}
+        run: echo "${{ toJSON(github.event.pull_request) }}"
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
