@@ -1,7 +1,7 @@
 name: Virtual Endoscopy. Pull-Request to main handler
 run-name: ${{ github.actor }} has opened pull-request ${{ github.event.pull_request }}
 on:
-  pull-request:
+  pull_request:
     types: opened
     branches: [main, ci-test-2]
 jobs:
