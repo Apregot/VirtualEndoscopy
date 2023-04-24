@@ -20,7 +20,7 @@ jobs:
           key: node-modules-${{ hashFiles('./web/package-lock.json') }}
       - id: install
         working-directory: ./web
-        run: npm install
+        run: npm ci
       - id: build
         working-directory: ./web
         run: npm run build
