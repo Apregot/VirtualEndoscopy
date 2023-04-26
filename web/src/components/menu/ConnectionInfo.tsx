@@ -1,4 +1,7 @@
 import React, { useEffect, type ReactElement, useState } from 'react';
+import { SocketService } from '../../lib/connection/SocketService';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { webSocketSlice } from '../../store/reducers/WebSocketSlice';
 
 export enum ConnectionStatus {
     CONNECTED,
@@ -12,6 +15,11 @@ interface ServerResponse {
 
 export const ConnectionInfo = (): ReactElement => {
     const [status, setStatus] = useState(ConnectionStatus.DISCONNECTED);
+    
+    const { connect } = webSocketSlice.actions;
+    const dispatch = useAppDispatch();
+
+    const { webSocket, isConnected } = useAppSelector((state) => state.webSocket);
 
     useEffect(() => {
         void fetch('http://158.160.65.29/atb/take', { // Фиксированный адрес сервака
@@ -22,23 +30,26 @@ export const ConnectionInfo = (): ReactElement => {
         }).then((result: ServerResponse) => {
             if (typeof result?.Address === 'string') {
                 console.log('Socket Address: ', result.Address);
-                const socket = new WebSocket(`ws:${result.Address}`, 'ffr-protocol');
-                socket.onopen = function(e) {
-                    alert('CONNECTED');
-                    setStatus(ConnectionStatus.CONNECTED);
-                };
-                socket.onclose = function(e) {
-                    alert('DISCONNECTED');
-                    setStatus(ConnectionStatus.DISCONNECTED);
-                };
+                dispatch(connect(new SocketService(`ws:${result.Address}`)));
             }
         });
     }, []);
     
+    useEffect(() => {
+        if (isConnected) {
+            setStatus(ConnectionStatus.CONNECTED);
+        } else {
+            setStatus(ConnectionStatus.DISCONNECTED);
+        }
+    }, [webSocket]);
+    
     const classes = 'ml-3 mt-1 max-h-6 px-2 py-1 rounded-lg font-semibold text-xs';
     
     return (
-        <div className={`${classes} ${getStatusClasses(status)}`}>• {getStatusTitle(status)}</div>
+        <div>
+            <div className={`${classes} ${getStatusClasses(status)}`}>• {getStatusTitle(status)}</div>
+            <button className={'ml-3'} onClick={() => { console.log(webSocket); }}>Check Connection</button>
+        </div>
     );
 };
 

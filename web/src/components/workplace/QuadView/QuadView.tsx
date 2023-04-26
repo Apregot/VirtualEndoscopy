@@ -4,7 +4,7 @@ import { useAppSelector } from '../../../hooks/redux';
 import styles from './QuadView.module.scss';
 
 export const QuadView = (): ReactElement => {
-    const { selectedPreviewSeries } = useAppSelector((state) => state.seriesReducer);
+    const { selectedPreviewSeries } = useAppSelector((state) => state.patientsSeriesList);
 
     let title = 'NONE SELECTED';
     if (selectedPreviewSeries !== null) {
