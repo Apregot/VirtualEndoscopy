@@ -2,6 +2,7 @@ import React, { type ReactElement } from 'react';
 import { Splitter, SplitterPanel } from 'primereact/splitter';
 import { SeriesInfoList } from './SeriesInfoList';
 import { QuadView } from '../QuadView';
+import { SeriesConnection } from './SeriesConnection';
 
 export const SeriesPreview = (): ReactElement => {
     return (
@@ -12,7 +13,7 @@ export const SeriesPreview = (): ReactElement => {
                         1
                     </SplitterPanel>
                     <SplitterPanel style={{ overflow: 'hidden' }}>
-                        3
+                        <SeriesConnection/>
                     </SplitterPanel>
                 </Splitter>
             </SplitterPanel>

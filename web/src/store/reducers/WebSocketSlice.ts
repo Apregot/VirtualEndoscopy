@@ -18,6 +18,11 @@ export const webSocketSlice = createSlice({
         connect: (state, action: PayloadAction<SocketService>) => {
             state.webSocket = action.payload;
             state.isConnected = true;
+        },
+        disconnect: (state) => {
+            state.isConnected = false;
+            state.webSocket?.disconnect();
+            state.webSocket = null;
         }
     }
 });

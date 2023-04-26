@@ -15,7 +15,7 @@ interface ServerResponse {
 
 export const ConnectionInfo = (): ReactElement => {
     const [status, setStatus] = useState(ConnectionStatus.DISCONNECTED);
-    
+
     const { connect } = webSocketSlice.actions;
     const dispatch = useAppDispatch();
 
@@ -47,8 +47,7 @@ export const ConnectionInfo = (): ReactElement => {
     
     return (
         <div>
-            <div className={`${classes} ${getStatusClasses(status)}`}>• {getStatusTitle(status)}</div>
-            <button className={'ml-3'} onClick={() => { console.log(webSocket); }}>Check Connection</button>
+            <div className={`${classes} ${getStatusClasses(status)}`}>• {getStatusTitle(status)}</div>            
         </div>
     );
 };

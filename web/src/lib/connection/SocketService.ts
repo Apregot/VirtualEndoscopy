@@ -7,9 +7,13 @@ class SocketService {
         this._wsurl = wsurl;
         this._wsready = false;
         this._ws = new WebSocket(wsurl, 'ffr-protocol');
-        this._ws.onopen = function() { alert('CONNECTED'); };
-        this._ws.onclose = function() { alert('DISCONNECTED'); };
-        this._ws.onerror = function() { alert('ERROR'); };
+        this._ws.onopen = function() { console.log('connected'); };
+        this._ws.onclose = function() { console.log('disconnected'); };
+        this._ws.onerror = function() { console.log('error'); };
+    }
+
+    disconnect(): void {
+        this._ws.close();
     }
   
 // async sendRequest(req: any): Promise<string> {
