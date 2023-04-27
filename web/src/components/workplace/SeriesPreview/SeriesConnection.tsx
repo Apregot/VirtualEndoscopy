@@ -11,6 +11,7 @@ export const SeriesConnection = (): ReactElement => {
         <div>
             <button className={'ml-3'} onClick={() => { console.log(webSocket); }}>Check Connection</button>
             <button className={'ml-3'} onClick={() => { dispatch(disconnect()); }}>Disconnect</button>
+            <button className={'ml-3'} onClick={() => { webSocket?.version(); }}>Check version</button>
         </div>
     );
 };
