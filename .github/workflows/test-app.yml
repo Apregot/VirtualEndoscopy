@@ -1,10 +1,9 @@
 name: Virtual Endoscopy.Test app
-run-name: ${{ github.actor }} has added commit ${{ github.sha }} to main
+run-name: ${{ github.actor }} has added commit to main
 on:
   push:
     branches:
       - 'main'
-      - 'ci-test-2'
 
 jobs:
   Test_app:
