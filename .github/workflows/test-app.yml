@@ -1,4 +1,4 @@
-name: Virtual Endoscopy. Test app
+name: Virtual Endoscopy.Test app
 run-name: ${{ github.actor }} has added commit ${{ github.sha }} to main
 on:
   push:

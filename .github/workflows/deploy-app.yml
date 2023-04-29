@@ -1,9 +1,9 @@
-name: Virtual Endoscopy. Deploy app
+name: Virtual Endoscopy.Deploy app
 run-name: Try to deploy latest version
 on:
   workflow_run:
-    workflows: [ Virtual Endoscopy. Test app ]
-    types: [ completed ]
+    workflows: [Virtual Endoscopy.Test app]
+    types: [completed]
 jobs:
   on-success:
     runs-on: ubuntu-latest
