@@ -1,0 +1,17 @@
+name: Virtual Endoscopy. Deploy app
+run-name: Try to deploy latest version
+on:
+  workflow_run:
+    workflows: [ Virtual Endoscopy. Test app ]
+    types: [ completed ]
+jobs:
+  on-success:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - run: echo 'Deployment starts'
+  on-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - run: echo 'The tests were failed. Deployment canceled.'; exit 1;

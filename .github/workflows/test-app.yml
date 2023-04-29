@@ -1,0 +1,26 @@
+name: Virtual Endoscopy. Test app
+run-name: ${{ github.actor }} has added commit ${{ github.sha }} to main
+on:
+  push:
+    branches:
+      - 'main'
+      - 'ci-test-2'
+
+jobs:
+  Test_app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-modules-${{ hashFiles('./web/package-lock.json') }}
+      - id: install
+        working-directory: ./web
+        run: npm ci
+      - id: build
+        working-directory: ./web
+        run: npm run build
