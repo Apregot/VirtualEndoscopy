@@ -4,6 +4,7 @@ on:
   workflow_run:
     workflows: [Virtual Endoscopy.Test app]
     types: [completed]
+    branches: [main, ci-test-2]
 jobs:
   on-success:
     runs-on: ubuntu-latest
