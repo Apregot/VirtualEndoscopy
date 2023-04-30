@@ -1,6 +1,6 @@
 import React, { type ReactElement } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { webSocketSlice } from '../../../store/reducers/WebSocketSlice';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
+import { webSocketSlice } from '../../../../store/reducers/WebSocketSlice';
 
 export const SeriesConnection = (): ReactElement => {
     const { webSocket } = useAppSelector((state) => state.webSocket);

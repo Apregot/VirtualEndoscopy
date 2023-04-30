@@ -1,8 +1,9 @@
 import React, { type ReactElement } from 'react';
 import { Splitter, SplitterPanel } from 'primereact/splitter';
 import { SeriesInfoList } from './SeriesInfoList';
-import { QuadView } from '../QuadView';
-import { SeriesConnection } from './SeriesConnection';
+import { QuadView } from './QuadView';
+import { Visualization } from './Visualization';
+import { CalculationSetup } from './CalculationSetup';
 
 export const SeriesPreview = (): ReactElement => {
     return (
@@ -10,10 +11,10 @@ export const SeriesPreview = (): ReactElement => {
             <SplitterPanel size={1}>
                 <Splitter layout="vertical">
                     <SplitterPanel style={{ overflow: 'hidden' }}>
-                        1
+                        <Visualization/>
                     </SplitterPanel>
                     <SplitterPanel style={{ overflow: 'hidden' }}>
-                        <SeriesConnection/>
+                        <CalculationSetup/>
                     </SplitterPanel>
                 </Splitter>
             </SplitterPanel>

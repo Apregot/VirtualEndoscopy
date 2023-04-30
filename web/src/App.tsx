@@ -28,6 +28,7 @@ function App (): ReactElement {
             --app-theme-bg-third: rgb(38 38 38);
             --app-theme-primary: rgb(245 245 244);
             --app-theme-secondary: #cecece;
+            --app-theme-third: #808080;
           }
         `;
     } else {
@@ -38,6 +39,7 @@ function App (): ReactElement {
             --app-theme-bg-third: #e5e7eb;
             --app-theme-primary: #495057;
             --app-theme-secondary: #a1a1aa;
+            --app-theme-third: #c0bebe;
           }
         `;
     }

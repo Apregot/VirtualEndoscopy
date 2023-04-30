@@ -1,6 +1,6 @@
 import React, { type ReactElement, useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { useAppSelector } from '../../../hooks/redux';
+import { useAppSelector } from '../../../../hooks/redux';
 import styles from './QuadView.module.scss';
 
 export const QuadView = (): ReactElement => {
