@@ -24,6 +24,6 @@ func initPaths(router *httprouter.Router) {
 
 	// Для тестирования работы сервера
 	router.GET("/", func(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
-		writer.Write([]byte("Sockets works!(And deploy. Attempt 5)"))
+		writer.Write([]byte("Sockets works!(And deploy)"))
 	})
 }
