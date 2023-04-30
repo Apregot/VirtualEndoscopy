@@ -1,0 +1,36 @@
+.btn {
+  display: block;
+  background-color: rgba(255,255,255, 0.8);
+  color: rgb(37 99 235);
+  padding: 3px 12px;
+  font-size: 13px;
+  border-radius: 0.365rem;
+
+  transition: all 0.05s ease-in;
+  -webkit-box-shadow: 5px 5px 23px 0px var(--shadow-color);
+  -moz-box-shadow: 5px 5px 23px 0px var(--shadow-color);
+  box-shadow: 5px 5px 23px 0px var(--shadow-color);
+
+  &:hover {
+    background-color: #f8f8f8;
+  }
+
+  &:active {
+    background-color: #e7e7e7;
+    color: rgb(29 78 216);
+    transform: scale(0.97);
+  }
+}
+
+.btn:disabled {
+  color: #d8d8d8;
+  background-color: rgba(255,255,255, 0.2);
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+
+  &:hover {
+    transform: none;
+  }
+}
+

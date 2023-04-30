@@ -1,0 +1,8 @@
+.btnList button {
+  margin-bottom: 15px;
+}
+.btnList:last-child {
+  margin-bottom: 0 !important;
+}
+
+/*# sourceMappingURL=SeriesConnection.module.css.map */
