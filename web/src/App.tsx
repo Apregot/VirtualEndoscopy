@@ -29,6 +29,8 @@ function App (): ReactElement {
             --app-theme-primary: rgb(245 245 244);
             --app-theme-secondary: #cecece;
             --app-theme-third: #808080;
+
+            --shadow-color: rgb(216 227 234 / 27%);
           }
         `;
     } else {
@@ -40,6 +42,8 @@ function App (): ReactElement {
             --app-theme-primary: #495057;
             --app-theme-secondary: #a1a1aa;
             --app-theme-third: #c0bebe;
+
+            --shadow-color: rgba(34, 60, 80, 0.1);
           }
         `;
     }
