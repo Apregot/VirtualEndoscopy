@@ -21,10 +21,10 @@
   color: rgb(64, 64, 64);
 }
 .list li:last-child {
-  border-radius: 0 0 0.375rem 0.375rem;
+  border-radius: 0.375rem;
 }
 .list li:first-child {
-  border-radius: 0.375rem 0.375rem 0 0;
+  border-radius: 0.375rem;
 }
 
 /*# sourceMappingURL=SelectPopupList.module.css.map */

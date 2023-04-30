@@ -2,6 +2,7 @@ import React, { type ReactElement, useState, useEffect } from 'react';
 import styles from './Menu.module.scss';
 import { ConnectionInfo } from './ConnectionInfo';
 import { FileMenu } from './FilesMenu';
+import { AboutMenu } from './AboutMenu';
 import { InputSwitch, type InputSwitchChangeEvent } from 'primereact/inputswitch';
 
 interface TProps {
@@ -21,6 +22,7 @@ export const Menu = (props: TProps): ReactElement => {
         <div className={styles.menu}>
             <div>
                 <FileMenu/>
+                <AboutMenu/>
                 <ConnectionInfo/>
             </div>
             <div className={styles.themeSwitcher}>
