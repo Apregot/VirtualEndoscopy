@@ -23,7 +23,7 @@ export const SeriesPreview = (): ReactElement => {
                     <SplitterPanel style={{ overflow: 'hidden' }}>
                         <QuadView />
                     </SplitterPanel>
-                    <SplitterPanel size={30} style={{ overflow: 'hidden' }}>
+                    <SplitterPanel size={30} className="overflow-y-scroll">
                         <SeriesInfoList />
                     </SplitterPanel>
                 </Splitter>

@@ -13,7 +13,7 @@ export const SeriesInfo = (props: TProps): ReactElement => {
     const patient = series.at(0)?.getPatient();
 
     return (
-        <div className="flex p-3">
+        <div className="flex p-3 flex-wrap">
             <div className={styles.patientInfo}>
                 <span className={styles.infoTitle}>Информация o пациенте</span>
                 <div className={styles.infoData}>
