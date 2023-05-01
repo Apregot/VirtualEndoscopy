@@ -81,7 +81,10 @@ declare module 'ami.js' {
         prepare: () => void;
         worldBoundingBox: () => [number, number, number, number, number, number];
         worldCenter: () => THREE.Vector3;
+
         _numberOfFrames: number;
+        _rows: number;
+        _columns: number;
     }
 
     export class Dimensions {

@@ -1,17 +1,24 @@
 import { type SeriesModel } from 'ami.js';
 import { Patient } from './Patient';
+import { ROI } from './ROI';
 
 export class Series {
     private readonly seriesModel: SeriesModel;
     private readonly patient: Patient;
+    private readonly ROI: ROI;
 
     constructor(seriesModel: SeriesModel) {
         this.seriesModel = seriesModel;
         this.patient = new Patient(seriesModel);
+        this.ROI = new ROI(seriesModel.stack[0]);
     }
 
     getModel(): SeriesModel {
         return this.seriesModel;
+    }
+
+    getROI(): ROI {
+        return this.ROI;
     }
 
     getPatient(): Patient {
