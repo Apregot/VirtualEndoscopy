@@ -12,7 +12,7 @@ module.exports = {
         project: ['tsconfig.json']
     },
     plugins: ['react'],
-    ignorePatterns: ['**/*SVG.jsx', '../**/*.js', 'node_modules/ami.js/**/*.js'],
+    ignorePatterns: ['**/*SVG.jsx', '../**/*.js', '**/src/lib/legacy/*.js', 'node_modules/ami.js/**/*.js'],
     rules: {
         semi: [2, 'always'],
         '@typescript-eslint/semi': [2, 'always'],

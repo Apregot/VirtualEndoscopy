@@ -6,13 +6,18 @@ import ProgressBar from 'react-bootstrap/ProgressBar';
 import styles from './Segmentation.module.scss';
 import * as THREE from 'three';
 
+// @ts-expect-error unknown types
+import { FFR__driver } from '../../../../lib/legacy';
+
 export const Segmentation = (): ReactElement => {
     const { selectedPreviewSeries } = useAppSelector((state) => state.patientsSeriesList);
-    const [loader, setLoader] = useState(false);
+    const { webSocket } = useAppSelector((state) => state.webSocket);
+    // const [loader, setLoader] = useState(false);
+    const [loadProgress, setLoadProgress] = useState(0);
 
     const [ROI, setROI] = useState(new THREE.Box3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(1, 1, 1)));
 
-    const disabled = selectedPreviewSeries === null;
+    const disabled = selectedPreviewSeries === null || webSocket === null || !webSocket.isReady();
     useEffect(() => {
         if (selectedPreviewSeries !== null) {
             setROI(selectedPreviewSeries.getROI());
@@ -24,18 +29,28 @@ export const Segmentation = (): ReactElement => {
     };
 
     const initializeFFR = (): void => {
-        setLoader(true);
+        if (selectedPreviewSeries === null) return;
+        const driver = new FFR__driver(webSocket, selectedPreviewSeries.getModel());
+        console.log('driver', driver);
+        const p = new Promise(resolve => {
+            driver.start((val: any) => {
+                val = Number(val);
+                if (typeof val === 'number') {
+                    setLoadProgress(val);
+                } 
+            }).then(() => { resolve(1); }); 
+        });
     };
 
     return (
         <div>
             {
-                loader
+                loadProgress > 0
                     ? (
-                        <Popup onClose={() => { setLoader(false); }} title={'Transfering DICOM data'} show={true}>
+                        <Popup onClose={() => { console.log('closed'); }} title={'Transfering DICOM data'} show={true}>
                             <div style={{ paddingBottom: '20px' }}>
-                        Загрузка DICOM...
-                                <ProgressBar animated now={60} label={'60%'} />
+                                {loadProgress < 100 ? 'Загрузка DICOM...' : 'DICOM успешно загружен! To be continued...'}
+                                <ProgressBar animated now={loadProgress} label={`${loadProgress}%`} />
                             </div>
                         </Popup>
                     )
