@@ -1,23 +1,25 @@
 import { type SeriesModel } from 'ami.js';
 import { Patient } from './Patient';
-import { ROI } from './ROI';
+import * as THREE from 'three';
 
 export class Series {
     private readonly seriesModel: SeriesModel;
     private readonly patient: Patient;
-    private readonly ROI: ROI;
+    private readonly ROI: THREE.Box3;
 
     constructor(seriesModel: SeriesModel) {
         this.seriesModel = seriesModel;
         this.patient = new Patient(seriesModel);
-        this.ROI = new ROI(seriesModel.stack[0]);
+        this.ROI = new THREE.Box3(new THREE.Vector3(0, 0, 0), seriesModel.stack[0].dimensionsIJK.clone());
+        console.log(this.ROI.min);
+        console.log(this.ROI.max);
     }
 
     getModel(): SeriesModel {
         return this.seriesModel;
     }
 
-    getROI(): ROI {
+    getROI(): THREE.Box3 {
         return this.ROI;
     }
 

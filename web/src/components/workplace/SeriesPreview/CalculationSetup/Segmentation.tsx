@@ -4,37 +4,27 @@ import { useAppSelector } from '../../../../hooks/redux';
 import { Popup } from '../../../base/Popup';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import styles from './Segmentation.module.scss';
+import * as THREE from 'three';
 
 export const Segmentation = (): ReactElement => {
     const { selectedPreviewSeries } = useAppSelector((state) => state.patientsSeriesList);
     const [loader, setLoader] = useState(false);
 
-    const [ROI, setROI] = useState({
-        xStart: 0,
-        xEnd: 1,
-        yStart: 0,
-        yEnd: 1,
-        zStart: 0,
-        zEnd: 1
-    });
+    const [ROI, setROI] = useState(new THREE.Box3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(1, 1, 1)));
 
     const disabled = selectedPreviewSeries === null;
     useEffect(() => {
         if (selectedPreviewSeries !== null) {
-            const ROI = selectedPreviewSeries.getROI();
-            setROI({
-                xStart: ROI.getX(),
-                yStart: ROI.getY(),
-                zStart: ROI.getZ(),
-                xEnd: ROI.getXDistance(),
-                yEnd: ROI.getYDistance(),
-                zEnd: ROI.getZDistance()
-            });
+            setROI(selectedPreviewSeries.getROI());
         }
     }, [selectedPreviewSeries]);
 
     const handleChange = (event: ChangeEvent): void => {
 
+    };
+
+    const initializeFFR = (): void => {
+        setLoader(true);
     };
 
     return (
@@ -56,22 +46,22 @@ export const Segmentation = (): ReactElement => {
                 <div>
                     <label>Позиция (x, y, z)</label>
                     <div>
-                        <input type="number" min="0" name="xStart" value={ROI.xStart} onChange={handleChange} />
-                        <input type="number" min="0" name="yStart" value={ROI.yStart} onChange={handleChange} />
-                        <input type="number" min="0" name="zStart" value={ROI.zStart} onChange={handleChange} />
+                        <input type="number" min="0" name="xStart" value={ROI.min.x} onChange={handleChange} />
+                        <input type="number" min="0" name="yStart" value={ROI.min.y} onChange={handleChange} />
+                        <input type="number" min="0" name="zStart" value={ROI.min.z} onChange={handleChange} />
                     </div>
                 </div>
                 <div>
                     <label>Размер (x, y, z)</label>
                     <div>
-                        <input type="number" min="1" name="xEnd" value={ROI.xEnd} onChange={handleChange} />
-                        <input type="number" min="1" name="yEnd" value={ROI.yEnd} onChange={handleChange} />
-                        <input type="number" min="1" name="zEnd" value={ROI.zEnd} onChange={handleChange} />
+                        <input type="number" min="1" name="xEnd" value={ROI.max.x} onChange={handleChange} />
+                        <input type="number" min="1" name="yEnd" value={ROI.max.y} onChange={handleChange} />
+                        <input type="number" min="1" name="zEnd" value={ROI.max.z} onChange={handleChange} />
                     </div>
                 </div>
                 <div className={styles.buttons}>
                     <BaseButton onClick={() => {}}>Сбросить ROI</BaseButton>
-                    <BaseButton disabled={disabled} onClick={() => { console.log('initializing ffr...'); setLoader(true); }}>Initialize FFR processing</BaseButton>
+                    <BaseButton disabled={disabled} onClick={initializeFFR}>Initialize FFR processing</BaseButton>
                 </div>
             </div>
         </div>
