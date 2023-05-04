@@ -47,45 +47,60 @@ class SocketService {
 
     version(): void { this.sendRequest('version').then(value => { console.log('version: ', value); }).catch(error => { console.log('error: ', error); }); }
 
-    // async sendRequestReturningArrayBuffer(req: any): Promise<any> {
-    //     if (!this._wsready) return await Promise.reject('no connection to server');
+    /**
+     * @legacy
+     *
+     * @param req
+     */
+    async sendRequestReturningArrayBuffer(req: Blob): Promise<ArrayBuffer> {
+        if (!this._wsready) throw Error('no connection to server');
 
-    //     // это эксперименты с декодированием binary CMD -> string
-    //     // работать то работает (если раскомментировать reqToString)
-    //     // но GCC при компиляции очень сильно ругается поэтому ладно, пусть будет по старинке
-    //     // console.log("sending on ffr-protocol: ", await this.reqToString(req)) 
+        // это эксперименты с декодированием binary CMD -> string
+        // работать то работает (если раскомментировать reqToString)
+        // но GCC при компиляции очень сильно ругается поэтому ладно, пусть будет по старинке
+        // console.log("sending on ffr-protocol: ", await this.reqToString(req))
 
-    //     console.log('sending on ffr-protocol (binary): ', req);
+        // TODO: вынести логирование таких вещей, как покрытие легаси кода, в отдельный класс Logger. Это позволит одним действием вырубать логирование для production сборок
+        console.log('[OLD APPLICATION] sending on ffr-protocol (binary): ', req);
 
-    //     return await new Promise((resolve, reject) => {
-    //         this._ws.onmessage = (e) => { resolve(e.data); };
-    //         this._ws.onerror = reject;
-    //         this._ws.binaryType = 'arraybuffer';
-    //         this._ws.send(req);
-    //     }); 
-    // }
-
-    // async AortaSearch_FindAorta(numCircles, minRadius, maxRadius) {
-    //     numCircles = numCircles || 2;
-    //     minRadius = minRadius || 10;
-    //     maxRadius = maxRadius || 35;
-
-    //     const cmd = FSF.CMD(this.CMD.AortaSearch_FindAorta);
-
-    //     // min и max радиусы по смыслу являются float, но в силу их приблизительности,
-    //     // округление до int вполне допустимо, поэтому параметры передаются одним массивом
-    //     //
-    //     const params = FSF.Array(new Uint16Array([numCircles, minRadius, maxRadius]));
-    //     const b2 = new Blob([cmd, params]);
-    //     // return this.sendRequestFSF(b2); // sendRequestFSF надо вообще убрать
-    //     console.log('sending on ffr-protocol: binary CMD AortaSearch_FindAorta');
-    //     return await this.sendRequestReturningArrayBuffer(b2);        
-    // }
+        return await new Promise((resolve, reject) => {
+            this._ws.onmessage = (e) => { resolve(e.data); };
+            this._ws.onerror = reject;
+            this._ws.binaryType = 'arraybuffer';
+            this._ws.send(req);
+        });
+    }
 
     /**
-     * For legacy working
-     * stack: передаваемый стек серии
-     * func: функция которая выполняется во время прогресса транспорта данных
+     * @legacy
+     *
+     * Функция ищет аорты после успешной загрузки данных на сервер
+     *
+     * @param numCircles
+     * @param minRadius
+     * @param maxRadius
+     * @constructor
+     */
+    async AortaSearch_FindAorta(numCircles = 35, minRadius = 10, maxRadius = 2): Promise<ArrayBuffer> {
+        const cmd = FSF.CMD(this.CMD.AortaSearch_FindAorta);
+
+        // min и max радиусы по смыслу являются float, но в силу их приблизительности,
+        // округление до int вполне допустимо, поэтому параметры передаются одним массивом
+        //
+        const params = FSF.Array(new Uint16Array([numCircles, minRadius, maxRadius]));
+        const b2 = new Blob([cmd, params]);
+        // return this.sendRequestFSF(b2); // sendRequestFSF надо вообще убрать
+
+        // TODO: вынести логирование таких вещей, как покрытие легаси кода, в отдельный класс Logger. Это позволит одним действием вырубать логирование для production сборок
+        console.log('[OLD APPLICATION] sending on ffr-protocol: binary CMD AortaSearch_FindAorta');
+        return await this.sendRequestReturningArrayBuffer(b2);
+    }
+
+    /**
+     * @legacy
+     *
+     * @param stack передаваемый стек серии
+     * @param func функция которая выполняется во время прогресса транспорта данных
      */
     async TransferCube(stack: any, func: any): Promise<any> {
         /* eslint-disable @typescript-eslint/naming-convention,  @typescript-eslint/restrict-plus-operands */
@@ -99,7 +114,7 @@ class SocketService {
         return await new Promise((resolve, reject) => {
             this._ws.onmessage = (e) => { resolve(e.data); };
             this._ws.onerror = reject;
-            console.log('sending on ffr-protocol: binary CMD LOAD CUBE');
+            console.log('[OLD APPLICATION] sending on ffr-protocol: binary CMD LOAD CUBE');
 
             const cmd = FSF.CMD(this.CMD.LOAD_CUBE);
             const cube_UID = new Uint8Array(32); cube_UID[0] = 255; // TBD: вычислить sha-256 хэш

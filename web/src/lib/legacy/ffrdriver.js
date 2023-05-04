@@ -3,7 +3,7 @@
  * FFR__driver это класс сценария обработки, то есть главный дирижер, который координирует UI и вызовы методов serverInterface 
  * Ниже serverInterface это технический класс доступа к серверу FFR, он знает протокол и т.д.
 */
-
+import { FSF } from '../legacy';
 // FFR__driver: в этом варианте реализует сценарий Почукаева-113 (много хардкода пока)  
 //
 export class FFR__driver {
@@ -32,7 +32,7 @@ export class FFR__driver {
      * Шаг-1: FFR::AortaSearch_FindAorta
      * @returns {Promise<void>}
      */
-    async start (
+    async start(
         onLoadingProgress
     ) {
         console.log('FFR__driver::start()');
@@ -56,7 +56,6 @@ export class FFR__driver {
             }
         });
 
-        return // TBD....
 
         const ret_aorta_search = await this._ffrsrv.AortaSearch_FindAorta();
         // console.log('ret_aorta_search=',hex(ret_aorta_search,32));
@@ -68,7 +67,14 @@ export class FFR__driver {
         const search_result = FSF.parseBuffer(ret_aorta_search);
         // console.log('search_result',search_result);
         const resp = search_result[0];	// это либо OK либо ERR
-        if (!resp.result) { FFR.viewer.showInfoMessage(resp.reason); } else {
+        if (!resp.result)
+        {
+            console.log('AortaSearchError', resp);
+        }
+        else
+        {
+            console.log('Success AourtaSearch: ', search_result);
+            return;
             const blob = new Blob([search_result[1]], { type: 'image/png' }); 
             const d8 = new Dialog8(this._stack, blob, search_result[2]);
             d8.exec(

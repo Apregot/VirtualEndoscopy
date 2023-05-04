@@ -38,7 +38,7 @@ export const Segmentation = (): ReactElement => {
                 if (typeof val === 'number') {
                     setLoadProgress(val);
                 } 
-            }).then(() => { resolve(1); }); 
+            });
         });
     };
 
