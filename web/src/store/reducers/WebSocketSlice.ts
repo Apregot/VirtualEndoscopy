@@ -2,14 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { SocketService } from '../../lib/connection/SocketService';
 import axios from 'axios';
 
-export interface FulfilledAction<PromiseResult> {
-    type: string
-    payload: PromiseResult
-    meta: {
-        requestId: string
-    }
-}
-
 export const fetchURL = createAsyncThunk(
     'webSocket/fetchURL',
     async (thunkAPI) => {
@@ -48,6 +40,9 @@ export const webSocketSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchURL.pending, (state) => {
             state.status = 'PROGRESS';
+        });
+        builder.addCase(fetchURL.rejected, (state) => {
+            state.status = 'DISCONNECTED';
         });
     }
 });
