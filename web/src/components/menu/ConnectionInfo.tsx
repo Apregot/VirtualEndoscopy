@@ -1,7 +1,5 @@
 import React, { useEffect, type ReactElement, useState } from 'react';
-import { SocketService } from '../../lib/connection/SocketService';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { webSocketSlice } from '../../store/reducers/WebSocketSlice';
+import { useAppSelector } from '../../hooks/redux';
 
 export enum ConnectionStatus {
     CONNECTED,
@@ -9,45 +7,32 @@ export enum ConnectionStatus {
     PROGRESS,
 };
 
-interface ServerResponse {
-    Address: string
-};
-
 export const ConnectionInfo = (): ReactElement => {
-    const [status, setStatus] = useState(ConnectionStatus.DISCONNECTED);
+    const [connectionStatus, setConnectionStatus] = useState(ConnectionStatus.DISCONNECTED);
 
-    const { connect } = webSocketSlice.actions;
-    const dispatch = useAppDispatch();
-
-    const { webSocket, isConnected } = useAppSelector((state) => state.webSocket);
-
-    useEffect(() => {
-        void fetch('http://158.160.65.29/atb/take', { // Фиксированный адрес сервака
-            // mode: 'cors',
-            method: 'GET'
-        }).then(async (response: Response) => {
-            return await response.json();
-        }).then((result: ServerResponse) => {
-            if (typeof result?.Address === 'string') {
-                console.log('Socket Address: ', result.Address);
-                dispatch(connect(new SocketService(`ws:${result.Address}`)));
-            }
-        });
-    }, []);
+    const { status } = useAppSelector((state) => state.webSocket);
     
     useEffect(() => {
-        if (isConnected) {
-            setStatus(ConnectionStatus.CONNECTED);
-        } else {
-            setStatus(ConnectionStatus.DISCONNECTED);
+        switch (status) {
+            case 'CONNECTED':
+                setConnectionStatus(ConnectionStatus.CONNECTED);
+                break;
+            case 'DISCONNECTED':
+                setConnectionStatus(ConnectionStatus.DISCONNECTED);
+                break;
+            case 'PROGRESS':
+                setConnectionStatus(ConnectionStatus.PROGRESS);
+                break;
+            default:
+                setConnectionStatus(ConnectionStatus.DISCONNECTED);   
         }
-    }, [webSocket]);
+    }, [status]);
     
     const classes = 'ml-3 mt-1 max-h-6 px-2 py-1 rounded-lg font-semibold text-xs';
     
     return (
         <div>
-            <div className={`${classes} ${getStatusClasses(status)}`}>• {getStatusTitle(status)}</div>            
+            <div className={`${classes} ${getStatusClasses(connectionStatus)}`}>• {getStatusTitle(connectionStatus)}</div>            
         </div>
     );
 };
@@ -71,7 +56,7 @@ function getStatusTitle(status: ConnectionStatus): string {
     case ConnectionStatus.DISCONNECTED:
         return 'Disconnected';
     case ConnectionStatus.PROGRESS:
-        return 'Connection...';
+        return 'Connecting...';
     }
     return 'Undefined';
 }
