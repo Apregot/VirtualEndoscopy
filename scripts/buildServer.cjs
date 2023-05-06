@@ -8,8 +8,12 @@ const execCallback = (err, stdout, stderr) => {
 	console.log(`out: ${stdout}`);
 }
 
+const envCommand = 'go env -w CGO_ENABLED=0';
+exec(envCommand, execCallback);
+
 const buildDir = path.normalize(__dirname +  "/../builtServer") + "/";
 console.log('buildDir: ' + buildDir);
+
 const command = "go build -C ./server/cmd/main -o " + buildDir;
 console.log('command: ' + command);
 exec(command, execCallback);
