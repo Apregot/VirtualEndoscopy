@@ -13,9 +13,9 @@ jobs:
       - name: download artifact
         uses: actions/download-artifact@v3
         with:
-          name: my-artifact
+          name: builtServer
           path: builtServer
-      - name: copy file via ssh password
+      - name: copy file via ssh
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.HOST }}
@@ -23,7 +23,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "./builtServer/*"
           target: ./builtServer
-      - name: executing remote ssh commands using ssh key
+      - name: executing remote ssh command
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.DEPLOY_HOST }}
