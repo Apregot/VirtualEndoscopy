@@ -93,16 +93,18 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
     }, [contextOpened]);
 
     return (
-        <div className="flex p-3 relative">
+        <div className="flex relative">
             <div onContextMenu={onContextMenuCalled} className={styles.patientSeries}>
-                <div style={{ borderRadius: '12px', overflow: 'hidden', marginBottom: '15px' }} ref={divRef}>
+                <div style={{ borderRadius: '12px', overflow: 'hidden', marginRight: '15px' }} ref={divRef}>
                     <canvas ref={canvasRef} width='128' height='128'/>
                 </div>
-                <span className={styles.infoTitle}>Номер: {series.getSN()}</span>
-                <div className={styles.infoData}>
-                    <span className={styles.infoDataRow}>PN: <span className={styles.infoDataRowValue}>{series.getPN()}</span></span>
-                    <span className={styles.infoDataRow}>SD: <span className={styles.infoDataRowValue}>{series.getSD()}</span></span>
-                    <span className={styles.infoDataRow}>Кадров: <span className={styles.infoDataRowValue}>{series.getNF()}</span></span>
+                <div>
+                    <span className={styles.infoTitle}>Номер: {series.getSN()}</span>
+                    <div className={styles.infoData}>
+                        <span className={styles.infoDataRow}>PN: <span className={styles.infoDataRowValue}>{series.getPN()}</span></span>
+                        <span className={styles.infoDataRow}>SD: <span className={styles.infoDataRowValue}>{series.getSD()}</span></span>
+                        <span className={styles.infoDataRow}>Кадров: <span className={styles.infoDataRowValue}>{series.getNF()}</span></span>
+                    </div>
                 </div>
             </div>
             <SelectPopupList

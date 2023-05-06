@@ -19,11 +19,7 @@ func createRouter() *httprouter.Router {
 }
 
 func initPaths(router *httprouter.Router) {
-	handler := dispenser.Handler{}
-	handler.Register(router)
-
-	// Для тестирования работы сервера
-	router.GET("/", func(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
-		writer.Write([]byte("Sockets works!(And deploy. Final?)"))
-	})
+	dispenserHandler := dispenser.Handler{}
+	dispenserHandler.Register(router)
+	Register(router)
 }

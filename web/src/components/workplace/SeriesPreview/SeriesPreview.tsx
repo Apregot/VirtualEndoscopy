@@ -8,12 +8,12 @@ import { CalculationSetup } from './CalculationSetup';
 export const SeriesPreview = (): ReactElement => {
     return (
         <Splitter style={{ height: '90vh' }}>
-            <SplitterPanel size={1}>
+            <SplitterPanel size={45}>
                 <Splitter layout="vertical">
                     <SplitterPanel style={{ overflow: 'hidden' }}>
                         <Visualization/>
                     </SplitterPanel>
-                    <SplitterPanel style={{ overflow: 'hidden' }}>
+                    <SplitterPanel className="overflow-y-scroll">
                         <CalculationSetup/>
                     </SplitterPanel>
                 </Splitter>
@@ -23,7 +23,7 @@ export const SeriesPreview = (): ReactElement => {
                     <SplitterPanel style={{ overflow: 'hidden' }}>
                         <QuadView />
                     </SplitterPanel>
-                    <SplitterPanel size={30} style={{ overflow: 'hidden' }}>
+                    <SplitterPanel size={30} className="overflow-y-scroll">
                         <SeriesInfoList />
                     </SplitterPanel>
                 </Splitter>

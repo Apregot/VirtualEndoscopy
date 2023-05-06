@@ -8,14 +8,13 @@
     display: block;
     margin-bottom: 15px;
   }
-  min-height: 200px;
   border-radius: 12px;
   background-color: var(--app-theme-bg-second);
   padding: 10px;
   -webkit-box-shadow: 4px 7px 17px -3px rgba(34, 60, 80, 0.1);
   -moz-box-shadow: 4px 7px 17px -3px rgba(34, 60, 80, 0.1);
   box-shadow: 4px 7px 17px -3px rgba(34, 60, 80, 0.1);
-
+  margin-bottom: 20px;
   .infoData {
     display: flex;
     flex-direction: column;
@@ -29,6 +28,17 @@
       }
     }
   }
+}
+
+.patientSeries {
+  display: flex;
+
+  max-height: 240px;
+  min-width: 180px;
+}
+
+.patientInfo {
+  background-color: var(--app-theme-bg-third);
 }
 
 .contextMenu {
