@@ -1,6 +1,6 @@
 import React, { type ReactElement } from 'react';
 import { BorderedBox } from '.././../../base/BorderedBox';
-import { SeriesConnection } from './SeriesConnection';
+import { SeriesConnection } from './ConnectionInfo';
 import { Segmentation } from './Segmentation';
 
 export const CalculationSetup = (): ReactElement => {
