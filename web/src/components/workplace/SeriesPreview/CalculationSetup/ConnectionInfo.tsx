@@ -7,7 +7,7 @@ import { type RootState } from '../../../../store/ApplicationStore';
 import { type SocketService } from '../../../../lib/connection/SocketService';
 ;
 
-export const SeriesConnection = (): ReactElement => {
+export const ConnectionInfo = (): ReactElement => {
     const { webSocket } = useAppSelector((state: RootState) => state.webSocket);
     const { disconnect, connect } = webSocketSlice.actions;
     const dispatch = useAppDispatch();

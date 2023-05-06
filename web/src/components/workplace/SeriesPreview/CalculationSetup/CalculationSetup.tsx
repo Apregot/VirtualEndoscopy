@@ -1,6 +1,6 @@
 import React, { type ReactElement } from 'react';
 import { BorderedBox } from '.././../../base/BorderedBox';
-import { SeriesConnection } from './ConnectionInfo';
+import { ConnectionInfo } from './ConnectionInfo';
 import { Segmentation } from './Segmentation';
 
 export const CalculationSetup = (): ReactElement => {
@@ -10,7 +10,7 @@ export const CalculationSetup = (): ReactElement => {
                 <Segmentation/>
             </BorderedBox>
             <BorderedBox title="Настройки соединения">
-                <SeriesConnection/>
+                <ConnectionInfo/>
             </BorderedBox>
         </>
     );

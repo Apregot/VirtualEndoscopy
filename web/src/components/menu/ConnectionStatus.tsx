@@ -1,30 +1,30 @@
 import React, { useEffect, type ReactElement, useState } from 'react';
 import { useAppSelector } from '../../hooks/redux';
 
-export enum ConnectionStatus {
+export enum Status {
     CONNECTED,
     DISCONNECTED,
     PROGRESS,
 };
 
-export const ConnectionInfo = (): ReactElement => {
-    const [connectionStatus, setConnectionStatus] = useState(ConnectionStatus.DISCONNECTED);
+export const ConnectionStatus = (): ReactElement => {
+    const [connectionStatus, setConnectionStatus] = useState(Status.DISCONNECTED);
 
     const { status } = useAppSelector((state) => state.webSocket);
     
     useEffect(() => {
         switch (status) {
             case 'CONNECTED':
-                setConnectionStatus(ConnectionStatus.CONNECTED);
+                setConnectionStatus(Status.CONNECTED);
                 break;
             case 'DISCONNECTED':
-                setConnectionStatus(ConnectionStatus.DISCONNECTED);
+                setConnectionStatus(Status.DISCONNECTED);
                 break;
             case 'PROGRESS':
-                setConnectionStatus(ConnectionStatus.PROGRESS);
+                setConnectionStatus(Status.PROGRESS);
                 break;
             default:
-                setConnectionStatus(ConnectionStatus.DISCONNECTED);   
+                setConnectionStatus(Status.DISCONNECTED);   
         }
     }, [status]);
     
@@ -37,25 +37,25 @@ export const ConnectionInfo = (): ReactElement => {
     );
 };
 
-function getStatusClasses(status: ConnectionStatus): string {
+function getStatusClasses(status: Status): string {
     switch (status) {
-    case ConnectionStatus.CONNECTED:
+    case Status.CONNECTED:
         return 'text-green-600 bg-green-400/30';
-    case ConnectionStatus.DISCONNECTED:
+    case Status.DISCONNECTED:
         return 'text-red-600 bg-red-400/30';
-    case ConnectionStatus.PROGRESS:
+    case Status.PROGRESS:
         return 'text-yellow-600 bg-yellow-400/30';
     }
     return '';
 }
 
-function getStatusTitle(status: ConnectionStatus): string {
+function getStatusTitle(status: Status): string {
     switch (status) {
-    case ConnectionStatus.CONNECTED:
+    case Status.CONNECTED:
         return 'Connected';
-    case ConnectionStatus.DISCONNECTED:
+    case Status.DISCONNECTED:
         return 'Disconnected';
-    case ConnectionStatus.PROGRESS:
+    case Status.PROGRESS:
         return 'Connecting...';
     }
     return 'Undefined';
