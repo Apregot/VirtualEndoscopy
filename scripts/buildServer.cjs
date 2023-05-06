@@ -8,8 +8,8 @@ const execCallback = (err, stdout, stderr) => {
 	console.log(`out: ${stdout}`);
 }
 
-const buildDir = path.normalize(__dirname +  "\\..\\builtServer") + "\\";
+const buildDir = path.normalize(__dirname +  "/../builtServer") + "\\";
 console.log('buildDir: ' + buildDir);
-const command = "go build -C .\\server\\cmd\\main -o " + buildDir;
+const command = "go build -C ./server/cmd/main -o " + buildDir;
 console.log('command: ' + command);
 exec(command, execCallback);
