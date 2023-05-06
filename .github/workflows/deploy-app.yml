@@ -23,7 +23,7 @@ jobs:
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "./builtServer/*"
-          target: ./builtServer
+          target: ~
       - name: executing remote ssh command
         uses: appleboy/ssh-action@v0.1.10
         with:
