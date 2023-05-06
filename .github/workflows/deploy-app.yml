@@ -11,19 +11,20 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: download artifact
-        uses: actions/download-artifact@v3
+        uses: dawidd6/action-download-artifact@v2
         with:
-          name: my-artifact
+          run_id: ${{ github.event.workflow_run.id }}
+          name: builtServer
           path: builtServer
-      - name: copy file via ssh password
+      - name: copy file via ssh
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "./builtServer/*"
-          target: ./builtServer
-      - name: executing remote ssh commands using ssh key
+          target: ${{ secrets.DEPLOY_DIRECTORY }}
+      - name: executing remote ssh command
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.DEPLOY_HOST }}
