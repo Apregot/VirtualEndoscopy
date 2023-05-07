@@ -7,14 +7,15 @@
 
     .menuButton {
       height: 20px;
-      width: 25px;
+      width: 26px;
       cursor: pointer;
       background-image: url('data:image/svg+xml,\
-      <svg width="100" height="30" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">\
-        <circle cx="4" cy="8" r="3" fill="white" stroke="black"/>\
-      <circle cx="13" cy="8" r="3" fill="white" stroke="black"/>\
-      <circle cx="22" cy="8" r="3" fill="white" stroke="black"/>\
-      </svg>');
+        <svg width="100" height="30" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">\
+          <circle cx="4" cy="8" r="3" fill="white" stroke="black"/>\
+          <circle cx="13" cy="8" r="3" fill="white" stroke="black"/>\
+          <circle cx="22" cy="8" r="3" fill="white" stroke="black"/>\
+        </svg>'
+      );
     }
   }
   .infoTitle {
