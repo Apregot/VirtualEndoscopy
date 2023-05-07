@@ -14,10 +14,14 @@ export const Segmentation = (): ReactElement => {
     const { webSocket } = useAppSelector((state) => state.webSocket);
     // const [loader, setLoader] = useState(false);
     const [loadProgress, setLoadProgress] = useState(0);
+    const [disabledFFR, setDisabledFFR] = useState(false);
+    console.log(webSocket);
 
     const [ROI, setROI] = useState(new THREE.Box3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(1, 1, 1)));
 
-    const disabled = selectedPreviewSeries === null || webSocket === null || !webSocket.isReady();
+    useEffect(() => {
+        setDisabledFFR(webSocket === null);
+    }, [webSocket]);
     useEffect(() => {
         if (selectedPreviewSeries !== null) {
             setROI(selectedPreviewSeries.getROI());
@@ -76,7 +80,7 @@ export const Segmentation = (): ReactElement => {
                 </div>
                 <div className={styles.buttons}>
                     <BaseButton onClick={() => {}}>Сбросить ROI</BaseButton>
-                    <BaseButton disabled={disabled} onClick={initializeFFR}>Initialize FFR processing</BaseButton>
+                    <BaseButton disabled={disabledFFR} onClick={initializeFFR}>Initialize FFR processing</BaseButton>
                 </div>
             </div>
         </div>
