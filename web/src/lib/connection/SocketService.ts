@@ -1,3 +1,4 @@
+import { type Stack } from 'ami.js';
 import { FSF } from './FSF';
 
 class SocketService {
@@ -48,7 +49,7 @@ class SocketService {
     /**
      * @legacy
      *
-     * @param req
+     * @param reqconsole.log(stack.ijk2LPS.elements);
      */
     async sendRequestReturningArrayBuffer(req: Blob): Promise<ArrayBuffer> {
         if (!this.wsready) throw Error('no connection to server');
@@ -79,7 +80,7 @@ class SocketService {
      * @param maxRadius
      * @constructor
      */
-    async AortaSearch_FindAorta(numCircles = 35, minRadius = 10, maxRadius = 2): Promise<ArrayBuffer> {
+    async AortaSearch_FindAorta(numCircles: number = 35, minRadius: number = 10, maxRadius: number = 2): Promise<ArrayBuffer> {
         const cmd = FSF.cmd(this.CMD.AortaSearch_FindAorta);
 
         // min и max радиусы по смыслу являются float, но в силу их приблизительности,
@@ -100,20 +101,20 @@ class SocketService {
      * @param stack передаваемый стек серии
      * @param func функция которая выполняется во время прогресса транспорта данных
      */
-    async TransferCube(stack: any, func: any): Promise<any> {
+    async TransferCube(stack: Stack, func: any): Promise<any> {
         /* eslint-disable @typescript-eslint/naming-convention,  @typescript-eslint/restrict-plus-operands */
 
         console.log('TransferCube()');
         if (!this.wsready) throw Error('no connection to server');
 
-        const slope = stack.rescaleSlope; const intercept = stack.rescaleIntercept;
+        const slope = stack.rescaleSlope;
+        const intercept = stack.rescaleIntercept;
         const needSlopeInterceptCalc = (slope !== 1 || intercept !== 0);
 
         return await new Promise((resolve, reject) => {
             this.ws.onmessage = (e) => { resolve(e.data); };
             this.ws.onerror = reject;
             console.log('[OLD APPLICATION] sending on ffr-protocol: binary CMD LOAD CUBE');
-
             const cmd = FSF.cmd(this.CMD.LOAD_CUBE);
             const cubeUID = new Uint8Array(32); cubeUID[0] = 255; // TBD: вычислить sha-256 хэш
             // eslint-disable-next-line @typescript-eslint/naming-convention

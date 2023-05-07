@@ -73,12 +73,26 @@ declare module 'ami.js' {
         mergeSeries: (series: ModelSeries[]) => SeriesModel[];
     }
 
+    class Coord {
+        x: number;
+        y: number;
+        z: number;
+    }
+
+    class ModuleFrame {
+        pixelData: Int16Array;
+    }
+
     export class Stack {
         xCosine: number;
         yCosine: number;
         zCosine: number;
-        dimensionsIJK: Dimensions;
+        dimensionsIJK: Coord; // было Dimensions, надо поправить, если сломается
         lps2IJK: Matrix4;
+        ijk2LPS: Matrix4;
+        rescaleSlope: number;
+        rescaleIntercept: number;
+        frame: ModuleFrame[];
 
         prepare: () => void;
         worldBoundingBox: () => [number, number, number, number, number, number];
@@ -87,6 +101,7 @@ declare module 'ami.js' {
         _numberOfFrames: number;
         _rows: number;
         _columns: number;
+        _spacing: Coord;
     }
 
     export class Dimensions {
