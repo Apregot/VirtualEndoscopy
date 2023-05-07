@@ -5,6 +5,7 @@ import { Popup } from '../../../base/Popup';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import styles from './Segmentation.module.scss';
 import * as THREE from 'three';
+import { AortaSelect, type AortaSelectionProps } from './AortaSelect';
 
 // @ts-expect-error unknown types
 import { FFR__driver } from '../../../../lib/legacy';
@@ -12,10 +13,9 @@ import { FFR__driver } from '../../../../lib/legacy';
 export const Segmentation = (): ReactElement => {
     const { selectedPreviewSeries } = useAppSelector((state) => state.patientsSeriesList);
     const { webSocket } = useAppSelector((state) => state.webSocket);
-    // const [loader, setLoader] = useState(false);
     const [loadProgress, setLoadProgress] = useState(0);
     const [disabledFFR, setDisabledFFR] = useState(false);
-    console.log(webSocket);
+    const [selectedAorta, setSelectedAorta] = useState<AortaSelectionProps | null>(null);
 
     const [ROI, setROI] = useState(new THREE.Box3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(1, 1, 1)));
 
@@ -37,22 +37,42 @@ export const Segmentation = (): ReactElement => {
         const driver = new FFR__driver(webSocket, selectedPreviewSeries.getModel());
         console.log('driver', driver);
         const p = new Promise(resolve => {
-            driver.start((val: any) => {
-                val = Number(val);
-                if (typeof val === 'number') {
-                    setLoadProgress(val);
-                } 
-            });
+            driver.start(
+                (val: any) => {
+                    val = Number(val);
+                    if (typeof val === 'number') {
+                        setLoadProgress(val);
+                    } 
+                },
+                (blob: Blob, circles: Float64Array) => {
+                    setLoadProgress(0);
+                    setSelectedAorta({
+                        stack: selectedPreviewSeries.getModel().stack[0],
+                        imgBlob: blob,
+                        circles
+                    });
+                }
+            );
         });
     };
 
     return (
         <div>
             {
+                selectedAorta !== null
+                    ? (
+                        <Popup show={true} title={'Select Aorta'} onClose={() => {}}>
+                            <AortaSelect aortaSelectionProps={selectedAorta}/>
+                        </Popup>
+                    )
+                    : ''
+            }
+
+            {
                 loadProgress > 0
                     ? (
                         <Popup onClose={() => { console.log('closed'); }} title={'Transfering DICOM data'} show={true}>
-                            <div style={{ paddingBottom: '20px' }}>
+                            <div style={{ paddingBottom: '20px', width: '100%' }}>
                                 {loadProgress < 100 ? 'Загрузка DICOM...' : 'DICOM успешно загружен! To be continued...'}
                                 <ProgressBar animated now={loadProgress} label={`${loadProgress}%`} />
                             </div>

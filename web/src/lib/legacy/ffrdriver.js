@@ -33,7 +33,8 @@ export class FFR__driver {
      * @returns {Promise<void>}
      */
     async start(
-        onLoadingProgress
+        onLoadingProgress,
+        selectAorta
     ) {
         console.log('FFR__driver::start()');
         // здесь надо организовать запуск ATB, подключение по вебсокету, запрос фото аорты и тогда вызывать Dialog-8
@@ -74,7 +75,9 @@ export class FFR__driver {
         else
         {
             console.log('Success AourtaSearch: ', search_result);
+            selectAorta(new Blob([search_result[1]], { type: 'image/png' }), search_result[2]);
             return;
+
             const blob = new Blob([search_result[1]], { type: 'image/png' }); 
             const d8 = new Dialog8(this._stack, blob, search_result[2]);
             d8.exec(
