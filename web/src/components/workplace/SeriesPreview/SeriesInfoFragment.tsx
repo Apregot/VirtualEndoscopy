@@ -94,12 +94,15 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
 
     return (
         <div className="flex relative">
-            <div onContextMenu={onContextMenuCalled} className={styles.patientSeries}>
+            <div className={styles.patientSeries}>
                 <div style={{ borderRadius: '12px', overflow: 'hidden', marginRight: '15px' }} ref={divRef}>
                     <canvas ref={canvasRef} width='128' height='128'/>
                 </div>
                 <div>
-                    <span className={styles.infoTitle}>Номер: {series.getSN()}</span>
+                    <div className={styles.header}>
+                        <span className={styles.infoTitle}>Номер: {series.getSN()}</span>
+                        <div className={styles.menuButton} onClick={onContextMenuCalled}></div>
+                    </div>
                     <div className={styles.infoData}>
                         <span className={styles.infoDataRow}>PN: <span className={styles.infoDataRowValue}>{series.getPN()}</span></span>
                         <span className={styles.infoDataRow}>SD: <span className={styles.infoDataRowValue}>{series.getSD()}</span></span>

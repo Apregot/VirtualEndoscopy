@@ -1,6 +1,22 @@
 .patientInfo,.patientSeries {
   margin-right: 20px;
 
+  .header {
+    display: flex;
+    justify-content: space-between;
+
+    .menuButton {
+      height: 20px;
+      width: 25px;
+      cursor: pointer;
+      background-image: url('data:image/svg+xml,\
+      <svg width="100" height="30" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">\
+        <circle cx="4" cy="8" r="3" fill="white" stroke="black"/>\
+      <circle cx="13" cy="8" r="3" fill="white" stroke="black"/>\
+      <circle cx="22" cy="8" r="3" fill="white" stroke="black"/>\
+      </svg>');
+    }
+  }
   .infoTitle {
     color: #d4d4d8;
     font-size: 17px;
@@ -8,6 +24,7 @@
     display: block;
     margin-bottom: 15px;
   }
+
   border-radius: 12px;
   background-color: var(--app-theme-bg-second);
   padding: 10px;
@@ -42,6 +59,6 @@
 }
 
 .contextMenu {
-  top: 25px;
-  left: 120px;
+  top: 35px;
+  left: 480px;
 }
