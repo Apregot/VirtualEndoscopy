@@ -7,7 +7,7 @@
  */
 declare module 'ami.js' {
     import type * as THREE from 'three';
-    import { Camera, Object3D } from 'three';
+    import { Camera, type Matrix4, Object3D } from 'three';
 
     export class SeriesModel {
         seriesInstanceUID: string;
@@ -78,6 +78,8 @@ declare module 'ami.js' {
         yCosine: number;
         zCosine: number;
         dimensionsIJK: Dimensions;
+        lps2IJK: Matrix4;
+
         prepare: () => void;
         worldBoundingBox: () => [number, number, number, number, number, number];
         worldCenter: () => THREE.Vector3;
