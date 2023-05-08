@@ -6,6 +6,7 @@
     justify-content: space-between;
 
     .menuButton {
+      margin-top: 5px;
       height: 20px;
       width: 26px;
       cursor: pointer;
@@ -61,5 +62,5 @@
 
 .contextMenu {
   top: 35px;
-  left: 480px;
+  right: 0;
 }
