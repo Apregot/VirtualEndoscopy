@@ -77,6 +77,7 @@ declare module 'ami.js' {
         x: number;
         y: number;
         z: number;
+        clone: () => THREE.Vector3;
     }
 
     class ModuleFrame {

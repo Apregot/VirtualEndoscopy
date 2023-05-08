@@ -1,5 +1,6 @@
 import Text from './Text';
-
+import HTMLElementHelper from './HTMLElementHelper';
 export {
-    Text
+    Text,
+    HTMLElementHelper
 };

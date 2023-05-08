@@ -36,8 +36,8 @@ export const Segmentation = (): ReactElement => {
         if (selectedPreviewSeries === null) return;
         const driver = new FFR__driver(webSocket, selectedPreviewSeries.getModel());
         console.log('driver', driver);
-        const p = new Promise(resolve => {
-            driver.start(
+        void (new Promise(resolve => {
+            void driver.start(
                 (val: any) => {
                     val = Number(val);
                     if (typeof val === 'number') {
@@ -53,7 +53,7 @@ export const Segmentation = (): ReactElement => {
                     });
                 }
             );
-        });
+        }));
     };
 
     return (
@@ -62,7 +62,7 @@ export const Segmentation = (): ReactElement => {
                 selectedAorta !== null
                     ? (
                         <Popup show={true} title={'Select Aorta'} onClose={() => {}}>
-                            <AortaSelect aortaSelectionProps={selectedAorta}/>
+                            <AortaSelect onAccept={(aortaIndex) => { console.log('SELECTED AORTA: ', aortaIndex); }} onReject={() => {}} aortaSelectionProps={selectedAorta}/>
                         </Popup>
                     )
                     : ''
@@ -73,7 +73,7 @@ export const Segmentation = (): ReactElement => {
                     ? (
                         <Popup onClose={() => { console.log('closed'); }} title={'Transfering DICOM data'} show={true}>
                             <div style={{ paddingBottom: '20px', width: '100%' }}>
-                                {loadProgress < 100 ? 'Загрузка DICOM...' : 'DICOM успешно загружен! To be continued...'}
+                                {loadProgress < 100 ? 'Загрузка DICOM...' : 'DICOM успешно загружен!'}
                                 <ProgressBar animated now={loadProgress} label={`${loadProgress}%`} />
                             </div>
                         </Popup>
