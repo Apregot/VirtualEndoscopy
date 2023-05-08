@@ -9,7 +9,7 @@
 }
 
 .modal {
-  margin: 20vh 20vw;
+  margin: 10vh 20vw;
   border-radius: 20px;
   background-color: #fff;
 }
@@ -37,6 +37,8 @@
 }
 
 .content {
+  display: flex;
+  justify-content: space-around;
   padding: 6px 20px;
 }
 

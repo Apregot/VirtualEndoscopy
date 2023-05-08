@@ -7,7 +7,7 @@
  */
 declare module 'ami.js' {
     import type * as THREE from 'three';
-    import { Camera, Object3D } from 'three';
+    import { Camera, type Matrix4, Object3D } from 'three';
 
     export class SeriesModel {
         seriesInstanceUID: string;
@@ -73,11 +73,28 @@ declare module 'ami.js' {
         mergeSeries: (series: ModelSeries[]) => SeriesModel[];
     }
 
+    class Coord {
+        x: number;
+        y: number;
+        z: number;
+        clone: () => THREE.Vector3;
+    }
+
+    class ModuleFrame {
+        pixelData: Int16Array;
+    }
+
     export class Stack {
         xCosine: number;
         yCosine: number;
         zCosine: number;
-        dimensionsIJK: Dimensions;
+        dimensionsIJK: Coord; // было Dimensions, надо поправить, если сломается
+        lps2IJK: Matrix4;
+        ijk2LPS: Matrix4;
+        rescaleSlope: number;
+        rescaleIntercept: number;
+        frame: ModuleFrame[];
+
         prepare: () => void;
         worldBoundingBox: () => [number, number, number, number, number, number];
         worldCenter: () => THREE.Vector3;
@@ -85,6 +102,7 @@ declare module 'ami.js' {
         _numberOfFrames: number;
         _rows: number;
         _columns: number;
+        _spacing: Coord;
     }
 
     export class Dimensions {

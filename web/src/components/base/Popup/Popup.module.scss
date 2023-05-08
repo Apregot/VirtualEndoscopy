@@ -9,7 +9,7 @@
 }
 
 .modal {
-  margin: 20vh 20vw;
+  margin: 10vh 20vw;
   border-radius: 20px;
   background-color: #fff;
 }
@@ -22,6 +22,7 @@
   font-weight: 700;
   color: #000;
   border-bottom: 2px solid #ebebeb;
+
   .closeButton {
     cursor: pointer;
     color: rgb(37 99 235);
@@ -38,5 +39,7 @@
 }
 
 .content {
+  display: flex;
+  justify-content: space-around;
   padding: 6px 20px;
 }
