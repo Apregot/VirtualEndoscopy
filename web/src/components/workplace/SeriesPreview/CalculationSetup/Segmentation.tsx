@@ -28,8 +28,30 @@ export const Segmentation = (): ReactElement => {
         }
     }, [selectedPreviewSeries]);
 
-    const handleChange = (event: ChangeEvent): void => {
-
+    const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+        switch (event.target.name) {
+            case 'xStart':
+              setROI(new THREE.Box3(new THREE.Vector3(Number(event.target.value), ROI.min.y, ROI.min.z), new THREE.Vector3(ROI.max.x, ROI.max.y, ROI.max.z)));
+              break;
+            case 'yStart':
+              setROI(new THREE.Box3(new THREE.Vector3(ROI.min.x, Number(event.target.value), ROI.min.z), new THREE.Vector3(ROI.max.x, ROI.max.y, ROI.max.z)));
+              break;
+            case 'zStart':
+              setROI(new THREE.Box3(new THREE.Vector3(ROI.min.x, ROI.min.y, Number(event.target.value)), new THREE.Vector3(ROI.max.x, ROI.max.y, ROI.max.z)));
+              break;
+            case 'xEnd':
+              setROI(new THREE.Box3(new THREE.Vector3(ROI.min.x, ROI.min.y, ROI.min.z), new THREE.Vector3(Number(event.target.value), ROI.max.y, ROI.max.z)));
+              break;
+            case 'yEnd':
+              setROI(new THREE.Box3(new THREE.Vector3(ROI.min.x, ROI.min.y, ROI.min.z), new THREE.Vector3(ROI.max.x, Number(event.target.value), ROI.max.z)));
+              break;
+            case 'zEnd':
+              setROI(new THREE.Box3(new THREE.Vector3(ROI.min.x, ROI.min.y, ROI.min.z), new THREE.Vector3(ROI.max.x, ROI.max.y, Number(event.target.value))));
+              break;      
+            default:
+              console.log('ERROR');
+              break;
+          }
     };
 
     const initializeFFR = (): void => {
@@ -95,7 +117,7 @@ export const Segmentation = (): ReactElement => {
                     <div>
                         <input type="number" min="1" name="xEnd" value={ROI.max.x} onChange={handleChange} />
                         <input type="number" min="1" name="yEnd" value={ROI.max.y} onChange={handleChange} />
-                        <input type="number" min="1" name="zEnd" value={ROI.max.z} onChange={handleChange} />
+                        <input type="number" min="1" name="zEnd" max={selectedPreviewSeries?.getROI().max.z} value={ROI.max.z} onChange={handleChange} />
                     </div>
                 </div>
                 <div className={styles.buttons}>
