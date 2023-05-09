@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os/exec"
+	"strconv"
 	"strings"
 )
 
@@ -12,9 +13,13 @@ type DockerContainer struct {
 	Port uint16
 }
 
+const imageName = "pea/atb:latest"
+
 func UpDockerContainer() DockerContainer {
 	dropContainer()
-	cmd := exec.Command("docker", "run", "-d", "-p", "8889:8889", "pea/atb:latest")
+	var port int = 8889
+	strconv.Itoa(port)
+	cmd := exec.Command("docker", "run", "-d", "-p", "8889:8889", imageName)
 	var out bytes.Buffer
 	cmd.Stdout = &out
 	err := cmd.Run()
