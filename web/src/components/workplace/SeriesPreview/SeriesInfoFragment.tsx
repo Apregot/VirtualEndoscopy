@@ -13,6 +13,7 @@ interface TProps {
 enum ContextMenuAction {
     OPEN_SERIES,
     CLOSE_SERIES,
+    SPLIT_SERIES,
 }
 
 export const SeriesInfoFragment = (props: TProps): ReactElement => {
@@ -74,6 +75,9 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
         if (itemId === ContextMenuAction.CLOSE_SERIES) {
             dispatch(deleteSeries(series));
         }
+        if (itemId === ContextMenuAction.CLOSE_SERIES) {
+            console.log('split');
+        }
     };
 
     useEffect(() => {
@@ -123,6 +127,10 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
                     {
                         id: ContextMenuAction.CLOSE_SERIES,
                         content: <span>Закрыть серию</span>
+                    },
+                    {
+                        id: ContextMenuAction.SPLIT_SERIES,
+                        content: <span>Проредить серию</span>
                     }
                 ]}
 

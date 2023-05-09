@@ -19,7 +19,7 @@ export const seriesSlice = createSlice({
             let check = true;
 
             for (const element of state.patientsSeriesList) {
-                if (element.at(0)?.getId === action.payload.getId) {
+                if (element.at(0)?.getId() === action.payload.getId()) {
                     check = false;
                     element.push(action.payload);
                 }
@@ -33,8 +33,8 @@ export const seriesSlice = createSlice({
 
         deleteSeries: (state, action: PayloadAction<Series>) => {
             for (const element of state.patientsSeriesList) {
-                if (element.at(0)?.getId === action.payload.getId) {
-                    const seriesIndex = element.findIndex(el => el.getSeriesId === action.payload.getSeriesId);
+                if (element.at(0)?.getId() === action.payload.getId()) {
+                    const seriesIndex = element.findIndex(el => el.getUID() === action.payload.getUID());
                     element.splice(seriesIndex, 1);
                 }
             }
