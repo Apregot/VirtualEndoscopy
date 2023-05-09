@@ -33,9 +33,12 @@ func (h *Handler) takeContainer(writer http.ResponseWriter, request *http.Reques
 	container := UpDockerContainer()
 	buffer.WriteString(strconv.Itoa(int(container.Port)))
 
-	logger.WriteToLog(buffer.Bytes())
+	logger.WriteToLog(buffer.String())
 
 	result := containerCreateResult{Address: buffer.String()}
 	encoded, _ := json.Marshal(result)
-	writer.Write(encoded)
+	_, err := writer.Write(encoded)
+	if err != nil {
+		logger.WriteToLog(err.Error())
+	}
 }

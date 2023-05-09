@@ -8,21 +8,21 @@ import (
 
 const logFile = "serverLog"
 
-func WriteToLogString(message string) {
-	WriteToLog([]byte(message))
+func WriteToLogBytes(message []byte) {
+	WriteToLog(string(message))
 }
 
-func WriteToLog(message []byte) {
+func WriteToLog(message string) {
 	f, err := os.OpenFile(logFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatalf("error opening file: %v", err)
 	}
 	defer f.Close()
 
-	prefix := append([]byte(time.Now().Format(time.RFC3339)), []byte(": ")...)
-	message = append(prefix, message...)
+	prefix := time.Now().Format(time.RFC3339) + ": "
+	message = prefix + message + "\n"
 
-	_, err = f.Write(message)
+	_, err = f.WriteString(message)
 	if err != nil {
 		log.Fatalf("error writing to file: %v", err)
 	}
