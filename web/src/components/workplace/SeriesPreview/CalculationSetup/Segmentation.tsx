@@ -61,8 +61,8 @@ export const Segmentation = (): ReactElement => {
             {
                 selectedAorta !== null
                     ? (
-                        <Popup show={true} title={'Select Aorta'} onClose={() => {}}>
-                            <AortaSelect onAccept={(aortaIndex) => { console.log('SELECTED AORTA: ', aortaIndex); }} onReject={() => {}} aortaSelectionProps={selectedAorta}/>
+                        <Popup show={true} title={'Select Aorta'} onClose={() => { setSelectedAorta(null); }}>
+                            <AortaSelect onAccept={(aortaIndex) => { console.log('SELECTED AORTA: ', aortaIndex); }} onReject={() => { setSelectedAorta(null); }} aortaSelectionProps={selectedAorta}/>
                         </Popup>
                     )
                     : ''

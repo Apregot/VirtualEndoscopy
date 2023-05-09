@@ -23,6 +23,7 @@ export const AortaSelect = (props: TProps): ReactElement => {
     const [circle, selectCircle] = useState(-1);
     const [centerIsChanging, setCenterChanging] = useState(false);
     const [IJKCenter, setIJKCenter] = useState<THREE.Vector3 | null>(null);
+    
     useEffect(() => {
         if (canvasRef === null) {
             return;
