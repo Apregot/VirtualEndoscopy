@@ -3,7 +3,7 @@ import styles from './SeriesInfo.module.scss';
 import { type Series } from '../../../lib/Series';
 import { SelectPopupList } from '../../base/SelectList/SelectPopupList';
 import { seriesSlice } from '../../../store/reducers/SeriesSlice';
-import { useAppDispatch } from '../../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { UP3 } from '../../../lib/visualization';
 
 interface TProps {
@@ -20,6 +20,8 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
     const series = props.series;
     const [contextOpened, openContext] = useState(false);
     const [seriesImg, setSeriesImg] = useState('');
+    
+    const { selectedPreviewSeries } = useAppSelector((state) => state.patientsSeriesList);
 
     const { selectPreviewSeries, deleteSeries } = seriesSlice.actions;
     const dispatch = useAppDispatch();
@@ -98,11 +100,11 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
 
     return (
         <div className="flex relative">
-            <div className={styles.patientSeries}>
+            <div className={(selectedPreviewSeries?.getROI() === series.getROI()) ? `${styles.patientSeries} ${styles.isSelected}` : `${styles.patientSeries}`}>
                 <div style={{ borderRadius: '12px', overflow: 'hidden', marginRight: '15px' }} ref={divRef}>
                     <canvas ref={canvasRef} width='128' height='128'/>
                 </div>
-                <div>
+                <div style={{ minWidth: '130px' }}>
                     <div className={styles.header}>
                         <span className={styles.infoTitle}>Номер: {series.getSN()}</span>
                         <div className={styles.menuButton} onClick={onContextMenuCalled}></div>
@@ -139,3 +141,4 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
         </div>
     );
 };
+

@@ -49,11 +49,15 @@
   }
 }
 
+.isSelected{
+  border: 3px solid red
+}
+
 .patientSeries {
   display: flex;
 
   max-height: 240px;
-  min-width: 180px;
+  min-width: 300px;
 }
 
 .patientInfo {
