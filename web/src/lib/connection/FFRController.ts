@@ -1,5 +1,5 @@
 import { type SeriesModel, type Stack } from 'ami.js';
-import { FSF } from '../legacy' // временно 
+import { FSF } from './FSF';
 import { FFRProtocol } from './FFRProtocol';
 import { type SocketService } from './SocketService';
 

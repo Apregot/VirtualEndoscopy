@@ -1,4 +1,3 @@
-
 class SocketService {
     private wsReady: boolean;
     private readonly ws: WebSocket;
