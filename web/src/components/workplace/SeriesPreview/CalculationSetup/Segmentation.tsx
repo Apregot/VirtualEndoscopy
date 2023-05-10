@@ -7,8 +7,7 @@ import styles from './Segmentation.module.scss';
 import * as THREE from 'three';
 import { AortaSelect, type AortaSelectionProps } from './AortaSelect';
 
-// @ts-expect-error unknown types
-import { FFR__driver } from '../../../../lib/legacy';
+import { FFRController } from '../../../../lib/connection/FFRController';
 
 export const Segmentation = (): ReactElement => {
     const { selectedPreviewSeries } = useAppSelector((state) => state.patientsSeriesList);
@@ -55,11 +54,11 @@ export const Segmentation = (): ReactElement => {
     };
 
     const initializeFFR = (): void => {
-        if (selectedPreviewSeries === null) return;
-        const driver = new FFR__driver(webSocket, selectedPreviewSeries.getModel());
-        console.log('driver', driver);
+        if (selectedPreviewSeries === null || webSocket === null) return;
+        const controller = new FFRController(webSocket, selectedPreviewSeries.getModel());
+        console.log('controller', controller);
         void (new Promise(resolve => {
-            void driver.start(
+            void controller.start(
                 (val: any) => {
                     val = Number(val);
                     if (typeof val === 'number') {
