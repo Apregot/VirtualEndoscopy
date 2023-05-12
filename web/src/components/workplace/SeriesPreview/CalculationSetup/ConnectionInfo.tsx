@@ -1,6 +1,6 @@
 import React, { type ReactElement } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import { webSocketSlice, fetchURL } from '../../../../store/reducers/WebSocketSlice';
+import { webSocketSlice, createWebSocket } from '../../../../store/reducers/WebSocketSlice';
 import { BaseButton } from '../../../base/Button';
 import styles from './ConnectionInfo.module.scss';
 import { type RootState } from '../../../../store/ApplicationStore';
@@ -15,8 +15,8 @@ export const ConnectionInfo = (): ReactElement => {
     return (
         <div className={styles.btnList}>
             <div className='flex'>
-                { (status === 'DISCONNECTED') ? <BaseButton onClick={() => { dispatch(fetchURL()).unwrap().then((originalPromiseResult: SocketService) => { dispatch(connect(originalPromiseResult)); }).catch((rejectedValue) => { console.log(rejectedValue.message); }); }}>Connect</BaseButton> : <BaseButton disabled onClick={() => { dispatch(fetchURL()).unwrap().then((originalPromiseResult: SocketService) => { dispatch(connect(originalPromiseResult)); }).catch((rejectedValue) => { console.log(rejectedValue.message); }); }}>Connect</BaseButton> }
-                { (status === 'CONNECTED') ? <BaseButton onClick={() => { dispatch(disconnect()); }}>Disconnect</BaseButton> : <BaseButton disabled onClick={() => { dispatch(disconnect()); }}>Disconnect</BaseButton> }
+                { (status === 'DISCONNECTED') ? <BaseButton onClick={() => { dispatch(createWebSocket()).unwrap().then((originalPromiseResult: SocketService) => { dispatch(connect(originalPromiseResult)); }).catch((rejectedValue) => { console.log(rejectedValue.message); }); }}>Connect</BaseButton> : <BaseButton disabled onClick={() => { dispatch(createWebSocket()).unwrap().then((originalPromiseResult: SocketService) => { dispatch(connect(originalPromiseResult)); }).catch((rejectedValue) => { console.log(rejectedValue.message); }); }}>Connect</BaseButton> }
+                { (status === 'CONNECTED') ? <BaseButton onClick={() => { webSocket?.disconnect(); }}>Disconnect</BaseButton> : <BaseButton disabled onClick={() => { dispatch(disconnect()); }}>Disconnect</BaseButton> }
             </div>
             <div className='flex'>
                 {(status === 'CONNECTED') ? <BaseButton onClick={() => { webSocket?.version(); }}>Check Version</BaseButton> : <BaseButton disabled onClick={() => { webSocket?.version(); }}>Check Version</BaseButton> }

@@ -2,11 +2,11 @@ class SocketService {
     private wsReady: boolean;
     private readonly ws: WebSocket;
 
-    constructor(wsurl: string) {
+    constructor(wsurl: string, onCLose: any) {
         this.wsReady = false;
         this.ws = new WebSocket(wsurl, 'ffr-protocol');
         this.ws.onopen = () => { console.log('connected'); this.wsReady = true; };
-        this.ws.onclose = () => { console.log('disconnected'); this.wsReady = true; };
+        this.ws.onclose = () => { console.log('disconnected'); this.wsReady = false; onCLose(); };
         this.ws.onerror = function() { console.log('error'); };
     }
 
