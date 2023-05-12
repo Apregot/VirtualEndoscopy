@@ -1,24 +1,18 @@
 import React, { type ReactElement, useEffect, useRef, useState } from 'react';
 import styles from './SeriesInfo.module.scss';
 import { type Series } from '../../../lib/Series';
-import { SelectPopupList } from '../../base/SelectList/SelectPopupList';
 import { seriesSlice } from '../../../store/reducers/SeriesSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { UP3 } from '../../../lib/visualization';
+import { Menu, MenuItem, SubMenu } from '@szhsin/react-menu';
+import '@szhsin/react-menu/dist/index.css';
 
 interface TProps {
     series: Series
 }
 
-enum ContextMenuAction {
-    OPEN_SERIES,
-    CLOSE_SERIES,
-    SPLIT_SERIES,
-}
-
 export const SeriesInfoFragment = (props: TProps): ReactElement => {
     const series = props.series;
-    const [contextOpened, openContext] = useState(false);
     const [seriesImg, setSeriesImg] = useState('');
     
     const { selectedPreviewSeries } = useAppSelector((state) => state.patientsSeriesList);
@@ -61,43 +55,6 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
         canvas1.style.display = 'none';
     }, [canvasRef]);
 
-    // TODO: must be splitted into contextMenuAvailable component
-    const onContextMenuCalled = (event: React.MouseEvent): void => {
-        openContext(true);
-        event.preventDefault();
-    };
-
-    const onContextMenuItemSelect = (itemId: string | number): void => {
-        console.log(`[SERIES LIST] Selected menu ${itemId}`);
-        openContext(false);
-
-        if (itemId === ContextMenuAction.OPEN_SERIES) {
-            dispatch(selectPreviewSeries(series));
-        }
-        if (itemId === ContextMenuAction.CLOSE_SERIES) {
-            dispatch(deleteSeries(series));
-        }
-        if (itemId === ContextMenuAction.CLOSE_SERIES) {
-            console.log('split');
-        }
-    };
-
-    useEffect(() => {
-        if (contextOpened) {
-            setTimeout(() => {
-                const onOtherAction = (): void => {
-                    openContext(false);
-                    document.removeEventListener('click', onOtherAction);
-                    document.removeEventListener('contextmenu', onOtherAction);
-                };
-
-                // HACK: При нажатии на другие кнопки нужно скрывать чужие меню. Для реализации оного в голову пришла только идея с таймером
-                document.addEventListener('click', onOtherAction, { once: true });
-                document.addEventListener('contextmenu', onOtherAction, { once: true });
-            }, 0);
-        }
-    }, [contextOpened]);
-
     return (
         <div className="flex relative">
             <div className={(selectedPreviewSeries?.getROI() === series.getROI()) ? `${styles.patientSeries} ${styles.isSelected}` : `${styles.patientSeries}`}>
@@ -107,7 +64,16 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
                 <div style={{ minWidth: '130px' }}>
                     <div className={styles.header}>
                         <span className={styles.infoTitle}>Номер: {series.getSN()}</span>
-                        <div className={styles.menuButton} onClick={onContextMenuCalled}></div>
+                        <Menu menuButton={<div className={styles.menuButton}></div>}>
+                            <MenuItem onClick={() => { dispatch(selectPreviewSeries(series)); }}>Открыть серию</MenuItem>
+                            <MenuItem onClick={() => { dispatch(deleteSeries(series)); }} >Закрыть серию</MenuItem>
+                            <SubMenu label="Проредить серию">
+                                <MenuItem>до 100 срезов</MenuItem>
+                                <MenuItem>до 200 срезов</MenuItem>
+                                <MenuItem>до 500 срезов</MenuItem>
+                                <MenuItem>до 700 срезов</MenuItem>
+                            </SubMenu>
+                        </Menu>
                     </div>
                     <div className={styles.infoData}>
                         <span className={styles.infoDataRow}>PN: <span className={styles.infoDataRowValue}>{series.getPN()}</span></span>
@@ -116,29 +82,6 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
                     </div>
                 </div>
             </div>
-            <SelectPopupList
-                opened={contextOpened}
-
-                className={styles.contextMenu}
-
-                items={[
-                    {
-                        id: ContextMenuAction.OPEN_SERIES,
-                        content: <span>Открыть серию</span>
-                    },
-                    {
-                        id: ContextMenuAction.CLOSE_SERIES,
-                        content: <span>Закрыть серию</span>
-                    },
-                    {
-                        id: ContextMenuAction.SPLIT_SERIES,
-                        content: <span>Проредить серию</span>
-                    }
-                ]}
-
-                onItemSelect={onContextMenuItemSelect}
-            />
         </div>
     );
 };
-
