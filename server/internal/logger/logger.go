@@ -17,7 +17,12 @@ func WriteToLog(message string) {
 	if err != nil {
 		log.Fatalf("error opening file: %v", err)
 	}
-	defer f.Close()
+	defer func(f *os.File) {
+		err := f.Close()
+		if err != nil {
+			log.Fatalf("error closing a file: %v", err)
+		}
+	}(f)
 
 	prefix := time.Now().Format(time.RFC3339) + ": "
 	message = prefix + message + "\n"
