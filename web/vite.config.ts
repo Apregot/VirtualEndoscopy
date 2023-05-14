@@ -7,5 +7,8 @@ export default defineConfig({
   plugins: [react(), viteSvgr()],
   build : {
     outDir: '../builtServer/dist'
-  }
+  },
+  define: {
+    __VERSION__: JSON.stringify(require("./package.json").version),
+  },
 })
