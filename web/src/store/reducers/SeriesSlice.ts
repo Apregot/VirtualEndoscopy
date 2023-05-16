@@ -50,6 +50,8 @@ export const seriesSlice = createSlice({
             
                 series.setNF(series.getModel().stack.at(0)?.frame.length);
                 series.getModel().stack[0]._numberOfFrames = series.getModel().stack.at(0).frame.length;
+                series.getModel().stack[0].dimensionsIJK.z = series.getModel().stack.at(0).frame.length;
+                series.getModel().stack[0]._halfDimensionsIJK.z = series.getModel().stack.at(0).frame.length / 2;
                 series.getROI().max.z = series.getModel().stack.at(0).frame.length;
             
                 for (const element of state.patientsSeriesList) {
