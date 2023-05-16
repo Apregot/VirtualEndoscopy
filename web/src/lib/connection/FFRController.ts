@@ -2,6 +2,8 @@ import { type SeriesModel, type Stack } from 'ami.js';
 import { FSF } from './FSF';
 import { FFRProtocol } from './FFRProtocol';
 import { type SocketService } from './SocketService';
+import type * as THREE from 'three';
+import { type AortaView } from '../visualization';
 
 /** Класс FFRController отвечает за взаимодействие с удаленным FFR-сервером, реализует запуск
  * диалогов и взаимодействие с QuadView в процессе обработки стеноза вплоть до запуска blood.
@@ -41,7 +43,7 @@ class FFRController {
         // задача FFRController - скоординировать вызовы диалогов и FFR сервера
         // TBD: Dialog-8 или FFRController? должен взаимодействовать с сервером
 
-        const retCube = await this.ffrp.TransferCube(this.stack, msg => {
+        await this.ffrp.TransferCube(this.stack, (msg: string) => {
             const part = msg.split(' ');
             if (part.length > 1) {
                 const persent = (parseFloat(part[0]) * 100).toFixed(1);
@@ -72,6 +74,27 @@ class FFRController {
             console.log('Success AourtaSearch: ', searchResult);
             selectAorta(new Blob([searchResult[1]], { type: 'image/png' }), searchResult[2]);
         }
+    }
+
+    async initializeAndSegmentAorta(center: THREE.Vector3, radius: number, onLoad: (proc: number) => void): Promise<AortaView> {
+        const x = Number(center.x.toFixed(2));
+        const y = Number(center.y.toFixed(2));
+        const z = Number(center.z.toFixed(2));
+        const r = Number(radius.toFixed(2));
+
+        await this.ffrp.Initialize(x, y, z, r);
+        await this.ffrp.PrepareAortaProc(onLoad);
+
+        const getOptimalTau = async (): Promise<number> => {
+            return await this.ffrp.sendRequest('GetOptimalTau');
+        };
+        const defaultAorta = { tau: 0.09, alpha: 0.5, beta: 0.5, gamma: 500, mesh: null };
+        const optimalTau = await getOptimalTau();
+        if (optimalTau > 0) {
+            defaultAorta.tau = optimalTau;
+        }
+
+        return defaultAorta;
     }
 }
 export { FFRController };

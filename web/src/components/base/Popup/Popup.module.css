@@ -6,12 +6,19 @@
   z-index: 1000;
   width: 100vw;
   height: 100vh;
+  cursor: default;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal {
   margin: 10vh 20vw;
   border-radius: 20px;
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .header {

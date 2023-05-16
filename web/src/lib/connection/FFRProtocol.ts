@@ -121,5 +121,44 @@ class FFRProtocol {
 
         /* eslint-enable @typescript-eslint/naming-convention,  @typescript-eslint/restrict-plus-operands */
     }
+
+    async Initialize(x: number, y: number, z: number, radius: number): Promise<ArrayBuffer> {
+        const data = (x === undefined ? [] : [x, y, z, radius]);
+        const cmd = FSF.cmd(this.CMD.Initialize);
+        const params = FSF.array(new Float32Array(data)); //
+        const args = new Blob([cmd, params]);
+        return await this.sendRequestReturningArrayBuffer(args);
+    }
+
+    async PrepareAortaProc(onProgress: (proc: number) => void): Promise<void> {
+        if (!this.wsready) { throw Error('busy'); }
+
+        await new Promise((resolve, reject) => {
+            this.ws.send('PrepareAortaProc');
+            this.ws.onmessage = function(e) {
+                if (e.data === 'fin') {
+                    onProgress(100);
+                    resolve(e.data);
+                } else {
+                    const inp = e?.data?.match(/^(\d\.\d{1,2}).*/)?.[1];
+                    onProgress(Number(inp === undefined ? 0 : inp) * 100);
+                }
+            };
+            this.ws.onerror = reject;
+        });
+    }
+
+    // дубликат socketService, надо что-то с этим решать
+    async sendRequest(req: any): Promise<any> {
+        // eslint-disable-next-line prefer-promise-reject-errors
+        if (!this.wsready) throw Error('no connection to server');
+        return await new Promise((resolve, reject) => {
+            this.ws.onmessage = (e) => { resolve(e.data); };
+            this.ws.onerror = reject;
+            console.log('sending on ffr-protocol: ', req);
+            this.ws.binaryType = 'blob';
+            this.ws.send(req);
+        });
+    }
 }
 export { FFRProtocol };

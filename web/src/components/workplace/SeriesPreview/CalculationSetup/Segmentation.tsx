@@ -8,65 +8,92 @@ import * as THREE from 'three';
 import { AortaSelect, type AortaSelectionProps } from './AortaSelect';
 
 import { FFRController } from '../../../../lib/connection/FFRController';
+import { type AortaView } from '../../../../lib/visualization';
 
-export const Segmentation = (): ReactElement => {
+interface ProgressBarData {
+    title: string
+    subtitle: string
+}
+
+interface TProps {
+    onSelectAorta: (aorta: AortaView) => void
+}
+
+export const Segmentation = (props: TProps): ReactElement => {
     const { selectedPreviewSeries } = useAppSelector((state) => state.patientsSeriesList);
     const { webSocket } = useAppSelector((state) => state.webSocket);
-    const [loadProgress, setLoadProgress] = useState(0);
     const [disabledFFR, setDisabledFFR] = useState(false);
     const [selectedAorta, setSelectedAorta] = useState<AortaSelectionProps | null>(null);
+    const [ffrController, setFFRController] = useState<FFRController | null>(null);
+    const [progressBarInfo, setProgressBarInfo] = useState<ProgressBarData | null>(null);
+    const [progressBarPercent, setProgressBarPercent] = useState<number>(0);
 
     const [ROI, setROI] = useState(new THREE.Box3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(1, 1, 1)));
 
     useEffect(() => {
         setDisabledFFR(webSocket === null);
     }, [webSocket]);
+    
     useEffect(() => {
         if (selectedPreviewSeries !== null) {
             setROI(selectedPreviewSeries.getROI());
         }
     }, [selectedPreviewSeries]);
 
+    useEffect(() => {
+        if (selectedPreviewSeries !== null && webSocket !== null) {
+            setFFRController(new FFRController(webSocket, selectedPreviewSeries.getModel()));
+        }
+    }, [selectedPreviewSeries, webSocket]);
+
     const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
         switch (event.target.name) {
             case 'xStart':
-              setROI(new THREE.Box3(new THREE.Vector3(Number(event.target.value), ROI.min.y, ROI.min.z), new THREE.Vector3(ROI.max.x, ROI.max.y, ROI.max.z)));
-              break;
+                setROI(new THREE.Box3(new THREE.Vector3(Number(event.target.value), ROI.min.y, ROI.min.z), new THREE.Vector3(ROI.max.x, ROI.max.y, ROI.max.z)));
+                break;
             case 'yStart':
-              setROI(new THREE.Box3(new THREE.Vector3(ROI.min.x, Number(event.target.value), ROI.min.z), new THREE.Vector3(ROI.max.x, ROI.max.y, ROI.max.z)));
-              break;
+                setROI(new THREE.Box3(new THREE.Vector3(ROI.min.x, Number(event.target.value), ROI.min.z), new THREE.Vector3(ROI.max.x, ROI.max.y, ROI.max.z)));
+                break;
             case 'zStart':
-              setROI(new THREE.Box3(new THREE.Vector3(ROI.min.x, ROI.min.y, Number(event.target.value)), new THREE.Vector3(ROI.max.x, ROI.max.y, ROI.max.z)));
-              break;
+                setROI(new THREE.Box3(new THREE.Vector3(ROI.min.x, ROI.min.y, Number(event.target.value)), new THREE.Vector3(ROI.max.x, ROI.max.y, ROI.max.z)));
+                break;
             case 'xEnd':
-              setROI(new THREE.Box3(new THREE.Vector3(ROI.min.x, ROI.min.y, ROI.min.z), new THREE.Vector3(Number(event.target.value), ROI.max.y, ROI.max.z)));
-              break;
+                setROI(new THREE.Box3(new THREE.Vector3(ROI.min.x, ROI.min.y, ROI.min.z), new THREE.Vector3(Number(event.target.value), ROI.max.y, ROI.max.z)));
+                break;
             case 'yEnd':
-              setROI(new THREE.Box3(new THREE.Vector3(ROI.min.x, ROI.min.y, ROI.min.z), new THREE.Vector3(ROI.max.x, Number(event.target.value), ROI.max.z)));
-              break;
+                setROI(new THREE.Box3(new THREE.Vector3(ROI.min.x, ROI.min.y, ROI.min.z), new THREE.Vector3(ROI.max.x, Number(event.target.value), ROI.max.z)));
+                break;
             case 'zEnd':
-              setROI(new THREE.Box3(new THREE.Vector3(ROI.min.x, ROI.min.y, ROI.min.z), new THREE.Vector3(ROI.max.x, ROI.max.y, Number(event.target.value))));
-              break;      
+                setROI(new THREE.Box3(new THREE.Vector3(ROI.min.x, ROI.min.y, ROI.min.z), new THREE.Vector3(ROI.max.x, ROI.max.y, Number(event.target.value))));
+                break;      
             default:
-              console.log('ERROR');
-              break;
-          }
+                console.log('ERROR');
+                break;
+        }
     };
 
+    /**
+     * Шаг 1 - загрузка DICOM
+     */
     const initializeFFR = (): void => {
-        if (selectedPreviewSeries === null || webSocket === null) return;
-        const controller = new FFRController(webSocket, selectedPreviewSeries.getModel());
-        console.log('controller', controller);
+        if (selectedPreviewSeries === null || webSocket === null || ffrController === null) return;
+        const controller = ffrController;
+        const currentProgressBar = {
+            title: 'Transfering DICOM data',
+            subtitle: 'Загрузка DICOM файлов....'
+        };
+        setProgressBarInfo(currentProgressBar);
+        setProgressBarPercent(0);
         void (new Promise(resolve => {
             void controller.start(
                 (val: any) => {
                     val = Number(val);
                     if (typeof val === 'number') {
-                        setLoadProgress(val);
+                        setProgressBarPercent(val);
                     } 
                 },
                 (blob: Blob, circles: Float64Array) => {
-                    setLoadProgress(0);
+                    setProgressBarInfo(null);
                     setSelectedAorta({
                         stack: selectedPreviewSeries.getModel().stack[0],
                         imgBlob: blob,
@@ -77,25 +104,47 @@ export const Segmentation = (): ReactElement => {
         }));
     };
 
+    /**
+     * Шаг 2 - после выбора аорты
+     * 
+     * @param center
+     * @param radius
+     */
+    const onAcceptAortaHandler = (center: THREE.Vector3, radius: number): void => {
+        setSelectedAorta(null);
+        if (ffrController === null) return;
+        const controller = ffrController;
+        const currentProgressBar = {
+            title: 'Prepare aorta data',
+            subtitle: 'Подготовка данных об аорте...'
+        };
+        setProgressBarInfo(currentProgressBar);
+        void (new Promise(resolve => {
+            void controller.initializeAndSegmentAorta(center, radius, (val: number) => {
+                setProgressBarPercent(val);
+            });
+        }));
+    };
+
     return (
         <div>
             {
                 selectedAorta !== null
                     ? (
                         <Popup show={true} title={'Select Aorta'} onClose={() => { setSelectedAorta(null); }}>
-                            <AortaSelect onAccept={(aortaIndex) => { console.log('SELECTED AORTA: ', aortaIndex); }} onReject={() => { setSelectedAorta(null); }} aortaSelectionProps={selectedAorta}/>
+                            <AortaSelect onAccept={onAcceptAortaHandler} onReject={() => { setSelectedAorta(null); }} aortaSelectionProps={selectedAorta}/>
                         </Popup>
                     )
                     : ''
             }
 
             {
-                loadProgress > 0
+                progressBarInfo !== null
                     ? (
-                        <Popup onClose={() => { console.log('closed'); }} title={'Transfering DICOM data'} show={true}>
+                        <Popup onClose={() => { console.log('closed'); }} title={progressBarInfo.title} show={true}>
                             <div style={{ paddingBottom: '20px', width: '100%' }}>
-                                {loadProgress < 100 ? 'Загрузка DICOM...' : 'DICOM успешно загружен!'}
-                                <ProgressBar animated now={loadProgress} label={`${loadProgress}%`} />
+                                {progressBarInfo.subtitle}
+                                <ProgressBar animated now={progressBarPercent} label={`${progressBarPercent}%`} />
                             </div>
                         </Popup>
                     )
