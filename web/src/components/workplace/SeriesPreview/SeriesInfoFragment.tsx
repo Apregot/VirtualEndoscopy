@@ -17,7 +17,7 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
     
     const { selectedPreviewSeries } = useAppSelector((state) => state.patientsSeriesList);
 
-    const { selectPreviewSeries, deleteSeries } = seriesSlice.actions;
+    const { selectPreviewSeries, deleteSeries, thinOutSeries } = seriesSlice.actions;
     const dispatch = useAppDispatch();
 
     const divRef = useRef(null);
@@ -49,7 +49,8 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
         ctx.drawImage(canvas as CanvasImageSource, 0, 0);
         ctx.font = 'bold 36px serif';
         // ctx.fillStyle('#ff0000');
-        const n = series.getModel().stack[0]._numberOfFrames; const xOffset = n < 10 ? 107 : n < 100 ? 90 : n < 1000 ? 70 : 50;
+        const n = series.getModel().stack[0]._numberOfFrames; 
+        const xOffset = n < 10 ? 107 : n < 100 ? 90 : n < 1000 ? 70 : 50;
         ctx.fillText(n.toString(), xOffset, 1);
         setSeriesImg((canvas as HTMLCanvasElement).toDataURL());
         canvas1.style.display = 'none';
@@ -68,10 +69,10 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
                             <MenuItem onClick={() => { dispatch(selectPreviewSeries(series)); }}>Открыть серию</MenuItem>
                             <MenuItem onClick={() => { dispatch(deleteSeries(series)); }} >Закрыть серию</MenuItem>
                             <SubMenu label="Проредить серию">
-                                <MenuItem>до 100 срезов</MenuItem>
-                                <MenuItem>до 200 срезов</MenuItem>
-                                <MenuItem>до 500 срезов</MenuItem>
-                                <MenuItem>до 700 срезов</MenuItem>
+                                <MenuItem onClick={() => { dispatch(thinOutSeries({ series, limit: 100 })); }}>до 100 срезов</MenuItem>
+                                <MenuItem onClick={() => { dispatch(thinOutSeries({ series, limit: 200 })); }}>до 200 срезов</MenuItem>
+                                <MenuItem onClick={() => { dispatch(thinOutSeries({ series, limit: 500 })); }}>до 500 срезов</MenuItem>
+                                <MenuItem onClick={() => { dispatch(thinOutSeries({ series, limit: 700 })); }}>до 700 срезов</MenuItem>
                             </SubMenu>
                         </Menu>
                     </div>
