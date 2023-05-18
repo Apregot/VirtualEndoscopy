@@ -13,6 +13,7 @@
   justify-content: space-between;
 }
 .patientInfo .header .menuButton, .patientSeries .header .menuButton {
+  margin-top: 5px;
   height: 20px;
   width: 26px;
   cursor: pointer;
@@ -38,10 +39,14 @@
   color: var(--app-theme-primary);
 }
 
+.isSelected {
+  border: 3px solid red;
+}
+
 .patientSeries {
   display: flex;
   max-height: 240px;
-  min-width: 180px;
+  min-width: 300px;
 }
 
 .patientInfo {
@@ -50,7 +55,7 @@
 
 .contextMenu {
   top: 35px;
-  left: 480px;
+  right: 0;
 }
 
 /*# sourceMappingURL=SeriesInfo.module.css.map */

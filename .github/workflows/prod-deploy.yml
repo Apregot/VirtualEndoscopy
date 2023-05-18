@@ -1,0 +1,89 @@
+name: Virtual Endoscopy.Deploy app
+run-name: ${{ github.actor }} started deploy
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'App version that will be deployed'
+        default: ''
+        required: true
+        type: string
+  push:
+    branches:
+      - 'main'
+      - 'ci-test'
+jobs:
+  Test_app:
+    runs-on: ubuntu-latest
+    steps:
+      - id: checkout-tag
+        name: Checkout repository by tag
+        if: ${{ inputs && inputs.version != '' }}
+        uses: actions/checkout@v3
+        with:
+          ref: tags/${{ inputs.version }}
+      - id: checkout-latest
+        name: Checkout repository by latest commit
+        if: ${{ steps.checkout-tag.status != 'success' }}
+        uses: actions/checkout@v3
+      - id: go-setup
+        name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
+      - id: node-setup
+        name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - id: cache
+        name: Use cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-modules-${{ hashFiles('./web/package-lock.json') }}
+      - id: dependencies-install
+        name: Install dependencies
+        working-directory: ./web
+        run: npm ci
+      - id: app-build
+        name: Build app
+        working-directory: ./web
+        run: npm run build
+      - id: artifact-upload
+        name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: builtServer
+          path: ./builtServer
+#  on-success:
+#    runs-on: ubuntu-latest
+#    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+#    steps:
+#      - name: download artifact
+#        uses: dawidd6/action-download-artifact@v2
+#        with:
+#          run_id: ${{ github.event.workflow_run.id }}
+#          name: builtServer
+#          path: builtServer
+#      - name: copy file via ssh
+#        uses: appleboy/scp-action@v0.1.4
+#        with:
+#          host: ${{ secrets.DEPLOY_HOST }}
+#          username: ${{ secrets.DEPLOY_USERNAME }}
+#          key: ${{ secrets.SSH_PRIVATE_KEY }}
+#          source: "./builtServer/*"
+#          target: ${{ secrets.DEPLOY_DIRECTORY }}
+#      - name: executing remote ssh command
+#        uses: appleboy/ssh-action@v0.1.10
+#        with:
+#          host: ${{ secrets.DEPLOY_HOST }}
+#          username: ${{ secrets.DEPLOY_USERNAME }}
+#          key: ${{ secrets.SSH_PRIVATE_KEY }}
+#          script_stop: true
+#          script: /bin/bash restart.sh
+#  on-failure:
+#    runs-on: ubuntu-latest
+#    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+#    steps:
+#      - run: echo 'The tests were failed. Deployment canceled.'; exit 1;

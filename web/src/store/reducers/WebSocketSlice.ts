@@ -2,17 +2,17 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { SocketService } from '../../lib/connection/SocketService';
 import axios from 'axios';
 
-export const fetchURL = createAsyncThunk(
-    'webSocket/fetchURL',
-    async (thunkAPI) => {
+export const createWebSocket = createAsyncThunk(
+    'webSocket/createWebSocket',
+    async (arg, thunkAPI) => {
         const url: string = await axios.get('http://158.160.65.29/atb/take')
             .then(res => {
                 return res.data.Address;
             });
-        
-        return new SocketService(`ws:${url}`);
+        return new SocketService(`ws:${url}`, () => { thunkAPI.dispatch(webSocketSlice.actions.disconnect()); });
     }
 );
+
 interface ConnectionState {
     status: 'CONNECTED' | 'DISCONNECTED' | 'PROGRESS'
     webSocket: SocketService | null
@@ -33,15 +33,14 @@ export const webSocketSlice = createSlice({
         },
         disconnect: (state) => {
             state.status = 'DISCONNECTED';
-            state.webSocket?.disconnect();
             state.webSocket = null;
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchURL.pending, (state) => {
+        builder.addCase(createWebSocket.pending, (state) => {
             state.status = 'PROGRESS';
         });
-        builder.addCase(fetchURL.rejected, (state) => {
+        builder.addCase(createWebSocket.rejected, (state) => {
             state.status = 'DISCONNECTED';
         });
     }

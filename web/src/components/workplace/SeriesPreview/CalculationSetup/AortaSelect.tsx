@@ -7,7 +7,7 @@ import { HTMLElementHelper } from '../../../../lib/utils';
 
 interface TProps {
     aortaSelectionProps: AortaSelectionProps
-    onAccept: (selectedCircle: number) => void
+    onAccept: (center: THREE.Vector3, radius: number) => void
     onReject: () => void
 }
 
@@ -23,6 +23,7 @@ export const AortaSelect = (props: TProps): ReactElement => {
     const [circle, selectCircle] = useState(-1);
     const [centerIsChanging, setCenterChanging] = useState(false);
     const [IJKCenter, setIJKCenter] = useState<THREE.Vector3 | null>(null);
+    
     useEffect(() => {
         if (canvasRef === null) {
             return;
@@ -117,7 +118,12 @@ export const AortaSelect = (props: TProps): ReactElement => {
                 <canvas ref={canvasRef} className={styles.canvas} width="512" height="512"></canvas>
             </div>
             <div className={styles.buttonPanel}>
-                <BaseButton disabled={props.aortaSelectionProps.circles.length === 0} onClick={() => { props.onAccept(circle); }}>Принять</BaseButton>
+                <BaseButton disabled={props.aortaSelectionProps.circles.length === 0} onClick={() => {
+                    const circles = props.aortaSelectionProps.circles;
+                    const center = new THREE.Vector3(circles[circle * 4], circles[circle * 4 + 1], circles[circle * 4 + 2]);
+                    const radius = circles[circle * 4 + 3];
+                    props.onAccept(center, radius);
+                }}>Принять</BaseButton>
                 <BaseButton onClick={() => { props.onReject(); }}>Отклонить</BaseButton>
                 <BaseButton disabled={props.aortaSelectionProps.circles.length === 0 || centerIsChanging} onClick={() => { onCenterChangeInit(); }}>Указать другой центр аорты</BaseButton>
             </div>

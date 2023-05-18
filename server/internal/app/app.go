@@ -5,10 +5,12 @@ import (
 	"log"
 	"net/http"
 	"server/internal/dispenser"
+	"server/internal/logger"
 )
 
 func Run() {
 	router := createRouter()
+	logger.WriteToLog("Application started")
 	log.Fatal(http.ListenAndServe(":80", router))
 }
 

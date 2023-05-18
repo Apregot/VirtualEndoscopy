@@ -103,6 +103,7 @@ declare module 'ami.js' {
         _rows: number;
         _columns: number;
         _spacing: Coord;
+        _halfDimensionsIJK: Coord;
     }
 
     export class Dimensions {

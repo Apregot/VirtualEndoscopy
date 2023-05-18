@@ -2,13 +2,16 @@ package app
 
 import (
 	"github.com/julienschmidt/httprouter"
+	"log"
 	"net/http"
-	"io/ioutil"
+	"os"
+	"server/internal/logger"
 )
 
 const (
 	assetsPath = "./dist/assets/"
 	imagesPath = "./dist/images/"
+	indexPath  = "./dist/index.html"
 )
 
 type Handler interface {
@@ -22,11 +25,13 @@ func Register(router *httprouter.Router) {
 }
 
 func getIndex(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
-	b, err := ioutil.ReadFile("./dist/index.html")
+	b, err := os.ReadFile(indexPath)
 	if err != nil {
-		panic(err)
+		logger.WriteToLog(err.Error())
+		log.Println(err)
+		b = []byte("Ошибка сервера")
 	}
-	writer.Write([]byte(b))
+	writer.Write(b)
 }
 
 func getAssets(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
@@ -36,20 +41,18 @@ func getAssets(writer http.ResponseWriter, request *http.Request, params httprou
 	} else {
 		writer.Header().Set("Content-Type", "application/javascript")
 	}
-
-	b1, err := ioutil.ReadFile(assetsPath + asset)
+	b1, err := os.ReadFile(assetsPath + asset)
 	if err != nil {
 		panic(err)
 	}
-	writer.Write([]byte(b1))
+	writer.Write(b1)
 }
 
-func getImage (writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
+func getImage(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
 	image := params.ByName("image")
-
-	b1, err := ioutil.ReadFile(imagesPath + image)
+	b1, err := os.ReadFile(imagesPath + image)
 	if err != nil {
 		panic(err)
 	}
-	writer.Write([]byte(b1))
+	writer.Write(b1)
 }

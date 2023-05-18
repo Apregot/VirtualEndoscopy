@@ -6,13 +6,13 @@ export class Series {
     private readonly seriesModel: SeriesModel;
     private readonly patient: Patient;
     private readonly ROI: THREE.Box3;
+    private readonly UID: string;
 
     constructor(seriesModel: SeriesModel) {
         this.seriesModel = seriesModel;
         this.patient = new Patient(seriesModel);
         this.ROI = new THREE.Box3(new THREE.Vector3(0, 0, 0), seriesModel.stack[0].dimensionsIJK.clone());
-        console.log(this.ROI.min);
-        console.log(this.ROI.max);
+        this.UID = this.seriesModel.rawHeader.string('x00020003');
     }
 
     getModel(): SeriesModel {
@@ -43,8 +43,8 @@ export class Series {
         return this.seriesModel.rawHeader.string('x00181030');
     }
 
-    getSeriesId(): string {
-        return this.seriesModel.rawHeader.string('x0020000e');
+    getUID(): string {
+        return this.UID;
     }
 
     getSD(): string {
@@ -53,5 +53,9 @@ export class Series {
 
     getNF(): number {
         return this.seriesModel.numberOfFrames;
+    }
+
+    setNF(frames: number): void {
+        this.seriesModel.numberOfFrames = frames;
     }
 }

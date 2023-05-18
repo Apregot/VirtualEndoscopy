@@ -8,15 +8,8 @@ import { CalculationSetup } from './CalculationSetup';
 export const SeriesPreview = (): ReactElement => {
     return (
         <Splitter style={{ height: '90vh' }}>
-            <SplitterPanel size={45}>
-                <Splitter layout="vertical">
-                    <SplitterPanel style={{ overflow: 'hidden' }}>
-                        <Visualization/>
-                    </SplitterPanel>
-                    <SplitterPanel className="overflow-y-scroll">
-                        <CalculationSetup/>
-                    </SplitterPanel>
-                </Splitter>
+            <SplitterPanel size={45} style={{ display: 'flex', flexDirection: 'column' }}>
+                <CalculationSetup/>
             </SplitterPanel>
             <SplitterPanel size={60}>
                 <Splitter layout="vertical">
