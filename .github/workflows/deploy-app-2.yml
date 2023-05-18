@@ -1,4 +1,4 @@
-name: Virtual Endoscopy.Deploy app
+name: Virtual Endoscopy.Deploy app.Step 2
 run-name: Sending app to production
 on:
   workflow_run:

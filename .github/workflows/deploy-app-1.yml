@@ -1,4 +1,4 @@
-name: Virtual Endoscopy.Deploy app.Step 2
+name: Virtual Endoscopy.Deploy app.Step 1
 run-name: ${{ github.actor }} started deploy. Version ${{ inputs && inputs.version || 'latest' }}
 on:
   workflow_dispatch:
