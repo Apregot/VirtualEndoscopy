@@ -18,13 +18,13 @@ jobs:
     steps:
       - id: checkout-tag
         name: Checkout repository
-        if: ${{ inputs && inputs.version !== '' }}
+        if: ${{ inputs && inputs.version != '' }}
         uses: actions/checkout@v3
         with:
           ref: tags/${{ inputs.version }}
       - id: checkout-latest
         name: Checkout repository
-        if: ${{ steps.checkout-tag.status !== 'success' }}
+        if: ${{ steps.checkout-tag.status != 'success' }}
         uses: actions/checkout@v3
       - id: go-setup
         name: Set up Go
