@@ -1,6 +1,6 @@
 Виртуальная эндоскопия (ATB)
 --------------
-[![Github All Releases](https://img.shields.io/github/actions/workflow/status/Apregot/VirtualEndoscopy/test-app.yml)]()
+[![Github All Releases](https://img.shields.io/github/actions/workflow/status/Apregot/VirtualEndoscopy/deploy-app-1.yml)](https://github.com/Apregot/VirtualEndoscopy/blob/main/.github/workflows/deploy-app-1.yml)
 
 Проект является дипломной работой студентов направления "Прикладная математика и информатика" БФУ им.Канта:
 - Даниила Верёвкина
