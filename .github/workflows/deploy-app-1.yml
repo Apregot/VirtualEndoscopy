@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'App version that will be deployed'
+        description: 'App version that will be deployed.(Leave the field empty to deploy the latest version)'
         default: ''
         required: false
         type: string
