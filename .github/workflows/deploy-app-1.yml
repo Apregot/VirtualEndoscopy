@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'App version that will be deployed.(Leave the field empty to deploy the latest version)'
+        description: 'App version that will be deployed.'
         default: ''
-        required: false
+        required: true
         type: string
   push:
     tags:
@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          ref: ${{ inputs.version }}
+          ref: v${{ inputs.version }}
       - id: checkout-latest
         name: Checkout repository by latest commit
         if: ${{ steps.checkout-tag.status != 'success' }}
