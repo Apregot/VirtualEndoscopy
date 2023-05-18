@@ -1,5 +1,5 @@
 name: Virtual Endoscopy.Deploy app
-run-name: Try to deploy latest version
+run-name: Sending app to production
 on:
   workflow_run:
     workflows: [Virtual Endoscopy.Test app]

@@ -1,17 +1,16 @@
-name: Virtual Endoscopy.Deploy app
-run-name: ${{ github.actor }} started deploy
+name: Virtual Endoscopy.Deploy app.Step 2
+run-name: ${{ github.actor }} started deploy. Version ${{ inputs && inputs.version || 'latest' }}
 on:
   workflow_dispatch:
     inputs:
       version:
         description: 'App version that will be deployed'
         default: ''
-        required: true
+        required: false
         type: string
   push:
     branches:
       - 'main'
-      - 'ci-test'
 jobs:
   Test_app:
     runs-on: ubuntu-latest
@@ -56,34 +55,3 @@ jobs:
         with:
           name: builtServer
           path: ./builtServer
-#  on-success:
-#    runs-on: ubuntu-latest
-#    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-#    steps:
-#      - name: download artifact
-#        uses: dawidd6/action-download-artifact@v2
-#        with:
-#          run_id: ${{ github.event.workflow_run.id }}
-#          name: builtServer
-#          path: builtServer
-#      - name: copy file via ssh
-#        uses: appleboy/scp-action@v0.1.4
-#        with:
-#          host: ${{ secrets.DEPLOY_HOST }}
-#          username: ${{ secrets.DEPLOY_USERNAME }}
-#          key: ${{ secrets.SSH_PRIVATE_KEY }}
-#          source: "./builtServer/*"
-#          target: ${{ secrets.DEPLOY_DIRECTORY }}
-#      - name: executing remote ssh command
-#        uses: appleboy/ssh-action@v0.1.10
-#        with:
-#          host: ${{ secrets.DEPLOY_HOST }}
-#          username: ${{ secrets.DEPLOY_USERNAME }}
-#          key: ${{ secrets.SSH_PRIVATE_KEY }}
-#          script_stop: true
-#          script: /bin/bash restart.sh
-#  on-failure:
-#    runs-on: ubuntu-latest
-#    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
-#    steps:
-#      - run: echo 'The tests were failed. Deployment canceled.'; exit 1;
