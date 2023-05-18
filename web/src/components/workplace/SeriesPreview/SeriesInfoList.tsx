@@ -7,7 +7,7 @@ import { type Series } from '../../../lib/Series';
 import styles from './SeriesInfoList.module.scss';
 
 export const SeriesInfoList = (): ReactElement => {
-    const { patientsSeriesList } = useAppSelector((state) => state.seriesReducer);
+    const { patientsSeriesList } = useAppSelector((state) => state.patientsSeriesList);
     console.log(patientsSeriesList);
     return (
         <Tabs

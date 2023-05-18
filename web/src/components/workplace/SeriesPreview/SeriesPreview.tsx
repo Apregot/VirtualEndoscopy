@@ -1,27 +1,22 @@
 import React, { type ReactElement } from 'react';
 import { Splitter, SplitterPanel } from 'primereact/splitter';
 import { SeriesInfoList } from './SeriesInfoList';
-import { QuadView } from '../QuadView';
+import { QuadView } from './QuadView';
+import { Visualization } from './Visualization';
+import { CalculationSetup } from './CalculationSetup';
 
 export const SeriesPreview = (): ReactElement => {
     return (
         <Splitter style={{ height: '90vh' }}>
-            <SplitterPanel size={1}>
-                <Splitter layout="vertical">
-                    <SplitterPanel style={{ overflow: 'hidden' }}>
-                        1
-                    </SplitterPanel>
-                    <SplitterPanel style={{ overflow: 'hidden' }}>
-                        3
-                    </SplitterPanel>
-                </Splitter>
+            <SplitterPanel size={45} style={{ display: 'flex', flexDirection: 'column' }}>
+                <CalculationSetup/>
             </SplitterPanel>
             <SplitterPanel size={60}>
                 <Splitter layout="vertical">
                     <SplitterPanel style={{ overflow: 'hidden' }}>
                         <QuadView />
                     </SplitterPanel>
-                    <SplitterPanel size={30} style={{ overflow: 'hidden' }}>
+                    <SplitterPanel size={30} className="overflow-y-scroll">
                         <SeriesInfoList />
                     </SplitterPanel>
                 </Splitter>

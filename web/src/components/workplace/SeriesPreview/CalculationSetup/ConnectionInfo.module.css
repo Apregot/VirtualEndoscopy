@@ -1,0 +1,9 @@
+.btnList button {
+  margin-bottom: 15px;
+  margin-left: 10px;
+}
+.btnList:last-child {
+  margin-bottom: 0 !important;
+}
+
+/*# sourceMappingURL=ConnectionInfo.module.css.map */

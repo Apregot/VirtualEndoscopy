@@ -1,0 +1,33 @@
+.buttons {
+  display: flex;
+  flex-direction: row;
+
+  button {
+    margin-left: 5px;
+  }
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.inputs {
+  label {
+    margin-bottom: 5px;
+    color: var(--app-theme-secondary);
+  }
+  input {
+    border-radius: 0.365rem;
+    max-width: 60px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 2px 5px;
+    background-color: var(--app-theme-bg-third);
+    color: var(--app-theme-primary);
+  }
+}
+
+.title {
+  font-weight: bold;
+  color: var(--app-theme-secondary);
+  margin-bottom: 10px;
+}

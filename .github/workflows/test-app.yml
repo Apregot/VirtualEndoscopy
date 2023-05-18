@@ -1,16 +1,19 @@
-name: Virtual Endoscopy. Test app
-run-name: ${{ github.actor }} has added commit ${{ github.sha }} to main
+name: Virtual Endoscopy.Test app
+run-name: ${{ github.actor }} has added commit to main
 on:
   push:
     branches:
       - 'main'
-      - 'ci-test-2'
 
 jobs:
   Test_app:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
@@ -24,3 +27,8 @@ jobs:
       - id: build
         working-directory: ./web
         run: npm run build
+      - name: upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: builtServer
+          path: ./builtServer

@@ -1,0 +1,10 @@
+.btnList {
+  button {
+    margin-bottom: 15px;
+    margin-left: 10px ;
+  }
+
+  &:last-child {
+    margin-bottom: 0 !important;
+  }
+}

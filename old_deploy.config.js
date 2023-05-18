@@ -1,11 +1,11 @@
 const Old_deployConfig = {
 	build: 72,
 	DEV: {
-		wsurl: 'ws://192.168.50.138:80'
+		wsurl: 'ws://158.160.65.29:8889'
 	},
 
 	TEST: {
-		wsurl: 'ws://192.168.50.138:80'
+		wsurl: 'ws://158.160.65.29:8889'
 	},
 
 	PROD: {

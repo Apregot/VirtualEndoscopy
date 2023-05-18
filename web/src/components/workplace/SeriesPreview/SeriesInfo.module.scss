@@ -1,6 +1,24 @@
 .patientInfo,.patientSeries {
   margin-right: 20px;
 
+  .header {
+    display: flex;
+    justify-content: space-between;
+
+    .menuButton {
+      margin-top: 5px;
+      height: 20px;
+      width: 26px;
+      cursor: pointer;
+      background-image: url('data:image/svg+xml,\
+        <svg width="100" height="30" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">\
+          <circle cx="4" cy="8" r="3" fill="white" stroke="black"/>\
+          <circle cx="13" cy="8" r="3" fill="white" stroke="black"/>\
+          <circle cx="22" cy="8" r="3" fill="white" stroke="black"/>\
+        </svg>'
+      );
+    }
+  }
   .infoTitle {
     color: #d4d4d8;
     font-size: 17px;
@@ -8,14 +26,14 @@
     display: block;
     margin-bottom: 15px;
   }
-  min-height: 200px;
+
   border-radius: 12px;
   background-color: var(--app-theme-bg-second);
   padding: 10px;
   -webkit-box-shadow: 4px 7px 17px -3px rgba(34, 60, 80, 0.1);
   -moz-box-shadow: 4px 7px 17px -3px rgba(34, 60, 80, 0.1);
   box-shadow: 4px 7px 17px -3px rgba(34, 60, 80, 0.1);
-
+  margin-bottom: 20px;
   .infoData {
     display: flex;
     flex-direction: column;
@@ -31,7 +49,22 @@
   }
 }
 
+.isSelected{
+  border: 3px solid red
+}
+
+.patientSeries {
+  display: flex;
+
+  max-height: 240px;
+  min-width: 300px;
+}
+
+.patientInfo {
+  background-color: var(--app-theme-bg-third);
+}
+
 .contextMenu {
-  top: 25px;
-  left: 120px;
+  top: 35px;
+  right: 0;
 }

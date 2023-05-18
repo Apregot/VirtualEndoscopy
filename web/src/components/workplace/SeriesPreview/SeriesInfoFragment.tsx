@@ -1,26 +1,23 @@
 import React, { type ReactElement, useEffect, useRef, useState } from 'react';
 import styles from './SeriesInfo.module.scss';
 import { type Series } from '../../../lib/Series';
-import { SelectPopupList } from '../../base/SelectList/SelectPopupList';
 import { seriesSlice } from '../../../store/reducers/SeriesSlice';
-import { useAppDispatch } from '../../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { UP3 } from '../../../lib/visualization';
+import { Menu, MenuItem, SubMenu } from '@szhsin/react-menu';
+import '@szhsin/react-menu/dist/index.css';
 
 interface TProps {
     series: Series
 }
 
-enum ContextMenuAction {
-    OPEN_SERIES,
-    CLOSE_SERIES,
-}
-
 export const SeriesInfoFragment = (props: TProps): ReactElement => {
     const series = props.series;
-    const [contextOpened, openContext] = useState(false);
     const [seriesImg, setSeriesImg] = useState('');
+    
+    const { selectedPreviewSeries } = useAppSelector((state) => state.patientsSeriesList);
 
-    const { selectPreviewSeries, deleteSeries } = seriesSlice.actions;
+    const { selectPreviewSeries, deleteSeries, thinOutSeries } = seriesSlice.actions;
     const dispatch = useAppDispatch();
 
     const divRef = useRef(null);
@@ -52,77 +49,40 @@ export const SeriesInfoFragment = (props: TProps): ReactElement => {
         ctx.drawImage(canvas as CanvasImageSource, 0, 0);
         ctx.font = 'bold 36px serif';
         // ctx.fillStyle('#ff0000');
-        const n = series.getModel().stack[0]._numberOfFrames; const xOffset = n < 10 ? 107 : n < 100 ? 90 : n < 1000 ? 70 : 50;
+        const n = series.getModel().stack[0]._numberOfFrames; 
+        const xOffset = n < 10 ? 107 : n < 100 ? 90 : n < 1000 ? 70 : 50;
         ctx.fillText(n.toString(), xOffset, 1);
         setSeriesImg((canvas as HTMLCanvasElement).toDataURL());
         canvas1.style.display = 'none';
     }, [canvasRef]);
 
-    // TODO: must be splitted into contextMenuAvailable component
-    const onContextMenuCalled = (event: React.MouseEvent): void => {
-        openContext(true);
-        event.preventDefault();
-    };
-
-    const onContextMenuItemSelect = (itemId: string | number): void => {
-        console.log(`[SERIES LIST] Selected menu ${itemId}`);
-        openContext(false);
-
-        if (itemId === ContextMenuAction.OPEN_SERIES) {
-            dispatch(selectPreviewSeries(series));
-        }
-        if (itemId === ContextMenuAction.CLOSE_SERIES) {
-            dispatch(deleteSeries(series));
-        }
-    };
-
-    useEffect(() => {
-        if (contextOpened) {
-            setTimeout(() => {
-                const onOtherAction = (): void => {
-                    openContext(false);
-                    document.removeEventListener('click', onOtherAction);
-                    document.removeEventListener('contextmenu', onOtherAction);
-                };
-
-                // HACK: При нажатии на другие кнопки нужно скрывать чужие меню. Для реализации оного в голову пришла только идея с таймером
-                document.addEventListener('click', onOtherAction, { once: true });
-                document.addEventListener('contextmenu', onOtherAction, { once: true });
-            }, 0);
-        }
-    }, [contextOpened]);
-
     return (
-        <div className="flex p-3 relative">
-            <div onContextMenu={onContextMenuCalled} className={styles.patientSeries}>
-                <div style={{ borderRadius: '12px', overflow: 'hidden', marginBottom: '15px' }} ref={divRef}>
+        <div className="flex relative">
+            <div className={(selectedPreviewSeries?.getROI() === series.getROI()) ? `${styles.patientSeries} ${styles.isSelected}` : `${styles.patientSeries}`}>
+                <div style={{ borderRadius: '12px', overflow: 'hidden', marginRight: '15px' }} ref={divRef}>
                     <canvas ref={canvasRef} width='128' height='128'/>
                 </div>
-                <span className={styles.infoTitle}>Номер: {series.getSN()}</span>
-                <div className={styles.infoData}>
-                    <span className={styles.infoDataRow}>PN: <span className={styles.infoDataRowValue}>{series.getPN()}</span></span>
-                    <span className={styles.infoDataRow}>SD: <span className={styles.infoDataRowValue}>{series.getSD()}</span></span>
-                    <span className={styles.infoDataRow}>Кадров: <span className={styles.infoDataRowValue}>{series.getNF()}</span></span>
+                <div style={{ minWidth: '130px' }}>
+                    <div className={styles.header}>
+                        <span className={styles.infoTitle}>Номер: {series.getSN()}</span>
+                        <Menu menuButton={<div className={styles.menuButton}></div>}>
+                            <MenuItem onClick={() => { dispatch(selectPreviewSeries(series)); }}>Открыть серию</MenuItem>
+                            <MenuItem onClick={() => { dispatch(deleteSeries(series)); }} >Закрыть серию</MenuItem>
+                            <SubMenu label="Проредить серию">
+                                <MenuItem onClick={() => { dispatch(thinOutSeries({ series, limit: 100 })); }}>до 100 срезов</MenuItem>
+                                <MenuItem onClick={() => { dispatch(thinOutSeries({ series, limit: 200 })); }}>до 200 срезов</MenuItem>
+                                <MenuItem onClick={() => { dispatch(thinOutSeries({ series, limit: 500 })); }}>до 500 срезов</MenuItem>
+                                <MenuItem onClick={() => { dispatch(thinOutSeries({ series, limit: 700 })); }}>до 700 срезов</MenuItem>
+                            </SubMenu>
+                        </Menu>
+                    </div>
+                    <div className={styles.infoData}>
+                        <span className={styles.infoDataRow}>PN: <span className={styles.infoDataRowValue}>{series.getPN()}</span></span>
+                        <span className={styles.infoDataRow}>SD: <span className={styles.infoDataRowValue}>{series.getSD()}</span></span>
+                        <span className={styles.infoDataRow}>Кадров: <span className={styles.infoDataRowValue}>{series.getNF()}</span></span>
+                    </div>
                 </div>
             </div>
-            <SelectPopupList
-                opened={contextOpened}
-
-                className={styles.contextMenu}
-
-                items={[
-                    {
-                        id: ContextMenuAction.OPEN_SERIES,
-                        content: <span>Открыть серию</span>
-                    },
-                    {
-                        id: ContextMenuAction.CLOSE_SERIES,
-                        content: <span>Закрыть серию</span>
-                    }
-                ]}
-
-                onItemSelect={onContextMenuItemSelect}
-            />
         </div>
     );
 };

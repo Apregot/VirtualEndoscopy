@@ -1,15 +1,37 @@
-name: Virtual Endoscopy. Deploy app
+name: Virtual Endoscopy.Deploy app
 run-name: Try to deploy latest version
 on:
   workflow_run:
-    workflows: [ Virtual Endoscopy. Test app ]
-    types: [ completed ]
+    workflows: [Virtual Endoscopy.Test app]
+    types: [completed]
+    branches: [main]
 jobs:
   on-success:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - run: echo 'Deployment starts'
+      - name: download artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          run_id: ${{ github.event.workflow_run.id }}
+          name: builtServer
+          path: builtServer
+      - name: copy file via ssh
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "./builtServer/*"
+          target: ${{ secrets.DEPLOY_DIRECTORY }}
+      - name: executing remote ssh command
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script_stop: true
+          script: /bin/bash restart.sh
   on-failure:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
