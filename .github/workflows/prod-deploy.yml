@@ -1,7 +1,7 @@
 name: Virtual Endoscopy.Deploy app
 run-name: ${{ github.actor }} started deploy
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       version:
         description: 'App version that will be deployed'
@@ -17,13 +17,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: checkout-tag
-        name: Checkout repository
+        name: Checkout repository by tag
         if: ${{ inputs && inputs.version != '' }}
         uses: actions/checkout@v3
         with:
           ref: tags/${{ inputs.version }}
       - id: checkout-latest
-        name: Checkout repository
+        name: Checkout repository by latest commit
         if: ${{ steps.checkout-tag.status != 'success' }}
         uses: actions/checkout@v3
       - id: go-setup
