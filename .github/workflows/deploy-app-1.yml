@@ -11,6 +11,8 @@ on:
   push:
     branches:
       - 'main'
+    tags:
+      - 'v*.*.*'
 jobs:
   Test_app:
     runs-on: ubuntu-latest
@@ -20,6 +22,7 @@ jobs:
         if: ${{ inputs && inputs.version != '' }}
         uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           ref: tags/${{ inputs.version }}
       - id: checkout-latest
         name: Checkout repository by latest commit
