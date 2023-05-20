@@ -7,7 +7,8 @@ export const CalculationSetup = (): ReactElement => {
     return (
         <>
             <BorderedBox title="3D Сегментация">
-                <Segmentation/>
+                <div></div>
+                {/*<Segmentation/>*/}
             </BorderedBox>
             <BorderedBox title="Настройки соединения">
                 <ConnectionInfo/>

@@ -44,15 +44,15 @@ export const seriesSlice = createSlice({
             const numberOfFrames = series.getNF();
 
             if (numberOfFrames <= action.payload.limit) { console.log('прореживание не требуется'); } else {
-                let N = 2;
-                while (numberOfFrames / N > action.payload.limit) { N *= 2; }
-                for (let i = 0; i < series.getModel().stack.at(0).frame.length; i++) { series.getModel().stack.at(0)?.frame.splice(i + 1, N - 1); }
-            
-                series.setNF(series.getModel().stack.at(0)?.frame.length);
-                series.getModel().stack[0]._numberOfFrames = series.getModel().stack.at(0).frame.length;
-                series.getModel().stack[0].dimensionsIJK.z = series.getModel().stack.at(0).frame.length;
-                series.getModel().stack[0]._halfDimensionsIJK.z = series.getModel().stack.at(0).frame.length / 2;
-                series.getROI().max.z = series.getModel().stack.at(0).frame.length;
+                // let N = 2;
+                // while (numberOfFrames / N > action.payload.limit) { N *= 2; }
+                // for (let i = 0; i < series.getModel().stack.at(0).frame.length; i++) { series.getModel().stack.at(0)?.frame.splice(i + 1, N - 1); }
+                //
+                // series.setNF(series.getModel().stack.at(0)?.frame.length);
+                // series.getModel().stack[0]._numberOfFrames = series.getModel().stack.at(0).frame.length;
+                // series.getModel().stack[0].dimensionsIJK.z = series.getModel().stack.at(0).frame.length;
+                // series.getModel().stack[0]._halfDimensionsIJK.z = series.getModel().stack.at(0).frame.length / 2;
+                // series.getROI().max.z = series.getModel().stack.at(0).frame.length;
             
                 for (const element of state.patientsSeriesList) {
                     if (element.at(0)?.getId() === action.payload.series.getId()) {
