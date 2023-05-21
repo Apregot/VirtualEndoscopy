@@ -17,7 +17,7 @@ type DockerContainer struct {
 }
 
 const ImageName = "pea/atb:latest"
-const LifeTime = time.Minute * 3
+const LifeTime = time.Minute * 5
 
 func UpDockerContainer() DockerContainer {
 	port, err := getFreePort()

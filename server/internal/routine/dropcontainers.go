@@ -74,7 +74,7 @@ func dropOldContainers(ctx context.Context, redisClient *redis.Client) {
 				}
 			}
 		}
-		time.Sleep(time.Minute * 5)
+		time.Sleep(time.Minute * 10)
 	}
 
 }
