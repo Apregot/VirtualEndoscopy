@@ -13,7 +13,7 @@ export interface ThreeFrame {
     targetID: number
 
     camera: AMI.OrthographicCamera | null
-    controls: AMI.TrackballOrthoControl | null
+    controls: AMI.TrackballOrthoControl | AMI.TrackballControll | null
 
     scene: THREE.Scene | null
     light: any
@@ -69,6 +69,84 @@ export class UP3 {
         }
 
         return threeElement;
+    }
+
+    static initRenderer3D(element: ThreeFrameElement): void {
+        debugger;
+        const renderObj = UP3.getEnabledElement(element, true);
+        if (renderObj === null) return;
+
+        renderObj.renderer = new THREE.WebGLRenderer({
+            antialias: true
+        });
+        // @ts-expect-error
+        renderObj.renderer.setSize(
+            renderObj.domElement.clientWidth, renderObj.domElement.clientHeight);
+
+        renderObj.renderer.setClearColor(renderObj.color, 1);
+        renderObj.renderer.domElement.id = renderObj.targetID;
+        renderObj.domElement.appendChild(renderObj.renderer.domElement);
+
+        // camera
+        renderObj.camera = new THREE.PerspectiveCamera(
+            45, renderObj.domElement.clientWidth / renderObj.domElement.clientHeight,
+            0.1, 100000);
+        renderObj.camera.position.x = 500;
+        renderObj.camera.position.y = 500;
+        renderObj.camera.position.z = -500;
+
+        const TrackballControl = AMI.trackballControlFactory(THREE);
+        // controls
+        renderObj.controls = new TrackballControl(
+            renderObj.camera, renderObj.domElement);
+        renderObj.controls.rotateSpeed = 5.5;
+        renderObj.controls.zoomSpeed = 1.2;
+        renderObj.controls.panSpeed = 0.8;
+        renderObj.controls.staticMoving = true;
+        renderObj.controls.dynamicDampingFactor = 0.3;
+
+        // scene
+        renderObj.scene = new THREE.Scene();
+
+        // light
+        renderObj.light = new THREE.DirectionalLight(0xffffff, 1);
+        renderObj.light.position.copy(renderObj.camera.position);
+        renderObj.scene.add(renderObj.light);
+    }
+
+    static render(element: ThreeFrameElement): void {
+        const renderObj = UP3.getEnabledElement(element, true);
+
+        if (renderObj === null) return;
+
+        if (renderObj.render) {
+            renderObj.render(renderObj);
+            return;
+        }
+
+        const controls = renderObj.controls; const renderer = renderObj.renderer;
+        const scene = renderObj.scene; const camera = renderObj.camera;
+
+        const render = () => {
+            renderer.clear();
+            if (!renderObj.enabledStandardRendering) {
+                console.log('stoped UP3.render()');
+                return;
+            }
+            requestAnimationFrame(render);
+            controls.update();
+            renderer.render(scene, camera);
+
+            // это для LUT
+            if (renderObj.scene2) {
+                renderer.autoClear = false;
+                renderer.render(renderObj.scene2, renderObj.camera2);
+            }
+        };
+
+        renderObj.rendered = true;
+        renderObj.enabledStandardRendering = true;
+        render();
     }
 
     static getEnabledElement(element: ThreeFrameElement, mustExists: boolean = false): ThreeFrame | null {

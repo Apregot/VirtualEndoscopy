@@ -130,8 +130,15 @@ declare module 'ami.js' {
         noRotate: boolean;
     }
 
+    export class TrackballControll {
+        constructor(camera: OrthographicCamera, element: HTMLElement);
+        staticMoving: boolean;
+        noRotate: boolean;
+    }
+
     /* Factory Section */
     function orthographicCameraFactory(three: THREE): OrthographicCamera.prototype;
     function stackHelperFactory(three: THREE): StackHelper.prototype;
     function trackballOrthoControlFactory(three: THREE): TrackballOrthoControl.prototype;
+    function trackballControlFactory(three: THREE): TrackballControll.prototype;
 }
