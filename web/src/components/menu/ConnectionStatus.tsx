@@ -52,11 +52,11 @@ function getStatusClasses(status: Status): string {
 function getStatusTitle(status: Status): string {
     switch (status) {
     case Status.CONNECTED:
-        return 'Connected';
+        return 'Подключено';
     case Status.DISCONNECTED:
-        return 'Disconnected';
+        return 'Нет соединения';
     case Status.PROGRESS:
-        return 'Connecting...';
+        return 'Подключение к серверу...';
     }
     return 'Undefined';
 }

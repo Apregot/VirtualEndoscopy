@@ -173,7 +173,7 @@ export const Segmentation = (props: TProps): ReactElement => {
                 </div>
                 <div className={styles.buttons}>
                     <BaseButton onClick={() => {}}>Сбросить ROI</BaseButton>
-                    <BaseButton disabled={disabledFFR} onClick={initializeFFR}>Initialize FFR processing</BaseButton>
+                    <BaseButton disabled={disabledFFR} onClick={initializeFFR}>Запустить FFR инициализацию</BaseButton>
                 </div>
             </div>
         </div>
