@@ -1,0 +1,44 @@
+.wrapper {
+  width: 500px;
+
+  .tabContent {
+    padding: 20px 0;
+  }
+}
+
+.range {
+  width: 100%;
+}
+
+.rangeWrapper {
+  background-color: #f8f8f8;
+  padding: 15px 5px 13px 5px;
+  border-radius: 12px;
+
+  .title {
+    font-weight: 500;
+    color: #9ba0a2;
+  }
+
+  .value {
+    color: #3a6ff0;
+  }
+}
+
+.rangeSubtitle {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #d1d1d1;
+}
+
+.buttonsPanel {
+  display: flex;
+  font-size: 50px;
+  padding: 10px 0;
+
+  button {
+    margin-right: 5px;
+    font-size: 15px;
+    border: 1px solid #e6e6e6;
+  }
+}

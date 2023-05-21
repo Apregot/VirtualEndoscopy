@@ -66,7 +66,7 @@ export const MovablePopup = (props: TProps): ReactElement => {
                 onMouseMove={mouseMove}
                 onMouseUp={mouseUp}
             >
-                <div>{props.title}</div>
+                <div className={commonStyles.headerTitle}>{props.title}</div>
                 <div className={commonStyles.closeButton} onClick={props.onClose}>x</div>
             </div>
             <div className={commonStyles.content}>

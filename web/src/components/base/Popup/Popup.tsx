@@ -14,7 +14,7 @@ export const Popup = (props: TProps): ReactElement => {
         <div className={styles.background} onClick={(event) => { event.stopPropagation(); }}>
             <div style={props.style ?? {}} className={styles.modal}>
                 <div className={styles.header}>
-                    <div>{props.title}</div>
+                    <div className={styles.headerTitle}>{props.title}</div>
                     <div className={styles.closeButton} onClick={props.onClose}>x</div>
                 </div>
                 <div className={styles.content}>
