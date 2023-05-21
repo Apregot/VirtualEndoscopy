@@ -72,7 +72,6 @@ export class UP3 {
     }
 
     static initRenderer3D(element: ThreeFrameElement): void {
-        debugger;
         const renderObj = UP3.getEnabledElement(element, true);
         if (renderObj === null) return;
 

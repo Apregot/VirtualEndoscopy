@@ -96,5 +96,9 @@ class FFRController {
 
         return defaultAorta;
     }
+
+    async loadAortaPreview(tau: number): Promise<ArrayBuffer> {
+        return await this.ffrp.sendRequestReturningArrayBuffer(`LoadAortaPreview ${tau}`);
+    }
 }
 export { FFRController };
