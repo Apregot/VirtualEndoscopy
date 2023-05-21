@@ -1,0 +1,22 @@
+.wrapper {
+  background-color: rgb(24 24 27);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.stub {
+  display:block;
+  color: rgb(75, 75, 89);
+  padding: 20px;
+  .title {
+    font-weight: bold;
+    font-size: 25px;
+  }
+  .subtitle {
+    font-size: 15px;
+  }
+}

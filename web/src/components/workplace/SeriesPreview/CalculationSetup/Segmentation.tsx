@@ -122,6 +122,9 @@ export const Segmentation = (props: TProps): ReactElement => {
         void (new Promise(resolve => {
             void controller.initializeAndSegmentAorta(center, radius, (val: number) => {
                 setProgressBarPercent(val);
+            }).then((aorta: AortaView) => {
+                setProgressBarInfo(null);
+                props.onSelectAorta(aorta);
             });
         }));
     };
@@ -141,7 +144,7 @@ export const Segmentation = (props: TProps): ReactElement => {
             {
                 progressBarInfo !== null
                     ? (
-                        <Popup onClose={() => { console.log('closed'); }} title={progressBarInfo.title} show={true}>
+                        <Popup style={{ minWidth: '500px' }} onClose={() => { console.log('closed'); }} title={progressBarInfo.title} show={true}>
                             <div style={{ paddingBottom: '20px', width: '100%' }}>
                                 {progressBarInfo.subtitle}
                                 <ProgressBar animated now={progressBarPercent} label={`${progressBarPercent}%`} />

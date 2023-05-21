@@ -1,9 +1,8 @@
 import React, { type ReactElement } from 'react';
 import { Splitter, SplitterPanel } from 'primereact/splitter';
 import { SeriesInfoList } from './SeriesInfoList';
-import { QuadView } from './QuadView';
-import { Visualization } from './Visualization';
 import { CalculationSetup } from './CalculationSetup';
+import { VisualizationEmptyState } from '../Common/VisualizationEmptyState';
 
 export const SeriesPreview = (): ReactElement => {
     return (
@@ -14,7 +13,8 @@ export const SeriesPreview = (): ReactElement => {
             <SplitterPanel size={60}>
                 <Splitter layout="vertical">
                     <SplitterPanel style={{ overflow: 'hidden' }}>
-                        <QuadView />
+                        <VisualizationEmptyState />
+                        {/* Нужно вынести компонент в другое место, плюс смену компонента когда сделаем работу с 2д */}
                     </SplitterPanel>
                     <SplitterPanel size={30} className="overflow-y-scroll">
                         <SeriesInfoList />
