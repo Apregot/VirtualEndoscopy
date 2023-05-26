@@ -12,7 +12,7 @@ import (
 
 func Run() {
 	router := createRouter()
-	logger.WriteToLog("Application started")
+	logger.WriteToLog("[APP] Application started")
 	log.Fatal(http.ListenAndServe(":80", router))
 }
 

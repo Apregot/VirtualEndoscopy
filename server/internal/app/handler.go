@@ -29,9 +29,12 @@ func getIndex(writer http.ResponseWriter, request *http.Request, params httprout
 	if err != nil {
 		logger.WriteToLog(err.Error())
 		log.Println(err)
-		b = []byte("Ошибка сервера")
+		b = []byte("Internal server error")
 	}
-	writer.Write(b)
+	_, err = writer.Write(b)
+	if err != nil {
+		logger.WriteToLog("[APP: GET INDEX ERROR]" + err.Error())
+	}
 }
 
 func getAssets(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
@@ -41,18 +44,26 @@ func getAssets(writer http.ResponseWriter, request *http.Request, params httprou
 	} else {
 		writer.Header().Set("Content-Type", "application/javascript")
 	}
-	b1, err := os.ReadFile(assetsPath + asset)
+	b, err := os.ReadFile(assetsPath + asset)
 	if err != nil {
+		logger.WriteToLog(err.Error())
 		panic(err)
 	}
-	writer.Write(b1)
+	_, err = writer.Write(b)
+	if err != nil {
+		logger.WriteToLog("[APP: GET ASSETS ERROR]" + err.Error())
+	}
 }
 
 func getImage(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
 	image := params.ByName("image")
-	b1, err := os.ReadFile(imagesPath + image)
+	b, err := os.ReadFile(imagesPath + image)
 	if err != nil {
+		logger.WriteToLog(err.Error())
 		panic(err)
 	}
-	writer.Write(b1)
+	_, err = writer.Write(b)
+	if err != nil {
+		logger.WriteToLog("[APP: GET IMAGE ERROR]" + err.Error())
+	}
 }

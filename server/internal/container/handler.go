@@ -19,7 +19,7 @@ type Handler struct {
 const ServerAddr = "158.160.65.29"
 
 func (h *Handler) Register(router *httprouter.Router) {
-	router.GET("/atb/take", h.takeContainer)
+	router.GET("/atb/take", h.takeConnection)
 	router.POST("/atb/prolong", h.prolongConnection)
 }
 
@@ -32,14 +32,10 @@ type prolongContainerResult struct {
 	Success bool
 }
 
-func (h *Handler) takeContainer(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
+func (h *Handler) takeConnection(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
 	writer.Header().Set("Access-Control-Allow-Origin", "*")
 	writer.Header().Set("Access-Control-Allow-Headers", "origin, x-requested-with, content-type")
 	writer.Header().Set("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS")
-
-	var buffer bytes.Buffer
-	buffer.WriteString(ServerAddr)
-	buffer.WriteString(":")
 
 	container := UpDockerContainer()
 
@@ -50,16 +46,17 @@ func (h *Handler) takeContainer(writer http.ResponseWriter, request *http.Reques
 		return
 	}
 
-	buffer.WriteString(strconv.Itoa(int(container.Port)))
+	var buffer bytes.Buffer
+	buffer.WriteString(ServerAddr + ":" + strconv.Itoa(int(container.Port)))
 
-	logger.WriteToLog(buffer.String())
+	logger.WriteToLog("[CONTAINER HANDLER] Created container address: " + buffer.String())
 
 	result := containerCreateResult{Id: container.Id, Address: buffer.String()}
 
 	encoded, _ := json.Marshal(result)
 	_, err := writer.Write(encoded)
 	if err != nil {
-		logger.WriteToLog(err.Error())
+		logger.WriteToLog("[CONTAINER HANDLER: WRITE ERROR]" + err.Error())
 	}
 }
 
@@ -75,7 +72,7 @@ func (h *Handler) prolongConnection(writer http.ResponseWriter, request *http.Re
 	isExists, _ := h.RedisClient.Exists(context.Background(), containerId).Result()
 	result := prolongContainerResult{Success: true}
 	if isExists == 0 {
-		logger.WriteToLog("[PROLONG CONNECTION ERROR: VALUE DOESN'T EXIST]")
+		logger.WriteToLog("[PROLONG CONNECTION: VALUE DOESN'T EXIST ERROR]")
 		result.Success = false
 	}
 

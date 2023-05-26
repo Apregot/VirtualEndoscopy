@@ -98,5 +98,5 @@ func dropContainers(containersToDrop []string) {
 		return
 	}
 
-	log.Println("[CONTAINER DISPENSER] Страые контейнеры удалены")
+	log.Println("[CONTAINER DISPENSER] Старые контейнеры удалены")
 }

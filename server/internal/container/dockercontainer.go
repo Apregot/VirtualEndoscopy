@@ -16,27 +16,36 @@ type DockerContainer struct {
 	Port uint16
 }
 
-const ImageName = "pea/atb:latest"
-const LifeTime = time.Minute * 5
+const (
+	ImageName = "pea/atb:latest"
+	AtbPort   = "8889"
+	LifeTime  = time.Minute * 5
+)
 
 func UpDockerContainer() DockerContainer {
 	port, err := getFreePort()
 	if err != nil {
-		logger.WriteToLog(err.Error())
-		log.Fatal(err)
+		logger.WriteToLog("[DOCKER CONTAINER: GET FREE PORT ERROR] " + err.Error())
 	}
-	cmd := exec.Command("docker", "run", "-d", "-p", strconv.FormatUint(uint64(port), 10)+":8889", ImageName)
+	cmd := exec.Command(
+		"docker",
+		"run",
+		"-d",
+		"-p",
+		strconv.FormatUint(uint64(port), 10)+":"+AtbPort,
+		ImageName,
+	)
 	var out bytes.Buffer
 	cmd.Stdout = &out
 	err = cmd.Run()
 	if err != nil {
-		logger.WriteToLog(err.Error())
+		logger.WriteToLog("[DOCKER CONTAINER: RUN ERROR] " + err.Error())
 		log.Fatal(err)
 	}
 	id := strings.TrimSuffix(out.String(), "\n")
 
 	container := DockerContainer{Id: id, Port: port}
-	logger.WriteToLog("Created container Id: " + container.Id)
+	logger.WriteToLog("[DOCKER CONTAINER] Created container Id: " + container.Id)
 
 	return container
 }
