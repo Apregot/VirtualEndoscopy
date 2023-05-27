@@ -28,7 +28,7 @@ interface FSFProtoCube {
     data: TypedArray
     dims: number[]
     maskType: number | undefined
-    ROI?: number[] | undefined
+    ROI: number[]
 
 }
 class FSF {
@@ -192,7 +192,7 @@ class FSF {
         const mask = new Uint8Array(data.buffer, offset + descSize, packedSize);
         fsfbuf.offset += descSize + packedSize;
     
-        return { dims: [n1, n2, n3], data: mask, maskType: Const.BITMASK };
+        return { dims: [n1, n2, n3], data: mask, maskType: Const.BITMASK, ROI: [] };
     }
 
     // Парсинг маркера FSF::FLOAT64 (1-dim short index)
@@ -319,4 +319,4 @@ class FSF {
         return str;
     }
 }
-export { FSF };
+export { FSF, type FSFProtoCube, Const as FSFCode };
