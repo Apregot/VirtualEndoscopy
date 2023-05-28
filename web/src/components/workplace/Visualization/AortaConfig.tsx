@@ -10,12 +10,17 @@ import { BaseButton } from '../../base/Button';
 interface TProps {
     aorta: AortaView
     onTauChange: (tau: number) => void
+    isLoading: boolean
 }
 
 export const AortaConfig = (props: TProps): ReactElement => {
     const [tau, setTau] = useState<number>(props.aorta.tau);
+    const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null);
     useEffect(() => {
-        props.onTauChange(tau);
+        if (timerId !== null) {
+            clearTimeout(timerId);
+        }
+        setTimerId(setTimeout(() => { props.onTauChange(tau); setTimerId(null); }, 400));
     }, [tau]);
 
     return (
@@ -31,8 +36,15 @@ export const AortaConfig = (props: TProps): ReactElement => {
                     >
                         <div className={styles.tabContent}>
                             <div className={styles.rangeWrapper}>
-                                <Form.Label><span className={styles.title}>Порог:</span> <span className={styles.value}>{tau}</span></Form.Label>
+                                <Form.Label><span className={styles.title}>Порог:</span> <span className={styles.value}>{tau}</span>
+                                    {
+                                        props.isLoading
+                                            ? <span className={'text-yellow-500'}> Загрузка...</span>
+                                            : ''
+                                    }
+                                </Form.Label>
                                 <Form.Range
+                                    disabled={props.isLoading}
                                     onChange={(e) => { setTau(Number(e.target.value)); }}
                                     min={0}
                                     max={1}
