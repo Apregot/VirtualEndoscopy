@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import * as AMI from 'ami.js';
 import { type WebGLRenderer } from 'three/src/renderers/WebGLRenderer';
 import { type Stack } from 'ami.js';
-import { type Object3D } from 'three';
+import { type Camera, type Object3D } from 'three';
 
 export interface ThreeFrame {
     id: string // Имя в системе UP3
@@ -12,8 +12,8 @@ export interface ThreeFrame {
     color: number
     targetID: number
 
-    camera: AMI.OrthographicCamera | null
-    controls: AMI.TrackballOrthoControl | AMI.TrackballControll | null
+    camera: ThreeFrameCamera | null
+    controls: AMI.TrackballControll | null
 
     scene: THREE.Scene | null
     light: any
@@ -21,7 +21,7 @@ export interface ThreeFrame {
     dicomInfo: any // ссылка на объект класса DicomInfo
     boxHelper: any // надо для dispose
     stack: any
-    render: any
+    render: WebGLRenderer | null
 
     sliceColor: number
     sliceOrientation: string
@@ -33,9 +33,23 @@ export interface ThreeFrame {
     enabledStandardRendering: boolean
 
     // вторая сцена и камера используется PlasticBoy для рендеринга LUT
-    scene2: any
-    camera2: any
+    scene2: THREE.Scene | null
+    camera2: ThreeFrameCamera | null
     light2: any // light2 добавляется к scene2 самим PlasticBoy
+}
+
+/**
+ * Этот интерфейс сделан для поддержки использования разных камер в 2D и 3D пространствах
+ */
+export interface ThreeFrameCamera extends Camera {
+    directions?: number[]
+    box?: { center: THREE.Vector3, halfDimensions: THREE.Vector3 }
+    canvas?: { width: number, height: number }
+    orientation?: string
+    update?: () => void
+    fitBox?: (a: number, b: number) => void
+    stackOrientation?: number
+    controls?: AMI.TrackballControll
 }
 
 /**
@@ -73,17 +87,17 @@ export class UP3 {
 
     static initRenderer3D(element: ThreeFrameElement): void {
         const renderObj = UP3.getEnabledElement(element, true);
-        if (renderObj === null) return;
+        if (renderObj === null || renderObj.domElement === null) return;
 
         renderObj.renderer = new THREE.WebGLRenderer({
             antialias: true
         });
-        // @ts-expect-error
+
         renderObj.renderer.setSize(
             renderObj.domElement.clientWidth, renderObj.domElement.clientHeight);
 
         renderObj.renderer.setClearColor(renderObj.color, 1);
-        renderObj.renderer.domElement.id = renderObj.targetID;
+        renderObj.renderer.domElement.id = String(renderObj.targetID);
         renderObj.domElement.appendChild(renderObj.renderer.domElement);
 
         // camera
@@ -98,6 +112,7 @@ export class UP3 {
         // controls
         renderObj.controls = new TrackballControl(
             renderObj.camera, renderObj.domElement);
+        if (renderObj.controls === null) return;
         renderObj.controls.rotateSpeed = 5.5;
         renderObj.controls.zoomSpeed = 1.2;
         renderObj.controls.panSpeed = 0.8;
@@ -117,8 +132,8 @@ export class UP3 {
         const renderObj = UP3.getEnabledElement(element, true);
 
         if (renderObj === null) return;
-
-        if (renderObj.render) {
+        if (renderObj.render !== null) {
+            // @ts-expect-error метод поддерживается, но видимо проблема библитеки типов
             renderObj.render(renderObj);
             return;
         }
@@ -126,7 +141,8 @@ export class UP3 {
         const controls = renderObj.controls; const renderer = renderObj.renderer;
         const scene = renderObj.scene; const camera = renderObj.camera;
 
-        const render = () => {
+        const render = (): void => {
+            if (renderer === null || controls === null || renderObj === null || scene === null || camera === null) return;
             renderer.clear();
             if (!renderObj.enabledStandardRendering) {
                 console.log('stoped UP3.render()');
@@ -137,7 +153,7 @@ export class UP3 {
             renderer.render(scene, camera);
 
             // это для LUT
-            if (renderObj.scene2) {
+            if (renderObj.scene2 != null && renderObj.camera2 != null) {
                 renderer.autoClear = false;
                 renderer.render(renderObj.scene2, renderObj.camera2);
             }
@@ -243,10 +259,12 @@ export class UP3 {
         frame.camera.box = box;
         frame.camera.canvas = canvas;
         frame.camera.orientation = frame.sliceOrientation;
-        frame.camera.update();
-        frame.camera.fitBox(1, 2);
+        frame.camera.update?.();
+        frame.camera.fitBox?.(1, 2);
 
-        frame.stackHelper.orientation = frame.camera.stackOrientation;
+        if (frame.camera.stackOrientation !== undefined) {
+            frame.stackHelper.orientation = frame.camera.stackOrientation;
+        }
         frame.stackHelper.index = Math.floor(frame.stackHelper.orientationMaxIndex / 2);
         frame.scene.add(frame.stackHelper as Object3D);
     }
