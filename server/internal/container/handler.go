@@ -61,6 +61,10 @@ func (h *Handler) takeConnection(writer http.ResponseWriter, request *http.Reque
 }
 
 func (h *Handler) prolongConnection(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
+	writer.Header().Set("Access-Control-Allow-Origin", "*")
+	writer.Header().Set("Access-Control-Allow-Headers", "origin, x-requested-with, content-type")
+	writer.Header().Set("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS")
+
 	err := request.ParseForm()
 	if err != nil {
 		logger.WriteToLog("[PROLONG CONNECTION: FORM PARSE ERROR] " + err.Error())
