@@ -41,7 +41,7 @@ export const Segmentation = (props: TProps): ReactElement => {
     }, [selectedPreviewSeries]);
 
     useEffect(() => {
-        if (selectedPreviewSeries !== null && webSocket !== null) {
+        if (selectedPreviewSeries !== null && webSocket !== null && selectedPreviewSeries.getStack()._numberOfFrames >= 30) {
             setFFRController(new FFRController(webSocket, selectedPreviewSeries.getModel()));
         }
     }, [selectedPreviewSeries, webSocket]);
