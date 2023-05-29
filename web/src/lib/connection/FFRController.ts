@@ -88,13 +88,17 @@ class FFRController {
         const getOptimalTau = async (): Promise<number> => {
             return await this.ffrp.sendRequest('GetOptimalTau');
         };
-        const defaultAorta = { tau: 0.09, alpha: 0.5, beta: 0.5, gamma: 500, mesh: null };
+        const defaultAorta: AortaView = { tau: 0.09, alpha: 0.5, beta: 0.5, gamma: 500, mesh: null };
         const optimalTau = await getOptimalTau();
         if (optimalTau > 0) {
-            defaultAorta.tau = optimalTau;
+            defaultAorta.tau = Number(optimalTau);
         }
 
         return defaultAorta;
+    }
+
+    async loadAortaPreview(tau: number): Promise<ArrayBuffer> {
+        return await this.ffrp.sendRequestReturningArrayBuffer(`LoadAortaPreview ${tau}`);
     }
 }
 export { FFRController };

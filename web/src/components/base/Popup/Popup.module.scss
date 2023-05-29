@@ -30,7 +30,12 @@
   color: #000;
   border-bottom: 2px solid #ebebeb;
 
+  .headerTitle {
+    padding-top: 3px;
+  }
+
   .closeButton {
+    margin-left: 20px;
     cursor: pointer;
     color: rgb(37 99 235);
     font-size: 20px;

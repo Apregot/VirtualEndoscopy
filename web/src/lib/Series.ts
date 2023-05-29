@@ -1,4 +1,4 @@
-import { type SeriesModel } from 'ami.js';
+import { type Stack, type SeriesModel } from 'ami.js';
 import { Patient } from './Patient';
 import * as THREE from 'three';
 
@@ -17,6 +17,10 @@ export class Series {
 
     getModel(): SeriesModel {
         return this.seriesModel;
+    }
+
+    getStack(): Stack {
+        return this.seriesModel.stack[0];
     }
 
     getROI(): THREE.Box3 {

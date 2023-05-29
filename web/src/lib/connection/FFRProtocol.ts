@@ -22,7 +22,7 @@ class FFRProtocol {
      *
      * @param reqconsole.log(stack.ijk2LPS.elements);
      */
-    async sendRequestReturningArrayBuffer(req: Blob): Promise<ArrayBuffer> {
+    async sendRequestReturningArrayBuffer(req: Blob | string): Promise<ArrayBuffer> {
         if (!this.wsready) throw Error('no connection to server');
 
         // это эксперименты с декодированием binary CMD -> string

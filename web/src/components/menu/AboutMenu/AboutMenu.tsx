@@ -1,10 +1,10 @@
 import React, {type ReactElement, useState} from 'react';
 import { SelectButtonText, SelectList } from '../../base/SelectList';
 import styles from './AboutMenu.module.scss';
-import {VersionPopup} from "./VersionPopup";
+import {HelpPopup} from "./HelpPopup";
 
 export const AboutMenu = (): ReactElement => {
-    const [isVersionPopupOpened, changePopupState] = useState(false);
+    const [isHelpPopupOpened, changePopupState] = useState(false);
     const onVersionClick = () => {
         changePopupState(true);
     }
@@ -30,7 +30,7 @@ export const AboutMenu = (): ReactElement => {
                     content: (
                         <a target="_blank" className={styles.aboutLink} onClick={onVersionClick}>
                             <SelectButtonText>
-                                Версия
+                                Справка
                             </SelectButtonText>
                         </a>
                     )
@@ -38,7 +38,7 @@ export const AboutMenu = (): ReactElement => {
             ]}
         >
             О программе
-            {isVersionPopupOpened ? <VersionPopup onClose={onClosePopup}></VersionPopup> : ''}
+            {isHelpPopupOpened ? <HelpPopup onClose={onClosePopup}></HelpPopup> : ''}
         </SelectList>
     );
 };
