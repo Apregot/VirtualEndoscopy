@@ -28,14 +28,6 @@ class SocketService {
         return this.ws;
     }
 
-    // prolongContainerLife(): void {
-    //     axios.post('http://158.160.65.29/atb/prolong', {
-    //         containerId: this.containerId
-    //     }).then((response) => {
-    //         console.log(response.status, response.data.token);
-    //     });
-    // }
-    
     async prolongContainerLife(): Promise<void> {
         await axios.post('http://158.160.65.29/atb/prolong', {
             containerId: this.containerId
