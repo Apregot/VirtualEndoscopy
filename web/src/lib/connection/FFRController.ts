@@ -40,7 +40,7 @@ class FFRController {
 
     async start(onLoadingProgress: any, selectAorta: any): Promise<void> {
         console.log('FFRController::start()');
-        this.ws.prolongContainerLife();
+        await this.ws.prolongContainerLife();
         // здесь надо организовать запуск ATB, подключение по вебсокету, запрос фото аорты и тогда вызывать Dialog-8
         // нет подключение обеспечивает верхний уровень, передавая сюда уже подключенный serverInterface
         // задача FFRController - скоординировать вызовы диалогов и FFR сервера

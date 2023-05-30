@@ -28,16 +28,22 @@ class SocketService {
         return this.ws;
     }
 
-    prolongContainerLife(): void {
-        axios.post('http://158.160.65.29/atb/prolong', {
+    // prolongContainerLife(): void {
+    //     axios.post('http://158.160.65.29/atb/prolong', {
+    //         containerId: this.containerId
+    //     }).then((response) => {
+    //         console.log(response.status, response.data.token);
+    //     });
+    // }
+    
+    async prolongContainerLife(): Promise<void> {
+        await axios.post('http://158.160.65.29/atb/prolong', {
             containerId: this.containerId
-        })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        }, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
     }
     
     async sendRequest(req: any): Promise<any> {
