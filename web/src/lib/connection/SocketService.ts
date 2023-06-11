@@ -1,9 +1,13 @@
+import axios from 'axios';
+
 class SocketService {
     private wsReady: boolean;
     private readonly ws: WebSocket;
+    private readonly containerId: string;
 
-    constructor(wsurl: string, onCLose: any) {
+    constructor(wsurl: string, id: string, onCLose: any) {
         this.wsReady = false;
+        this.containerId = id;
         this.ws = new WebSocket(wsurl, 'ffr-protocol');
         this.ws.onopen = () => { console.log('connected'); this.wsReady = true; };
         this.ws.onclose = () => { console.log('disconnected'); this.wsReady = false; onCLose(); };
@@ -22,6 +26,16 @@ class SocketService {
 
     getWebSocket(): WebSocket {
         return this.ws;
+    }
+
+    async prolongContainerLife(): Promise<void> {
+        await axios.post('http://158.160.65.29/atb/prolong', {
+            containerId: this.containerId
+        }, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
     }
     
     async sendRequest(req: any): Promise<any> {

@@ -2,14 +2,22 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { SocketService } from '../../lib/connection/SocketService';
 import axios from 'axios';
 
+interface Answer {
+    url: string
+    id: string
+}
+
 export const createWebSocket = createAsyncThunk(
     'webSocket/createWebSocket',
     async (arg, thunkAPI) => {
-        const url: string = await axios.get('http://158.160.65.29/atb/take')
+        const ans: Answer = await axios.get('http://158.160.65.29/atb/take')
             .then(res => {
-                return res.data.Address;
+                return {
+                    url: res.data.Address,
+                    id: res.data.Id
+                };
             });
-        return new SocketService(`ws:${url}`, () => { thunkAPI.dispatch(webSocketSlice.actions.disconnect()); });
+        return new SocketService(`ws:${ans.url}`, ans.id, () => { thunkAPI.dispatch(webSocketSlice.actions.disconnect()); });
     }
 );
 

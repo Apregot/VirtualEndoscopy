@@ -4,6 +4,7 @@ import { DICOMLoader } from '../../../lib';
 import { useAppDispatch } from '../../../hooks/redux';
 import { seriesSlice } from '../../../store/reducers/SeriesSlice';
 import { Series } from '../../../lib/Series';
+import { SelectButtonDir } from '../../base/SelectList/SelectButtonDir';
 
 export const FileMenu = (): ReactElement => {
     const { pushSeries } = seriesSlice.actions;
@@ -13,6 +14,18 @@ export const FileMenu = (): ReactElement => {
         DICOMLoader.loadSeries(files)
             .then((model) => {
                 dispatch(pushSeries(new Series(model)));
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    };
+    const onDirUpload = (files: FileList): void => {
+        DICOMLoader.loadSeries(files)
+            .then((model) => {
+                const series = new Series(model);
+                series.getStack()._numberOfFrames = series.getStack().frame.length;
+                series.setNF(series.getStack().frame.length);
+                dispatch(pushSeries(series));
             })
             .catch((err) => {
                 console.error(err);
@@ -29,6 +42,14 @@ export const FileMenu = (): ReactElement => {
                         <SelectButtonFile onFileUpload={onFileUpload}>
               Чтение DICOM файла
                         </SelectButtonFile>
+                    )
+                },
+                {
+                    id: 'menu_dir_upload',
+                    content: (
+                        <SelectButtonDir onDirUpload={onDirUpload}>
+              Чтение DICOM каталога
+                        </SelectButtonDir>
                     )
                 }
             ]}

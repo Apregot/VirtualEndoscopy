@@ -23,9 +23,11 @@ class FFRController {
     private readonly visArea: any;
     private readonly aortaPreviewMesh: any;
     private readonly vesselsThreshold: number;
+    private readonly ws: SocketService;
 
     constructor (ws: SocketService, series: SeriesModel) {
         this.ffrp = new FFRProtocol(ws.getWebSocket());
+        this.ws = ws;
         this.series = series;
         this.stack = series.stack[0]; // this.stack.frame.reverse(); // для Томск
         this.progressBar = null;
@@ -38,6 +40,7 @@ class FFRController {
 
     async start(onLoadingProgress: any, selectAorta: any): Promise<void> {
         console.log('FFRController::start()');
+        await this.ws.prolongContainerLife();
         // здесь надо организовать запуск ATB, подключение по вебсокету, запрос фото аорты и тогда вызывать Dialog-8
         // нет подключение обеспечивает верхний уровень, передавая сюда уже подключенный serverInterface
         // задача FFRController - скоординировать вызовы диалогов и FFR сервера
